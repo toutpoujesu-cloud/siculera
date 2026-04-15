@@ -7,9 +7,15 @@
   'use strict';
 
   /* ── Config ────────────────────────────────────────────────────────────── */
-  // In dev (npx serve on :8080/:5500/:3000), point to the API server; in prod, use same origin
-  const _devPorts = ['8080', '5500', '3000', '5173', '4173'];
-  const _apiOrigin = _devPorts.includes(window.location.port) ? 'http://localhost:4000' : '';
+  // In production, use dedicated API host. In local dev, use localhost backend.
+  const _devPorts = ['8080', '5500', '3000', '5173', '4173', '4000'];
+  const _host = window.location.hostname;
+  const _explicitApiBase = (window.SICULERA_API_BASE || '').trim();
+  const _apiOrigin = _explicitApiBase
+    ? _explicitApiBase.replace(/\/$/, '')
+    : ((_host === 'localhost' || _host === '127.0.0.1' || _devPorts.includes(window.location.port))
+      ? 'http://localhost:4000'
+      : 'https://api.siculera.com');
   const API_BASE   = _apiOrigin + '/api/chat';
   const STORAGE_TOKEN   = 'siculera_chat_token';
   const STORAGE_CONSENT = 'siculera_chat_consent';

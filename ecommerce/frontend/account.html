@@ -282,9 +282,14 @@ input.err{border-color:#e05c5c}
 'use strict';
 
 const API_BASE = (() => {
+  const explicit = (window.SICULERA_API_BASE || '').trim();
+  if (explicit) return explicit.replace(/\/$/, '');
+  const host = window.location.hostname;
   const port = window.location.port;
-  if (port === '8080' || port === '5500' || port === '3000') return 'http://localhost:4000';
-  return '';
+  if (host === 'localhost' || host === '127.0.0.1' || ['8080', '5500', '3000', '5173', '4173', '4000'].includes(port)) {
+    return 'http://localhost:4000';
+  }
+  return 'https://api.siculera.com';
 })();
 
 const TOKEN_KEY = 'siculera_user_token';

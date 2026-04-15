@@ -1921,13 +1921,14 @@ function attachLanguageListeners() {
 }
 
 const API_BASE = (() => {
-  // In production the frontend is served from the same origin as the API.
-  // In development (e.g. npx serve on :8080) point to the backend port.
+  const explicit = (window.SICULERA_API_BASE || '').trim();
+  if (explicit) return explicit.replace(/\/$/, '');
+  const host = window.location.hostname;
   const port = window.location.port;
-  if (port === '8080' || port === '5500' || port === '3000') {
+  if (host === 'localhost' || host === '127.0.0.1' || ['8080', '5500', '3000', '5173', '4173', '4000'].includes(port)) {
     return 'http://localhost:4000';
   }
-  return ''; // same origin
+  return 'https://api.siculera.com';
 })();
 
 function flavourClass(flavour) {
