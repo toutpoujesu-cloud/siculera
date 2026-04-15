@@ -36,3 +36,9 @@ npm start
 ```
 
 Then open `http://localhost:4000/admin` in your browser.
+
+## Production Deployment
+
+For the recommended production setup (Cloudflare Pages frontend + Render API backend + `api.siculera.com`):
+
+- See `DEPLOY_BACKEND_RENDER_CLOUDFLARE.md`

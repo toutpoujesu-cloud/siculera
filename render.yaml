@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: siculera-api
+    runtime: node
+    rootDir: ecommerce
+    buildCommand: npm install
+    startCommand: npm start
+    plan: starter
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "10000"
+      - key: USE_SYSTEM_POSTGRES
+        value: "true"
+      - key: FRONTEND_URL
+        value: https://www.siculera.com
+      - key: ALLOWED_ORIGINS
+        value: https://www.siculera.com,https://siculera.com
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: DATA_ENCRYPTION_KEY
+        sync: false
+      - key: DEEPSEEK_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: PAYPAL_CLIENT_ID
+        sync: false
+      - key: PAYPAL_CLIENT_SECRET
+        sync: false
