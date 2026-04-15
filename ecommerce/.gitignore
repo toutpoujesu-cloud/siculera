@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+
+# Environment variables — NEVER commit these
+.env
+.env.local
+.env.production
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build output
+dist/
+build/
+
+# Coverage
+coverage/
+
+# Editor
+.vscode/
+.idea/
+
+# Uploaded files (product images etc.) — keep folder, ignore contents
+uploads/products/*
+!uploads/products/.gitkeep
+
+# Stripe CLI
+.stripe/

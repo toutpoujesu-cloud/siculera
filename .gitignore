@@ -1,0 +1,22 @@
+# Secrets and local credentials
+claude apikey/
+deepseek apikey/
+
+# Local environment files
+**/.env
+**/.env.local
+**/.env.*.local
+
+# Local database and runtime files
+ecommerce/.pgdata/
+
+# Dependencies and logs
+**/node_modules/
+**/logs/
+**/*.log
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

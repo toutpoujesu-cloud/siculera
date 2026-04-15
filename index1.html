@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Siculera — Authentic Sicilian almond pastry crafted for luxury gifting, refined dining, and memorable hospitality. Traditional, citrus, pistachio and fruit-filled creations from Sicily.">
+<meta property="og:title" content="Siculera — Luxury Sicilian Pastry House">
+<meta property="og:description" content="Authentic Sicilian almond creations, crafted with care and made for gifting, sharing, and refined everyday pleasure.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Siculera — Luxury Sicilian Pastry House">
+<title>Siculera — Luxury Sicilian Pastry House</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fbf7f1;
+  --bg-soft: #f6efe3;
+  --bg-warm: #f3eadb;
+  --ink: #27312a;
+  --ink-soft: #3c4a3f;
+  --muted: #6b7a6c;
+  --accent: #7e9277;
+  --gold: #b8975a;
+  --gold-light: #d4b882;
+  --gold-pale: #f0e6d0;
+  --line: #e8ddd0;
+  --white: #fff;
+  --shadow-sm: 0 8px 24px rgba(39,49,42,.06);
+  --shadow: 0 18px 48px rgba(39,49,42,.08);
+  --shadow-lg: 0 32px 72px rgba(39,49,42,.13);
+  --max: 1220px;
+  --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --ease-out: cubic-bezier(.22,.68,0,1.1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: linear-gradient(180deg, #fdfaf5 0%, var(--bg) 100%);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1, h2, h3, h4, .serif {
+  font-family: var(--serif);
+  font-weight: 400;
+  letter-spacing: .015em;
+  line-height: 1.1;
+  margin: 0 0 .6rem;
+  color: var(--ink);
+}
+p { margin: .15rem 0 1rem; }
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+.container { width: min(var(--max), calc(100% - 128px)); margin: 0 auto; }
+
+/* Skip link */
+.skip-link {
+  position: absolute; top: -100%; left: 1rem;
+  background: var(--ink); color: #fff;
+  padding: .5rem 1.2rem; border-radius: 999px;
+  z-index: 999; font-size: .88rem; transition: top .2s;
+}
+.skip-link:focus { top: 1rem; }
+
+/* ── Topbar ── */
+.topbar {
+  background: var(--ink);
+  color: rgba(253,250,245,.65);
+  text-align: center;
+  font-size: .76rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: .75rem 1rem;
+  font-weight: 400;
+}
+.topbar strong { color: var(--gold-light); font-weight: 500; }
+
+/* ── Header ── */
+.site-header {
+  position: sticky; top: 0; z-index: 30;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(251,247,241,.92);
+  border-bottom: 1px solid rgba(39,49,42,.06);
+  transition: box-shadow .3s ease;
+}
+.site-header.scrolled { box-shadow: 0 4px 28px rgba(39,49,42,.08); }
+.nav {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  gap: 24px; padding: 16px 0;
+}
+.brand { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+.brand img {
+  height: 52px; border-radius: 10px;
+  background: #f8f2e8;
+  box-shadow: 0 6px 18px rgba(39,49,42,.1);
+  object-fit: cover;
+}
+.brand-text { display: flex; flex-direction: column; gap: 2px; }
+.brand-name {
+  font-family: var(--serif); font-size: 1.5rem;
+  font-weight: 400; letter-spacing: .05em; line-height: 1;
+}
+.brand-sub {
+  font-size: .68rem; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .22em; font-weight: 400;
+}
+.nav-links {
+  display: flex; align-items: center;
+  gap: 28px; color: var(--muted);
+  font-size: .84rem; font-weight: 400; letter-spacing: .04em;
+}
+.nav-links a { position: relative; transition: color .2s; }
+.nav-links a::after {
+  content: ''; position: absolute;
+  left: 0; bottom: -5px; width: 0; height: 1px;
+  background: var(--gold); transition: width .25s ease;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-links a:hover::after { width: 100%; }
+.nav-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.cart-button {
+  display: flex; align-items: center; gap: 9px;
+  padding: 9px 18px; border-radius: 999px;
+  border: 1px solid rgba(39,49,42,.1);
+  background: rgba(255,255,255,.82);
+  cursor: pointer; font-weight: 500; font-size: .84rem;
+  font-family: var(--sans); color: var(--ink);
+  transition: all .22s ease; letter-spacing: .03em;
+}
+.cart-button:hover {
+  background: #fff; border-color: rgba(39,49,42,.2);
+  box-shadow: 0 4px 14px rgba(39,49,42,.09);
+}
+.cart-count {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 22px; height: 22px; padding: 0 6px;
+  border-radius: 999px; background: var(--accent);
+  color: #fff; font-size: .76rem; font-weight: 600;
+}
+
+/* Hamburger */
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  padding: 9px; background: transparent; border: none;
+  cursor: pointer; border-radius: 8px;
+}
+.hamburger span {
+  display: block; width: 22px; height: 1.5px;
+  background: var(--ink); transition: all .28s ease;
+  transform-origin: center;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Mobile nav */
+.mobile-nav {
+  display: none; position: fixed; inset: 0;
+  background: rgba(253,250,245,.97);
+  backdrop-filter: blur(24px);
+  z-index: 29; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 4px; opacity: 0; pointer-events: none;
+  transition: opacity .3s ease;
+}
+.mobile-nav.open { opacity: 1; pointer-events: auto; }
+.mobile-nav a {
+  font-family: var(--serif); font-size: 2.4rem;
+  font-weight: 300; color: var(--ink);
+  padding: .55rem 0; letter-spacing: .04em;
+  transition: color .2s;
+}
+.mobile-nav a:hover { color: var(--gold); }
+.mobile-nav-close {
+  position: absolute; top: 22px; right: 22px;
+  background: transparent; border: none;
+  font-size: 1.6rem; cursor: pointer;
+  color: var(--muted); padding: 8px;
+  transition: color .2s;
+}
+.mobile-nav-close:hover { color: var(--ink); }
+
+/* ── Eyebrow ── */
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 12px;
+  margin-bottom: 18px; color: var(--gold);
+  text-transform: uppercase; letter-spacing: .22em;
+  font-size: .7rem; font-weight: 500;
+}
+.eyebrow::before, .eyebrow::after {
+  content: ''; display: block; width: 22px; height: 1px;
+  background: currentColor; opacity: .7;
+}
+
+/* ── Hero ── */
+.hero {
+  padding: 104px 0 80px;
+  background:
+    radial-gradient(ellipse at 8% 0%, rgba(184,151,90,.13), transparent 32%),
+    radial-gradient(ellipse at 90% 12%, rgba(126,146,119,.09), transparent 24%),
+    linear-gradient(180deg, #fdfaf5 0%, #fbf7f1 100%);
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute;
+  top: -60px; right: -100px;
+  width: 560px; height: 560px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(184,151,90,.06), transparent 70%);
+  pointer-events: none;
+}
+.hero-grid {
+  display: grid; grid-template-columns: 1.1fr .9fr;
+  gap: 60px; align-items: center;
+}
+.hero h1 {
+  font-size: clamp(3rem, 5.5vw, 5.2rem);
+  font-weight: 300; max-width: 11ch;
+  letter-spacing: -.01em; line-height: 1.04;
+  margin-bottom: 1.2rem;
+}
+.hero h1 em { font-style: italic; color: var(--gold); }
+.hero > .container > .hero-grid > div > p {
+  font-size: .98rem; color: var(--muted);
+  max-width: 44ch; line-height: 1.75; font-weight: 300;
+}
+
+/* ── Buttons ── */
+.cta-row {
+  display: flex; gap: 13px; flex-wrap: wrap; margin-top: 28px;
+}
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 9px; border-radius: 999px; padding: 13px 26px;
+  cursor: pointer; font-weight: 500; font-family: var(--sans);
+  transition: all .25s ease; border: 1px solid transparent;
+  font-size: .82rem; letter-spacing: .08em; text-transform: uppercase;
+  position: relative; overflow: hidden;
+}
+.btn-primary {
+  background: var(--ink); color: #faf7f1;
+  box-shadow: 0 8px 22px rgba(39,49,42,.12);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(39,49,42,.2);
+  background: var(--ink-soft);
+}
+.btn-secondary {
+  background: transparent; color: var(--ink);
+  border-color: rgba(39,49,42,.18);
+}
+.btn-secondary:hover {
+  background: rgba(39,49,42,.04);
+  border-color: rgba(39,49,42,.3);
+  transform: translateY(-1px);
+}
+.btn-gold {
+  background: linear-gradient(135deg, #c8a96e, #a87d44);
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(184,151,90,.28);
+}
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(184,151,90,.36);
+}
+
+/* Hero card */
+.hero-card {
+  background: rgba(255,255,255,.62);
+  border: 1px solid rgba(39,49,42,.07);
+  border-radius: 38px; padding: 22px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(8px);
+}
+.hero-card-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 13px; }
+.product-tile {
+  background: rgba(255,255,255,.9); border: 1px solid var(--line);
+  border-radius: 22px; overflow: hidden;
+  transition: transform .32s var(--ease-out), box-shadow .32s ease;
+}
+.product-tile:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 22px 44px rgba(39,49,42,.1);
+}
+
+/* Product photo gradients */
+.product-photo {
+  aspect-ratio: 1/1; position: relative;
+  background: radial-gradient(circle at 28% 24%, rgba(255,255,255,.96), rgba(255,255,255,.28)),
+    linear-gradient(135deg,#ead7b4,#ceb083 42%,#f3ead7 88%);
+}
+.product-photo.citrus {
+  background: radial-gradient(circle at 28% 24%, rgba(255,255,255,.96), rgba(255,255,255,.28)),
+    linear-gradient(135deg,#f4df98,#d99b45 42%,#f5ecd2 88%);
+}
+.product-photo.green {
+  background: radial-gradient(circle at 28% 24%, rgba(255,255,255,.96), rgba(255,255,255,.28)),
+    linear-gradient(135deg,#dce4c7,#8fa271 42%,#eef1e2 88%);
+}
+.product-photo.rose {
+  background: radial-gradient(circle at 28% 24%, rgba(255,255,255,.96), rgba(255,255,255,.28)),
+    linear-gradient(135deg,#ecd0c6,#bf7c6f 42%,#f8e9e4 88%);
+}
+.pastry {
+  position: absolute; inset: 18% 19%;
+  border-radius: 42% 58% 46% 54%/58% 43% 57% 42%;
+  background: linear-gradient(145deg,#f6e3bf,#dcc096 52%,#c79f70);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.65), 0 16px 24px rgba(39,49,42,.11);
+  transform: rotate(-10deg);
+}
+.pastry::after {
+  content: ''; position: absolute;
+  inset: 16% 22% 48% 18%;
+  border-radius: 999px;
+  background: rgba(255,255,255,.34); filter: blur(1px);
+}
+.tile-body { padding: 14px 14px 16px; }
+.tile-title {
+  font-family: var(--serif); font-size: 1.06rem;
+  font-weight: 500; margin-bottom: .2rem;
+}
+.tile-note { font-size: .84rem; color: var(--muted); font-weight: 300; }
+
+/* ── Ornament divider ── */
+.ornament {
+  display: flex; align-items: center; gap: 14px;
+  justify-content: center; margin: 0 auto 52px;
+  max-width: 220px;
+}
+.ornament::before, .ornament::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+}
+.ornament-diamond {
+  width: 7px; height: 7px;
+  background: var(--gold); transform: rotate(45deg); flex-shrink: 0;
+}
+
+/* ── Sections ── */
+.section { padding: 104px 0; border-top: 1px solid rgba(39,49,42,.04); }
+.section-soft {
+  background: linear-gradient(180deg, rgba(243,234,219,.32), rgba(251,247,241,.5));
+}
+
+.transition { text-align: center; margin-bottom: 20px; }
+.transition h3 {
+  font-family: var(--serif); font-weight: 300;
+  font-size: clamp(1.55rem, 2.8vw, 2.3rem);
+  margin-bottom: .4rem; letter-spacing: .01em;
+}
+.transition p {
+  color: var(--muted); max-width: 48ch; margin: 0 auto;
+  font-size: .94rem; font-weight: 300; line-height: 1.7;
+}
+
+/* ── Trust strip ── */
+.trust-strip {
+  padding: 28px 0;
+  background: rgba(255,255,255,.55);
+  border-top: 1px solid rgba(39,49,42,.05);
+  border-bottom: 1px solid rgba(39,49,42,.05);
+}
+.trust-items {
+  display: flex; align-items: center;
+  justify-content: center; flex-wrap: wrap;
+}
+.trust-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 28px; color: var(--muted);
+  font-size: .76rem; letter-spacing: .12em;
+  text-transform: uppercase; font-weight: 400;
+  position: relative;
+}
+.trust-item + .trust-item::before {
+  content: ''; position: absolute;
+  left: 0; top: 20%; height: 60%; width: 1px;
+  background: rgba(39,49,42,.1);
+}
+.trust-icon { font-size: 1rem; color: var(--gold); }
+
+/* ── Split layout ── */
+.split {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 60px; align-items: center;
+}
+.content-card { padding: 8px 0; }
+.content-card h2 {
+  font-family: var(--serif);
+  font-size: clamp(2.1rem, 4vw, 3.4rem);
+  font-weight: 300; max-width: 13ch;
+  margin-bottom: .85rem; letter-spacing: -.01em; line-height: 1.08;
+}
+.content-card h2 em { font-style: italic; color: var(--gold); }
+.content-card p {
+  color: var(--muted); max-width: 52ch;
+  font-size: .95rem; font-weight: 300; line-height: 1.75;
+}
+.bullets { display: grid; gap: 16px; margin-top: 28px; }
+.bullets div {
+  padding-top: 14px;
+  border-top: 1px solid rgba(39,49,42,.07);
+  color: var(--muted); font-size: .93rem; font-weight: 300;
+}
+.bullets strong {
+  color: var(--ink); font-weight: 500;
+  display: block; margin-bottom: .2rem;
+}
+
+/* Visual illustration box */
+.visual {
+  min-height: 480px; border-radius: 36px;
+  position: relative; overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 16%, rgba(184,151,90,.12), transparent 28%),
+    linear-gradient(180deg, #fffdf8 0%, #f5ede1 100%);
+  border: 1px solid rgba(39,49,42,.05);
+  box-shadow: var(--shadow);
+}
+.visual .plate {
+  position: absolute; width: 58%; aspect-ratio: 1/1;
+  border-radius: 50%; background: linear-gradient(145deg,#f9f4eb,#ddd0ba);
+  left: 22%; top: 14%;
+  box-shadow: 0 28px 52px rgba(39,49,42,.1);
+}
+.visual .mini-pastry {
+  position: absolute; width: 18%; aspect-ratio: 1/1;
+  border-radius: 42% 58% 43% 57%/58% 45% 55% 42%;
+  background: linear-gradient(145deg,#f3deba,#cfb085 58%,#c69a69);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.65), 0 14px 18px rgba(39,49,42,.1);
+}
+.visual .mini-pastry.green { background: linear-gradient(145deg,#e0e8cb,#9aad7d 58%,#73864f); }
+.visual .mini-pastry.orange { background: linear-gradient(145deg,#f8dc95,#df9f43 58%,#c07a29); }
+.visual .mini-pastry.rose { background: linear-gradient(145deg,#eed1c9,#c88576 58%,#97493e); }
+
+/* Section header centered */
+.section-center {
+  max-width: 680px; margin: 0 auto 44px; text-align: center;
+}
+.section-center h2 {
+  font-family: var(--serif);
+  font-size: clamp(2.1rem, 4vw, 3.4rem);
+  font-weight: 300; margin-bottom: .55rem; letter-spacing: -.01em;
+}
+.section-center p { color: var(--muted); font-size: .95rem; font-weight: 300; }
+
+/* ── Flavour grid ── */
+.grid6 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.flavour-card {
+  background: rgba(255,255,255,.84); border: 1px solid rgba(39,49,42,.06);
+  border-radius: 22px; padding: 28px 24px;
+  box-shadow: var(--shadow-sm);
+  transition: transform .3s var(--ease-out), box-shadow .3s ease;
+  position: relative; overflow: hidden;
+}
+.flavour-card::after {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0; transition: opacity .3s;
+}
+.flavour-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+.flavour-card:hover::after { opacity: 1; }
+.flavour-card h4 {
+  font-family: var(--serif); font-size: 1.22rem;
+  font-weight: 500; margin-bottom: .5rem;
+}
+.flavour-card p { color: var(--muted); font-size: .91rem; margin: 0; font-weight: 300; }
+
+/* ── Products grid ── */
+.products-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+.collection-card {
+  background: rgba(255,255,255,.9); border: 1px solid rgba(39,49,42,.06);
+  border-radius: 28px; overflow: hidden;
+  box-shadow: 0 12px 30px rgba(39,49,42,.06);
+  transition: transform .35s var(--ease-out), box-shadow .35s ease;
+}
+.collection-card:hover { transform: translateY(-7px); box-shadow: var(--shadow-lg); }
+.collection-card .product-photo { aspect-ratio: 4/3; }
+.collection-card .body { padding: 20px 22px 22px; }
+.tag {
+  display: inline-block; font-size: .66rem;
+  text-transform: uppercase; letter-spacing: .2em;
+  color: var(--gold); font-weight: 500; margin-bottom: 8px;
+}
+.collection-card h3 {
+  font-family: var(--serif); font-size: 1.3rem;
+  font-weight: 400; line-height: 1.18; margin-bottom: .5rem;
+}
+.collection-card p {
+  color: var(--muted); font-size: .89rem;
+  font-weight: 300; line-height: 1.62; min-height: 58px;
+}
+.tile-bottom {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-top: 16px; padding-top: 16px;
+  border-top: 1px solid rgba(39,49,42,.06);
+}
+.price { font-family: var(--serif); font-size: 1.26rem; font-weight: 400; }
+.small-btn {
+  padding: 9px 18px; border-radius: 999px;
+  background: var(--ink); color: #faf7f1; border: none;
+  cursor: pointer; font-weight: 500; font-family: var(--sans);
+  font-size: .78rem; letter-spacing: .07em; text-transform: uppercase;
+  transition: all .25s ease;
+}
+.small-btn:hover {
+  background: var(--ink-soft); transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(39,49,42,.2);
+}
+
+/* ── Testimonials ── */
+.testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+.testimonial-card {
+  background: rgba(255,255,255,.84); border: 1px solid rgba(39,49,42,.06);
+  border-radius: 24px; padding: 30px 26px;
+  box-shadow: var(--shadow-sm); position: relative;
+}
+.testimonial-card::before {
+  content: '\201C'; font-family: var(--serif);
+  font-size: 4.5rem; color: var(--gold); opacity: .3;
+  position: absolute; top: 10px; left: 20px; line-height: 1;
+}
+.stars { color: var(--gold); font-size: .78rem; letter-spacing: 3px; margin-bottom: 6px; }
+.testimonial-text {
+  font-family: var(--serif); font-size: 1.08rem;
+  font-weight: 400; font-style: italic;
+  line-height: 1.65; color: var(--ink);
+  margin-bottom: 20px; padding-top: 24px;
+}
+.testimonial-author { display: flex; align-items: center; gap: 12px; }
+.testimonial-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--bg-warm), var(--gold-light));
+  flex-shrink: 0;
+}
+.testimonial-name { font-weight: 500; font-size: .9rem; color: var(--ink); }
+.testimonial-role { font-size: .8rem; color: var(--muted); font-weight: 300; }
+
+/* ── Newsletter ── */
+.newsletter-section { background: var(--ink); padding: 88px 0; }
+.newsletter-inner { max-width: 560px; margin: 0 auto; text-align: center; }
+.newsletter-inner .eyebrow { justify-content: center; color: var(--gold-light); }
+.newsletter-inner .eyebrow::before,
+.newsletter-inner .eyebrow::after { background: var(--gold-light); }
+.newsletter-inner h2 {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 3.2vw, 2.9rem);
+  font-weight: 300; color: #faf7f1;
+  letter-spacing: -.01em; margin-bottom: .75rem;
+}
+.newsletter-inner > p {
+  color: rgba(250,247,241,.56); font-size: .93rem;
+  font-weight: 300; margin-bottom: 30px;
+}
+.newsletter-form { display: flex; gap: 10px; max-width: 420px; margin: 0 auto; }
+.newsletter-form input {
+  flex: 1; padding: 13px 20px;
+  border-radius: 999px; border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.08); color: #faf7f1;
+  font-family: var(--sans); font-size: .9rem;
+  outline: none; transition: border-color .2s;
+}
+.newsletter-form input::placeholder { color: rgba(255,255,255,.36); }
+.newsletter-form input:focus { border-color: rgba(255,255,255,.38); }
+.newsletter-form button {
+  padding: 13px 22px; border-radius: 999px;
+  background: var(--gold); color: #fff; border: none;
+  cursor: pointer; font-weight: 500; font-family: var(--sans);
+  font-size: .8rem; letter-spacing: .08em; text-transform: uppercase;
+  transition: all .25s ease; white-space: nowrap;
+}
+.newsletter-form button:hover { background: #c8a96e; transform: translateY(-1px); }
+.newsletter-note {
+  font-size: .76rem; color: rgba(250,247,241,.34);
+  margin-top: 16px; letter-spacing: .04em;
+}
+#newsletterSuccess {
+  display: none;
+  color: var(--gold-light);
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-style: italic;
+  margin-top: 8px;
+}
+
+/* ── CTA banner ── */
+.cta-banner {
+  background: linear-gradient(135deg, #f7f0e5 0%, #f0e2cc 100%);
+  border: 1px solid rgba(39,49,42,.06);
+  color: var(--ink); border-radius: 36px;
+  padding: 56px 60px; box-shadow: var(--shadow);
+  position: relative; overflow: hidden;
+}
+.cta-banner::before {
+  content: ''; position: absolute;
+  top: -60px; right: -60px;
+  width: 320px; height: 320px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(184,151,90,.1), transparent 70%);
+  pointer-events: none;
+}
+.cta-banner h2 {
+  font-family: var(--serif);
+  font-size: clamp(2.1rem, 3.6vw, 3.2rem);
+  font-weight: 300; max-width: 14ch; letter-spacing: -.01em;
+}
+.cta-banner p { color: var(--muted); font-weight: 300; }
+
+/* ── FAQ ── */
+.faq-item {
+  background: rgba(255,255,255,.8); border: 1px solid rgba(39,49,42,.06);
+  border-radius: 20px; padding: 26px 24px;
+  box-shadow: var(--shadow-sm);
+  transition: transform .3s var(--ease-out), box-shadow .3s ease;
+}
+.faq-item:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.faq-item h4 {
+  font-family: var(--serif); font-size: 1.08rem;
+  font-weight: 500; margin-bottom: .5rem;
+}
+.faq-item p { color: var(--muted); font-size: .92rem; margin: 0; font-weight: 300; line-height: 1.7; }
+
+/* ── Footer ── */
+.footer {
+  padding: 72px 0 32px;
+  background: #27312a; color: rgba(250,247,241,.7);
+  border-top: none;
+}
+.footer-grid {
+  display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+  gap: 32px; padding-bottom: 52px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.footer-brand .brand-name-footer {
+  font-family: var(--serif); font-size: 1.56rem;
+  font-weight: 400; color: #faf7f1;
+  letter-spacing: .06em; margin-bottom: 10px; display: block;
+}
+.footer-brand p {
+  font-size: .88rem; line-height: 1.75;
+  max-width: 26ch; font-weight: 300;
+  color: rgba(250,247,241,.5);
+}
+.footer h4 {
+  font-family: var(--sans); font-size: .7rem;
+  font-weight: 500; color: rgba(250,247,241,.4);
+  text-transform: uppercase; letter-spacing: .2em; margin-bottom: 16px;
+}
+.footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.footer li, .footer a { color: rgba(250,247,241,.52); font-size: .88rem; font-weight: 300; }
+.footer a:hover { color: rgba(250,247,241,.88); }
+.social-links { display: flex; gap: 11px; margin-top: 22px; }
+.social-link {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.14);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(250,247,241,.46); font-size: .78rem; font-weight: 600;
+  transition: all .2s; cursor: pointer;
+}
+.social-link:hover { border-color: var(--gold); color: var(--gold); background: rgba(184,151,90,.08); }
+.footer-bottom {
+  margin-top: 28px; display: flex;
+  justify-content: space-between; gap: 16px;
+  flex-wrap: wrap; color: rgba(250,247,241,.28); font-size: .8rem;
+}
+.footer-bottom a { color: rgba(250,247,241,.32); }
+.footer-bottom a:hover { color: rgba(250,247,241,.68); }
+
+/* ── Scroll reveal ── */
+.reveal {
+  opacity: 0; transform: translateY(36px);
+  transition: opacity .82s ease, transform .82s ease;
+}
+.reveal.in-view { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: .1s; }
+.reveal-d2 { transition-delay: .2s; }
+.reveal-d3 { transition-delay: .3s; }
+.reveal-d4 { transition-delay: .4s; }
+.reveal-d5 { transition-delay: .5s; }
+
+/* ── Overlay & Drawer ── */
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(28,36,30,.28);
+  backdrop-filter: blur(6px);
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s ease; z-index: 70;
+}
+.overlay.show { opacity: 1; pointer-events: auto; }
+.drawer {
+  position: fixed; top: 0; right: 0;
+  width: min(480px,100vw); height: 100vh;
+  background: var(--white);
+  transform: translateX(102%);
+  transition: transform .3s ease; z-index: 80;
+  box-shadow: -24px 0 56px rgba(39,49,42,.14);
+  display: flex; flex-direction: column;
+}
+.drawer.show { transform: translateX(0); }
+.drawer-header, .modal-header {
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 12px;
+  padding: 24px 24px 16px; border-bottom: 1px solid var(--line);
+}
+.drawer-content { padding: 20px 24px; overflow: auto; flex: 1; }
+.drawer-footer {
+  padding: 18px 24px 28px;
+  border-top: 1px solid var(--line); background: #fbf7f1;
+}
+.close {
+  background: transparent; border: none;
+  font-size: 1.4rem; cursor: pointer;
+  color: var(--muted); padding: 8px; border-radius: 8px;
+  transition: color .2s, background .2s;
+  line-height: 1;
+}
+.close:hover { color: var(--ink); background: rgba(39,49,42,.06); }
+
+/* ── Cart ── */
+.cart-item {
+  display: grid; grid-template-columns: 80px 1fr auto;
+  gap: 14px; align-items: start;
+  padding: 16px 0; border-bottom: 1px solid var(--line);
+}
+.thumb {
+  border-radius: 14px; aspect-ratio: 1/1;
+  background: linear-gradient(135deg,#ead7b4,#ceb083 42%,#f3ead7 88%);
+}
+.thumb.citrus { background: linear-gradient(135deg,#f4df98,#d99b45 42%,#f5ecd2 88%); }
+.thumb.green { background: linear-gradient(135deg,#dce4c7,#8fa271 42%,#eef1e2 88%); }
+.thumb.rose { background: linear-gradient(135deg,#ecd0c6,#bf7c6f 42%,#f8e9e4 88%); }
+.cart-meta h4 { font-size: .97rem; margin-bottom: .2rem; font-weight: 500; }
+.cart-meta p { font-size: .87rem; color: var(--muted); margin: 0 0 .4rem; font-weight: 300; }
+.qty-row { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+.qty-btn {
+  width: 28px; height: 28px; border-radius: 999px;
+  border: 1px solid var(--line); background: #fff;
+  cursor: pointer; font-size: 1rem;
+  transition: all .2s; display: flex; align-items: center; justify-content: center;
+}
+.qty-btn:hover { border-color: var(--ink); background: var(--ink); color: #fff; }
+.remove-link { font-size: .82rem; color: var(--muted); cursor: pointer; text-decoration: underline; }
+.note {
+  font-size: .88rem; color: var(--muted); background: #f8f2e8;
+  padding: 12px 14px; border-radius: 14px; margin: 14px 0 0; font-weight: 300;
+}
+.summary-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; margin: 10px 0; font-size: .93rem;
+}
+.gift-box { display: grid; gap: 10px; margin: 14px 0; }
+.gift-box textarea, .field input, .field select, .field textarea {
+  width: 100%; border: 1px solid var(--line); background: #fff;
+  border-radius: 12px; padding: 12px 14px;
+  font: inherit; font-family: var(--sans); color: var(--ink);
+  transition: border-color .2s; outline: none;
+  font-size: .93rem;
+}
+.gift-box textarea:focus, .field input:focus,
+.field select:focus, .field textarea:focus { border-color: var(--accent); }
+.checkbox { display: flex; align-items: flex-start; gap: 10px; font-size: .93rem; }
+
+/* ── Modal ── */
+.modal {
+  position: fixed; left: 50%; top: 50%;
+  transform: translate(-50%,-48%) scale(.97);
+  width: min(1060px,calc(100vw - 24px));
+  max-height: 92vh; overflow: auto;
+  background: var(--white); border-radius: 30px;
+  box-shadow: 0 36px 90px rgba(39,49,42,.18);
+  z-index: 90; opacity: 0; pointer-events: none;
+  transition: all .28s ease;
+}
+.modal.show { opacity: 1; pointer-events: auto; transform: translate(-50%,-50%) scale(1); }
+.modal-body { padding: 24px; }
+.cart-layout { display: grid; grid-template-columns: 1.35fr .85fr; gap: 24px; }
+.summary-card {
+  background: #fcf8f1; border: 1px solid var(--line);
+  border-radius: 22px; padding: 24px; position: sticky; top: 20px;
+}
+.checkout-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 24px; }
+.field { margin-bottom: 14px; }
+.field label { display: block; margin-bottom: 7px; font-weight: 500; font-size: .88rem; }
+.checkout-section {
+  border: 1px solid var(--line); border-radius: 20px;
+  padding: 22px; margin-bottom: 16px; background: #fffdfa;
+}
+.checkout-section .serif {
+  font-family: var(--serif); font-size: 1.2rem; font-weight: 400;
+}
+.success { text-align: center; padding: 44px 20px 20px; }
+.success-mark {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: rgba(126,146,119,.14);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px; font-size: 1.8rem; color: var(--accent);
+}
+.wholesale-form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.full { grid-column: 1 / -1; }
+
+/* ── Form error / validation ── */
+.field-error {
+  font-size: .82rem; color: #c0392b;
+  margin-top: 5px; display: none;
+}
+.field input.invalid, .field select.invalid { border-color: #c0392b; }
+
+/* ── Focus styles ── */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px; border-radius: 4px;
+}
+
+/* ── Sticky mobile CTA ── */
+.mobile-cta {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  z-index: 60;
+  padding: 12px 20px;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  background: rgba(251,247,241,.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(39,49,42,.08);
+  box-shadow: 0 -8px 32px rgba(39,49,42,.08);
+}
+.mobile-cta .btn { width: 100%; justify-content: center; padding: 15px 26px; font-size: .85rem; }
+
+/* ── Responsive ── */
+@media (max-width: 980px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .split { grid-template-columns: 1fr; }
+  .cart-layout, .checkout-grid { grid-template-columns: 1fr; }
+  .testimonials-grid { grid-template-columns: repeat(2,1fr); }
+  .products-grid { grid-template-columns: repeat(2,1fr); }
+  .grid6 { grid-template-columns: repeat(2,1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr 1fr; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .mobile-nav { display: flex; }
+  /* On tablet, hide the decorative visual boxes in split layouts to keep focus on content */
+  .split .visual { min-height: 320px; }
+  .section { padding: 72px 0; }
+  .hero { padding: 72px 0 56px; }
+  .cta-banner { padding: 44px 40px; }
+  /* Tablet hero card: 2 columns but tighter */
+  .hero-card { margin-top: 32px; }
+  .hero-grid > div:first-child { text-align: center; }
+  .hero-grid > div:first-child .cta-row { justify-content: center; }
+  .hero-grid > div:first-child .eyebrow { justify-content: center; }
+}
+
+@media (max-width: 720px) {
+  .container { width: min(var(--max), calc(100% - 64px)); }
+  .hero-card-grid { grid-template-columns: 1fr 1fr; }
+  .brand-sub { display: none; }
+  .cta-row { flex-direction: column; align-items: stretch; }
+  .cta-row .btn { justify-content: center; min-height: 50px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .wholesale-form { grid-template-columns: 1fr; }
+  .cart-item { grid-template-columns: 72px 1fr; }
+  .cart-item > :last-child { grid-column: 2; }
+  .cta-banner { padding: 36px 28px; }
+  .section { padding: 56px 0; }
+  .trust-item { font-size: .72rem; padding: 8px 14px; }
+  .trust-items { gap: 0; }
+  .newsletter-form { flex-direction: column; }
+  .newsletter-form input,
+  .newsletter-form button { width: 100%; min-height: 50px; }
+  /* Hide decorative visual boxes on mobile to save space */
+  .split .visual { display: none; }
+  /* Full-width split content */
+  .split { gap: 0; }
+  .content-card { padding: 0; }
+  /* Testimonials: 1 column on small tablet */
+  .testimonials-grid { grid-template-columns: 1fr; }
+  /* Touch targets */
+  .small-btn { min-height: 44px; padding: 11px 20px; }
+  .cart-button { min-height: 44px; }
+  .qty-btn { width: 36px; height: 36px; }
+  /* Modal full-screen on mobile */
+  .modal {
+    left: 0; top: auto; bottom: 0;
+    width: 100vw;
+    max-height: 92vh;
+    border-radius: 24px 24px 0 0;
+    transform: translateY(100%) scale(1);
+  }
+  .modal.show { transform: translateY(0) scale(1); }
+  /* Drawer full-width */
+  .drawer { width: 100vw; }
+  /* Mobile CTA bar */
+  .mobile-cta { display: block; }
+  /* Add padding to main content so sticky CTA doesn't overlap */
+  .footer { padding-bottom: calc(32px + 76px); }
+}
+
+@media (max-width: 480px) {
+  .container { width: min(var(--max), calc(100% - 40px)); }
+  .products-grid { grid-template-columns: 1fr; }
+  .grid6 { grid-template-columns: 1fr; }
+  .hero h1 { font-size: clamp(2.4rem, 8vw, 3rem); }
+  .hero { padding: 56px 0 44px; }
+  .section { padding: 48px 0; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .hero-card { padding: 16px; }
+  .hero-card-grid { gap: 10px; }
+  .nav { padding: 14px 0; }
+  .brand img { height: 44px; }
+  .brand-name { font-size: 1.3rem; }
+  /* CTA banner */
+  .cta-banner { padding: 30px 24px; border-radius: 24px; }
+  /* Flavour / FAQ cards */
+  .flavour-card, .faq-item { padding: 20px 18px; }
+  /* Collection card */
+  .collection-card .body { padding: 16px 18px 18px; }
+  /* Testimonial */
+  .testimonial-card { padding: 24px 20px; }
+  /* Newsletter */
+  .newsletter-section { padding: 64px 0; }
+  /* Trust strip scroll on very small */
+  .trust-items { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding: 0 4px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .trust-items::-webkit-scrollbar { display: none; }
+  .trust-item + .trust-item::before { display: none; }
+  .trust-item { flex-shrink: 0; }
+  /* Buttons full height */
+  .btn { min-height: 50px; padding: 14px 22px; }
+  /* Drawer header / footer */
+  .drawer-header { padding: 20px 20px 14px; }
+  .drawer-content { padding: 16px 20px; }
+  .drawer-footer { padding: 14px 20px 20px; padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px)); }
+  /* Modal body */
+  .modal-body { padding: 16px; }
+  .modal-header { padding: 20px 20px 14px; }
+  /* Checkout grid */
+  .checkout-grid { gap: 16px; }
+  .summary-card { position: static; }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<div class="topbar">Carefully crafted in Sicily &nbsp;·&nbsp; <strong>Complimentary gift wrapping</strong> on all orders</div>
+
+<header class="site-header" id="siteHeader">
+  <div class="container nav">
+    <a class="brand" href="#top" aria-label="Siculera — return to top">
+      <img src="siculera-logo.jpeg" alt="Siculera" width="52" height="52">
+      <div class="brand-text">
+        <div class="brand-name">Siculera</div>
+        <div class="brand-sub">Pasticceria Siciliana</div>
+      </div>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="#collection">Shop</a>
+      <a href="#flavours">Flavours</a>
+      <a href="#gifting">Gifting</a>
+      <a href="#wholesale">Wholesale</a>
+      <a href="#story">Our Story</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-right">
+      <button class="cart-button" id="openCartBtn" aria-label="Open shopping cart" type="button">
+        <span>Cart</span>
+        <span class="cart-count" id="cartCount" aria-live="polite">0</span>
+      </button>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Open navigation menu" aria-expanded="false" type="button">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+  <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close navigation menu" type="button">×</button>
+  <a href="#collection" class="mobile-nav-link">Shop</a>
+  <a href="#flavours" class="mobile-nav-link">Flavours</a>
+  <a href="#gifting" class="mobile-nav-link">Gifting</a>
+  <a href="#wholesale" class="mobile-nav-link">Wholesale</a>
+  <a href="#story" class="mobile-nav-link">Our Story</a>
+  <a href="#contact" class="mobile-nav-link">Contact</a>
+</nav>
+
+<main id="main-content">
+
+  <!-- ── Hero ── -->
+  <section class="hero" id="top">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow">Luxury Sicilian Pastry House</span>
+        <h1>Sicilian almond pastry, <em>reimagined</em> with elegance</h1>
+        <p>Traditional, citrus, pistachio, and fruit-filled creations made for gifting, sharing, and refined everyday pleasure.</p>
+        <div class="cta-row">
+          <a href="#collection" class="btn btn-primary">Discover the Collection</a>
+          <a href="#flavours" class="btn btn-secondary">Explore the Flavours</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-grid">
+          <article class="product-tile">
+            <div class="product-photo"><div class="pastry"></div></div>
+            <div class="tile-body"><div class="tile-title">Traditional</div><div class="tile-note">Timeless, elegant, unmistakably Sicilian.</div></div>
+          </article>
+          <article class="product-tile">
+            <div class="product-photo citrus"><div class="pastry"></div></div>
+            <div class="tile-body"><div class="tile-title">Lemon &amp; Orange</div><div class="tile-note">Bright citrus depth with Mediterranean warmth.</div></div>
+          </article>
+          <article class="product-tile">
+            <div class="product-photo green"><div class="pastry"></div></div>
+            <div class="tile-body"><div class="tile-title">Pistachio</div><div class="tile-note">Richer, softer, more indulgent.</div></div>
+          </article>
+          <article class="product-tile">
+            <div class="product-photo rose"><div class="pastry"></div></div>
+            <div class="tile-body"><div class="tile-title">Fruit-Filled</div><div class="tile-note">Apricot and cherry for memorable gifting.</div></div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Trust strip ── -->
+  <div class="trust-strip">
+    <div class="container">
+      <div class="trust-items">
+        <div class="trust-item reveal"><span class="trust-icon">✦</span> Crafted in Sicily</div>
+        <div class="trust-item reveal reveal-d1"><span class="trust-icon">✦</span> Luxury gift packaging</div>
+        <div class="trust-item reveal reveal-d2"><span class="trust-icon">✦</span> Europe-wide delivery</div>
+        <div class="trust-item reveal reveal-d3"><span class="trust-icon">✦</span> Wholesale available</div>
+        <div class="trust-item reveal reveal-d4"><span class="trust-icon">✦</span> 100% authentic ingredients</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Story ── -->
+  <section class="section" id="story">
+    <div class="container">
+      <div class="transition reveal">
+        <h3>The taste of Sicily, interpreted with care</h3>
+        <p>A softer, more refined way to experience a timeless tradition.</p>
+      </div>
+      <div class="ornament reveal"><div class="ornament-diamond"></div></div>
+      <div class="split">
+        <div class="content-card reveal">
+          <h2>A pastry tradition shaped by flavour, light, and <em>place</em></h2>
+          <p>Siculera brings together almond, citrus, fruit, and Sicilian warmth in a collection designed to feel both familiar and elevated.</p>
+          <p>At Siculera, each creation begins with a simple idea: to honour the character of Sicilian pastry through ingredients, balance, and quiet refinement.</p>
+          <p>From the depth of traditional almond paste to the brightness of citrus, the richness of pistachio, and the delicacy of fruit-filled variations, every piece is shaped to feel elegant, memorable, and easy to share.</p>
+          <div class="bullets">
+            <div><strong>Authentic Sicilian inspiration</strong><span>Flavours rooted in tradition and regional character.</span></div>
+            <div><strong>Crafted to be shared</strong><span>Perfect for gifting, gatherings, and quiet moments of indulgence.</span></div>
+            <div><strong>Distinctive flavour collection</strong><span>Classic, citrus, pistachio, and fruit-filled almond creations.</span></div>
+          </div>
+          <div class="cta-row"><a href="#collection" class="btn btn-primary">Discover the Signature Collection</a></div>
+        </div>
+        <div class="visual reveal reveal-d2">
+          <div class="plate"></div>
+          <div class="mini-pastry" style="left:28%;top:28%;"></div>
+          <div class="mini-pastry orange" style="left:51%;top:25%;transform:rotate(18deg)"></div>
+          <div class="mini-pastry green" style="left:38%;top:48%;transform:rotate(-14deg)"></div>
+          <div class="mini-pastry rose" style="left:57%;top:51%;transform:rotate(10deg)"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Flavours ── -->
+  <section class="section section-soft" id="flavours">
+    <div class="container">
+      <div class="transition reveal">
+        <h3>Begin with the flavour that suits the moment</h3>
+        <p>Some are classic. Some feel brighter. Others are softer, deeper, or more indulgent.</p>
+      </div>
+      <div class="section-center reveal">
+        <h2>Six creations, each with its own Sicilian character</h2>
+        <p>A collection shaped by contrast, balance, and the richness of Mediterranean flavour.</p>
+      </div>
+      <div class="ornament reveal"><div class="ornament-diamond"></div></div>
+      <div class="grid6">
+        <div class="flavour-card reveal"><h4>Traditional</h4><p>For those who love the classic Sicilian taste — deep, warm, and enduring.</p></div>
+        <div class="flavour-card reveal reveal-d1"><h4>Lemon</h4><p>Fresh, bright, and lightly vibrant with a clean Mediterranean lift.</p></div>
+        <div class="flavour-card reveal reveal-d2"><h4>Orange</h4><p>Citrus-forward and warmly Mediterranean, full of Sicilian sun.</p></div>
+        <div class="flavour-card reveal reveal-d3"><h4>Pistachio</h4><p>Richer, smoother, and more indulgent — a favourite for true connoisseurs.</p></div>
+        <div class="flavour-card reveal reveal-d4"><h4>Apricot Jam</h4><p>Soft, delicate, and gently fruity with a refined almond finish.</p></div>
+        <div class="flavour-card reveal reveal-d5"><h4>Caramelized Cherry</h4><p>Elegant, distinctive, and made for memorable gifting occasions.</p></div>
+      </div>
+      <div class="cta-row" style="justify-content:center;margin-top:32px">
+        <a href="#collection" class="btn btn-primary">Find Your Flavour</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Collection ── -->
+  <section class="section" id="collection">
+    <div class="container">
+      <div class="transition reveal">
+        <h3>A collection to choose slowly</h3>
+        <p>For your table, for a gift, or for the pleasure of discovering something beautifully made.</p>
+      </div>
+      <div class="section-center reveal">
+        <h2>The Siculera collection</h2>
+        <p>Six almond creations, composed with elegance and distinct character.</p>
+      </div>
+      <div class="ornament reveal"><div class="ornament-diamond"></div></div>
+      <div class="products-grid" id="productGrid"></div>
+    </div>
+  </section>
+
+  <!-- ── Feature split 1 ── -->
+  <section class="section section-soft">
+    <div class="container">
+      <div class="transition reveal">
+        <h3>What gives Siculera its presence</h3>
+        <p>Not only flavour, but atmosphere, care, and the memory it leaves behind.</p>
+      </div>
+      <div class="split">
+        <div class="visual reveal">
+          <div class="plate" style="left:18%;top:11%;width:64%"></div>
+          <div class="mini-pastry" style="left:26%;top:28%;"></div>
+          <div class="mini-pastry orange" style="left:49%;top:28%;"></div>
+          <div class="mini-pastry green" style="left:37%;top:50%;"></div>
+        </div>
+        <div class="content-card reveal reveal-d2">
+          <h2>Rooted in Sicily. Composed with <em>restraint.</em></h2>
+          <p>Each creation is shaped to bring together flavour, elegance, and the quiet generosity of Sicilian hospitality.</p>
+          <p>Siculera draws from the flavours that belong naturally to Sicily: almond, citrus, pistachio, fruit, warmth, and welcome.</p>
+          <p>What makes the collection distinctive is not only what it tastes like, but the way it feels — measured, refined, and made to be remembered.</p>
+          <div class="cta-row"><a href="#collection" class="btn btn-primary">Why Siculera</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Gifting ── -->
+  <section class="section" id="gifting">
+    <div class="container">
+      <div class="transition reveal">
+        <h3>Made for graceful occasions</h3>
+        <p>For gifting, sharing, and the moments that deserve something considered.</p>
+      </div>
+      <div class="split">
+        <div class="content-card reveal">
+          <h2>For gifts, tables, and <em>memorable</em> gestures</h2>
+          <p>A collection designed for moments where taste becomes part of the experience.</p>
+          <p>Some things are chosen not simply for flavour, but for the atmosphere they create.</p>
+          <p>Siculera is made for thoughtful gifts, elegant tables, warm welcomes, and celebrations that call for something distinctive yet understated.</p>
+          <div class="cta-row"><a href="#collection" class="btn btn-primary">Explore Giftable Selections</a></div>
+        </div>
+        <div class="visual reveal reveal-d2">
+          <div class="plate" style="left:21%;top:16%;width:60%"></div>
+          <div class="mini-pastry rose" style="left:30%;top:30%;"></div>
+          <div class="mini-pastry" style="left:52%;top:32%;"></div>
+          <div class="mini-pastry orange" style="left:39%;top:52%;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Testimonials ── -->
+  <section class="section section-soft">
+    <div class="container">
+      <div class="transition reveal">
+        <h3>Chosen with care, remembered with warmth</h3>
+        <p>A few words from those who have made Siculera part of their table.</p>
+      </div>
+      <div class="ornament reveal"><div class="ornament-diamond"></div></div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"An extraordinary gift. The pistachio almond paste was unlike anything I had tried before — refined, elegant, and unmistakably Sicilian."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar"></div>
+            <div><div class="testimonial-name">Isabella M.</div><div class="testimonial-role">Milan, Italy</div></div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal reveal-d2">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"We serve Siculera at our boutique hotel and guests ask about it every season. The packaging alone conveys the quality inside."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar" style="background:linear-gradient(135deg,#dce4c7,#8fa271)"></div>
+            <div><div class="testimonial-name">Thomas R.</div><div class="testimonial-role">Head of Hospitality, Côte d'Azur</div></div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal reveal-d4">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"I sent a box of the caramelized cherry to a client in London. The response was immediate — she asked where to order more. Impeccable."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar" style="background:linear-gradient(135deg,#ecd0c6,#bf7c6f)"></div>
+            <div><div class="testimonial-name">Camille D.</div><div class="testimonial-role">Corporate Gifting, Paris</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Wholesale ── -->
+  <section class="section" id="wholesale">
+    <div class="container">
+      <div class="transition reveal">
+        <h3>Also shaped for hospitality and refined retail</h3>
+        <p>A Sicilian offering suited to hotels, cafés, boutiques, and considered business gifting.</p>
+      </div>
+      <div class="split">
+        <div class="content-card reveal">
+          <h2>For hospitality, retail, and <em>business</em> gifting</h2>
+          <p>A refined Sicilian collection for partners who want to offer something memorable and beautifully received.</p>
+          <p>Siculera is designed not only for individual orders, but also for boutique hospitality, gourmet retail, and thoughtful corporate gifting.</p>
+          <p>Presented with care, the collection can become part of a welcome, a curated retail selection, or a gesture that leaves a lasting impression.</p>
+          <div class="cta-row">
+            <button class="btn btn-primary" id="openWholesaleBtn" type="button">Enquire About Wholesale</button>
+          </div>
+        </div>
+        <div class="visual reveal reveal-d2">
+          <div class="plate" style="left:24%;top:16%;width:56%"></div>
+          <div class="mini-pastry" style="left:33%;top:34%;"></div>
+          <div class="mini-pastry green" style="left:54%;top:35%;"></div>
+          <div class="mini-pastry orange" style="left:43%;top:55%;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ── -->
+  <section class="section section-soft" id="faq">
+    <div class="container">
+      <div class="transition reveal">
+        <h3>A few simple clarifications</h3>
+        <p>For personal orders, gifts, and business enquiries.</p>
+      </div>
+      <div class="section-center reveal">
+        <h2>Questions before choosing Siculera</h2>
+        <p>Everything should feel clear, calm, and easy from the beginning.</p>
+      </div>
+      <div class="ornament reveal"><div class="ornament-diamond"></div></div>
+      <div class="grid6">
+        <div class="faq-item reveal"><h4>Can I order Siculera online for personal delivery?</h4><p>Yes. You can explore the collection online and choose the flavours or selection that best fits the occasion.</p></div>
+        <div class="faq-item reveal reveal-d1"><h4>Is Siculera suitable for gifting?</h4><p>Absolutely. The collection is designed to feel thoughtful, elegant, and easy to share — ideal for gifts and special moments.</p></div>
+        <div class="faq-item reveal reveal-d2"><h4>Can businesses order for hotels, retail, or client gifting?</h4><p>Yes. We welcome enquiries from boutique hotels, cafés, gourmet shops, and businesses looking for memorable gifting options.</p></div>
+        <div class="faq-item reveal reveal-d3"><h4>Do I need to know exactly what I want before contacting you?</h4><p>Not at all. Whether you already have something specific in mind or simply want guidance, we can help you find the right option.</p></div>
+        <div class="faq-item reveal reveal-d4"><h4>Can I choose flavours based on the occasion?</h4><p>Yes. Some prefer a classic selection, while others choose citrus, pistachio, or fruit-filled varieties depending on the mood or season.</p></div>
+        <div class="faq-item reveal reveal-d5"><h4>Is there a wholesale or partnership option?</h4><p>Yes. If you are interested in retail, hospitality, or larger gifting orders, you can contact us through the business enquiry path.</p></div>
+      </div>
+      <div class="cta-row" style="justify-content:center;margin-top:32px">
+        <button class="btn btn-primary" id="openCartBtn2" type="button">Order or Enquire</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Newsletter ── -->
+  <section class="newsletter-section">
+    <div class="container">
+      <div class="newsletter-inner">
+        <span class="eyebrow">Stay in touch</span>
+        <h2>Seasonal stories, new flavours, and quiet invitations</h2>
+        <p>Receive occasional notes from Siculera — never frequent, always considered.</p>
+        <form class="newsletter-form" id="newsletterForm" novalidate>
+          <input type="email" placeholder="Your email address" aria-label="Email address" id="newsletterEmail" required>
+          <button type="submit">Subscribe</button>
+        </form>
+        <p id="newsletterSuccess">Thank you — you will hear from us soon.</p>
+        <p class="newsletter-note">No noise. Unsubscribe at any time.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA banner ── -->
+  <section class="section">
+    <div class="container">
+      <div class="cta-banner reveal">
+        <span class="eyebrow">An Invitation</span>
+        <h2>Bring a refined taste of Sicily into the moment</h2>
+        <p>Siculera is created to be chosen with pleasure, shared with ease, and remembered with warmth.</p>
+        <p>Whether you are discovering the collection for the first time or already know what you want, the path forward should feel simple and considered.</p>
+        <div class="cta-row">
+          <a href="#collection" class="btn btn-primary">Discover the Collection</a>
+          <button class="btn btn-secondary" id="openWholesaleBtn2" type="button">Wholesale Enquiries</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── Footer ── -->
+<footer class="footer" id="contact">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="brand-name-footer">Siculera</span>
+        <p>Authentic Sicilian almond specialties made for gifting, sharing, and memorable moments of refined pleasure.</p>
+        <div class="social-links" aria-label="Social media">
+          <a class="social-link" href="#" aria-label="Instagram">in</a>
+          <a class="social-link" href="#" aria-label="Facebook">f</a>
+          <a class="social-link" href="#" aria-label="Pinterest">p</a>
+        </div>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#collection">Shop All</a></li>
+          <li><a href="#collection">Traditional Almond Paste</a></li>
+          <li><a href="#collection">Lemon Almond Paste</a></li>
+          <li><a href="#collection">Orange Almond Paste</a></li>
+          <li><a href="#collection">Gift Selections</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>About</h4>
+        <ul>
+          <li><a href="#story">Our Story</a></li>
+          <li><a href="#flavours">Flavours</a></li>
+          <li><a href="#gifting">Gifting</a></li>
+          <li><a href="#wholesale">Wholesale &amp; Hospitality</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Customer Care</h4>
+        <ul>
+          <li>Shipping Information</li>
+          <li>Returns &amp; Refunds</li>
+          <li>Ordering Information</li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li>hello@siculera.it</li>
+          <li>wholesale@siculera.it</li>
+          <li>Sicily, Italy</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>We respect your privacy and handle your information with care, in line with applicable data protection requirements.</div>
+      <div>© 2026 Siculera. All rights reserved. &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- ── Overlay ── -->
+<!-- ── Mobile Sticky CTA ── -->
+<div class="mobile-cta" id="mobileCta" aria-label="Quick order">
+  <button class="btn btn-primary" id="mobileCTABtn" type="button">Discover the Collection</button>
+</div>
+
+<div class="overlay" id="overlay" role="presentation"></div>
+
+<!-- ── Cart Drawer ── -->
+<aside class="drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Shopping cart">
+  <div class="drawer-header">
+    <div>
+      <div class="serif" style="font-family:var(--serif);font-size:1.5rem;font-weight:400">Your selection</div>
+      <div style="color:var(--muted);font-size:.88rem;font-weight:300">Review your Siculera creations.</div>
+    </div>
+    <button class="close" id="closeCartBtn" aria-label="Close cart" type="button">×</button>
+  </div>
+  <div class="drawer-content">
+    <div id="cartItems"></div>
+    <div class="note">Shipping and delivery options are shown at checkout.</div>
+    <div class="gift-box">
+      <label class="checkbox">
+        <input type="checkbox" id="giftToggle">
+        <span>This order is a gift</span>
+      </label>
+      <textarea id="giftMessage" rows="3" placeholder="Add a gift message (optional)" style="display:none" aria-label="Gift message"></textarea>
+    </div>
+  </div>
+  <div class="drawer-footer">
+    <div class="summary-row"><span>Subtotal</span><strong id="drawerSubtotal">€0.00</strong></div>
+    <div class="cta-row" style="margin-top:16px">
+      <button class="btn btn-primary" id="checkoutBtn" type="button" style="width:100%">Checkout</button>
+      <button class="btn btn-secondary" id="viewCartBtn" type="button" style="width:100%">View Full Cart</button>
+    </div>
+  </div>
+</aside>
+
+<!-- ── Cart Modal ── -->
+<section class="modal" id="cartModal" role="dialog" aria-modal="true" aria-label="Your cart">
+  <div class="modal-header">
+    <div>
+      <div style="font-family:var(--serif);font-size:1.65rem;font-weight:400">Your selection</div>
+      <div style="color:var(--muted);font-size:.88rem;font-weight:300">Review your Siculera creations before checkout.</div>
+    </div>
+    <button class="close" id="closeCartModal" aria-label="Close" type="button">×</button>
+  </div>
+  <div class="modal-body">
+    <div class="cart-layout">
+      <div id="cartModalItems"></div>
+      <div class="summary-card">
+        <div style="font-family:var(--serif);font-size:1.3rem;font-weight:400;margin-bottom:12px">Order summary</div>
+        <div class="summary-row"><span>Subtotal</span><strong id="modalSubtotal">€0.00</strong></div>
+        <div class="summary-row"><span>Estimated shipping</span><span style="color:var(--muted)">Calculated at checkout</span></div>
+        <div class="note" style="margin:14px 0 0">Secure checkout. Prepared with care. Gift and business options available.</div>
+        <div class="cta-row" style="margin-top:16px">
+          <button class="btn btn-primary" id="modalCheckoutBtn" type="button" style="width:100%">Proceed to Checkout</button>
+          <button class="btn btn-secondary" id="continueShoppingBtn" type="button" style="width:100%">Continue Shopping</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Checkout Modal ── -->
+<section class="modal" id="checkoutModal" role="dialog" aria-modal="true" aria-label="Checkout">
+  <div class="modal-header">
+    <div>
+      <div style="font-family:var(--serif);font-size:1.65rem;font-weight:400">Checkout</div>
+      <div style="color:var(--muted);font-size:.88rem;font-weight:300">Your order will be prepared with care and confirmed by email.</div>
+    </div>
+    <button class="close" id="closeCheckoutModal" aria-label="Close" type="button">×</button>
+  </div>
+  <div class="modal-body">
+    <div class="checkout-grid">
+      <div>
+        <div class="checkout-section">
+          <div class="checkout-section serif" style="font-family:var(--serif);font-size:1.2rem;font-weight:400;margin-bottom:14px">Contact</div>
+          <div class="field">
+            <label for="coEmail">Email</label>
+            <input type="email" id="coEmail" placeholder="you@example.com" autocomplete="email">
+          </div>
+          <div class="field">
+            <label for="coPhone">Phone</label>
+            <input type="tel" id="coPhone" placeholder="+39" autocomplete="tel">
+          </div>
+        </div>
+        <div class="checkout-section">
+          <div style="font-family:var(--serif);font-size:1.2rem;font-weight:400;margin-bottom:14px">Delivery</div>
+          <div class="field"><label for="coName">Full name</label><input id="coName" placeholder="Your full name" autocomplete="name"></div>
+          <div class="field"><label for="coAddress">Address</label><input id="coAddress" placeholder="Street address" autocomplete="street-address"></div>
+          <div class="field"><label for="coCity">City</label><input id="coCity" placeholder="City" autocomplete="address-level2"></div>
+          <div class="field"><label for="coPost">Postal code</label><input id="coPost" placeholder="Postal code" autocomplete="postal-code"></div>
+          <div class="field"><label for="coCountry">Country</label><input id="coCountry" placeholder="Country" autocomplete="country-name"></div>
+        </div>
+        <div class="checkout-section">
+          <div style="font-family:var(--serif);font-size:1.2rem;font-weight:400;margin-bottom:14px">Shipping</div>
+          <div class="field">
+            <label for="coShip">Shipping method</label>
+            <select id="coShip">
+              <option>Standard Delivery (3–5 days)</option>
+              <option>Express Delivery (1–2 days)</option>
+            </select>
+          </div>
+        </div>
+        <div class="checkout-section">
+          <div style="font-family:var(--serif);font-size:1.2rem;font-weight:400;margin-bottom:14px">Payment</div>
+          <div class="field">
+            <label for="coPay">Payment method</label>
+            <select id="coPay">
+              <option>Card</option>
+              <option>PayPal</option>
+              <option>Apple Pay</option>
+              <option>Google Pay</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="summary-card">
+        <div style="font-family:var(--serif);font-size:1.3rem;font-weight:400;margin-bottom:12px">Order summary</div>
+        <div id="checkoutSummary"></div>
+        <div class="summary-row" style="border-top:1px solid var(--line);padding-top:10px;margin-top:6px">
+          <span style="font-weight:500">Total</span>
+          <strong id="checkoutTotal">€0.00</strong>
+        </div>
+        <div class="note" style="margin-top:14px">Secure checkout. Carefully prepared for delivery.</div>
+        <div id="checkoutError" style="display:none;font-size:.88rem;color:#c0392b;margin-top:10px;padding:10px 12px;background:rgba(192,57,43,.06);border-radius:10px"></div>
+        <div class="cta-row" style="margin-top:16px">
+          <button class="btn btn-primary" id="placeOrderBtn" type="button" style="width:100%">Place Order</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Success Modal ── -->
+<section class="modal" id="successModal" role="dialog" aria-modal="true" aria-label="Order confirmed">
+  <div class="modal-header">
+    <div>
+      <div style="font-family:var(--serif);font-size:1.65rem;font-weight:400">Order confirmed</div>
+      <div style="color:var(--muted);font-size:.88rem;font-weight:300">Thank you for choosing Siculera.</div>
+    </div>
+    <button class="close" id="closeSuccessModal" aria-label="Close" type="button">×</button>
+  </div>
+  <div class="modal-body success">
+    <div class="success-mark" aria-hidden="true">✓</div>
+    <h2 style="font-family:var(--serif);font-weight:400">Thank you for your order</h2>
+    <p>Your Siculera selection has been received and will be prepared with care.</p>
+    <p id="successOrderText" style="color:var(--muted);font-weight:300;font-size:.94rem"></p>
+    <div class="cta-row" style="justify-content:center;margin-top:24px">
+      <a href="#collection" class="btn btn-primary" id="keepExploringBtn">Continue Exploring</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Wholesale Modal ── -->
+<section class="modal" id="wholesaleModal" role="dialog" aria-modal="true" aria-label="Wholesale enquiry">
+  <div class="modal-header">
+    <div>
+      <div style="font-family:var(--serif);font-size:1.65rem;font-weight:400">Wholesale &amp; hospitality enquiry</div>
+      <div style="color:var(--muted);font-size:.88rem;font-weight:300">Tell us a little about your business and we will be in touch shortly.</div>
+    </div>
+    <button class="close" id="closeWholesaleModal" aria-label="Close" type="button">×</button>
+  </div>
+  <div class="modal-body">
+    <form class="wholesale-form" id="wholesaleForm" novalidate>
+      <div class="field"><label for="wName">Full name</label><input id="wName" required placeholder="Your name"></div>
+      <div class="field"><label for="wBiz">Business name</label><input id="wBiz" required placeholder="Business name"></div>
+      <div class="field"><label for="wEmail">Email</label><input id="wEmail" required type="email" placeholder="Email"></div>
+      <div class="field"><label for="wPhone">Phone</label><input id="wPhone" placeholder="Phone"></div>
+      <div class="field"><label for="wCountry">Country</label><input id="wCountry" placeholder="Country"></div>
+      <div class="field">
+        <label for="wType">Business type</label>
+        <select id="wType">
+          <option>Hotel / Resort</option>
+          <option>Café</option>
+          <option>Gourmet Shop</option>
+          <option>Retailer</option>
+          <option>Corporate Gifting</option>
+          <option>Distributor</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="field full"><label for="wQty">Estimated quantity or order type</label><input id="wQty" placeholder="Tell us what you are looking for"></div>
+      <div class="field full"><label for="wMsg">Message</label><textarea id="wMsg" rows="5" placeholder="How would you like to work with Siculera?"></textarea></div>
+      <div class="full cta-row"><button class="btn btn-primary" type="submit">Send Enquiry</button></div>
+    </form>
+    <div id="wholesaleSuccess" style="display:none" class="success">
+      <div class="success-mark" aria-hidden="true">✓</div>
+      <h2 style="font-family:var(--serif);font-weight:400">Thank you for your enquiry</h2>
+      <p>We have received your request and will be in touch shortly.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+// ── Products ──
+const products = [
+  {id:'traditional', name:'Traditional Sicilian Almond Paste', note:'The timeless classic, simple and unmistakably Sicilian.', price:18, className:''},
+  {id:'lemon',       name:'Lemon Almond Paste',                note:'Fresh citrus brightness with a delicate almond base.',   price:19, className:'citrus'},
+  {id:'orange',      name:'Orange Almond Paste',               note:'Warm, fragrant, and full of Mediterranean character.',    price:19, className:'citrus'},
+  {id:'pistachio',   name:'Pistachio Almond Paste',            note:'Smooth, richer, and naturally more indulgent.',           price:22, className:'green'},
+  {id:'apricot',     name:'Almond Paste with Apricot Jam',     note:'Soft fruit sweetness with a refined almond finish.',      price:21, className:'rose'},
+  {id:'cherry',      name:'Almond Paste with Caramelized Cherry', note:'Elegant, distinctive, and made for memorable gifting.',  price:23, className:'rose'}
+];
+
+// ── Cart state (with localStorage persistence) ──
+let cart = [];
+try { const s = localStorage.getItem('siculera_cart'); if (s) cart = JSON.parse(s); } catch(e) {}
+function saveCart() { try { localStorage.setItem('siculera_cart', JSON.stringify(cart)); } catch(e) {} }
+
+const productGrid     = document.getElementById('productGrid');
+const cartCountEl     = document.getElementById('cartCount');
+const cartItemsEl     = document.getElementById('cartItems');
+const cartModalItemsEl= document.getElementById('cartModalItems');
+const drawerSubtotalEl= document.getElementById('drawerSubtotal');
+const modalSubtotalEl = document.getElementById('modalSubtotal');
+const checkoutSummaryEl=document.getElementById('checkoutSummary');
+const checkoutTotalEl = document.getElementById('checkoutTotal');
+
+function euro(v) { return '€' + v.toFixed(2); }
+
+function renderProducts() {
+  productGrid.innerHTML = products.map((p, i) => `
+    <article class="collection-card reveal" style="transition-delay:${i * .08}s">
+      <div class="product-photo ${p.className}"><div class="pastry"></div></div>
+      <div class="body">
+        <span class="tag">Signature flavour</span>
+        <h3>${p.name}</h3>
+        <p>${p.note}</p>
+        <div class="tile-bottom">
+          <div class="price">${euro(p.price)}</div>
+          <button class="small-btn" data-add="${p.id}" type="button" aria-label="Add ${p.name} to cart">Add to Cart</button>
+        </div>
+      </div>
+    </article>`).join('');
+
+  document.querySelectorAll('[data-add]').forEach(btn =>
+    btn.addEventListener('click', () => {
+      addToCart(btn.dataset.add);
+      btn.textContent = 'Added ✓';
+      btn.style.background = 'var(--accent)';
+      setTimeout(() => { btn.textContent = 'Add to Cart'; btn.style.background = ''; }, 1800);
+    })
+  );
+  // Re-observe new cards
+  document.querySelectorAll('#productGrid .reveal').forEach(el => observer.observe(el));
+}
+
+function addToCart(id) {
+  const item = cart.find(x => x.id === id);
+  if (item) { item.qty += 1; } else { const p = products.find(x => x.id === id); cart.push({...p, qty: 1}); }
+  saveCart(); updateCart(); openDrawer();
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(x => x.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) cart = cart.filter(x => x.id !== id);
+  saveCart(); updateCart();
+}
+
+function removeItem(id) {
+  cart = cart.filter(x => x.id !== id);
+  saveCart(); updateCart();
+}
+
+function subtotal() { return cart.reduce((s, i) => s + i.price * i.qty, 0); }
+
+function cartItemTemplate(i) {
+  return `<div class="cart-item">
+    <div class="thumb ${i.className}" role="img" aria-label="${i.name}"></div>
+    <div class="cart-meta">
+      <h4>${i.name}</h4>
+      <p>${i.note}</p>
+      <div class="qty-row">
+        <button class="qty-btn" data-qty="${i.id}" data-delta="-1" aria-label="Decrease quantity" type="button">−</button>
+        <strong aria-live="polite">${i.qty}</strong>
+        <button class="qty-btn" data-qty="${i.id}" data-delta="1" aria-label="Increase quantity" type="button">+</button>
+        <span class="remove-link" data-remove="${i.id}" role="button" tabindex="0" aria-label="Remove ${i.name}">Remove</span>
+      </div>
+    </div>
+    <strong>${euro(i.price * i.qty)}</strong>
+  </div>`;
+}
+
+function bindCartControls(scope) {
+  scope.querySelectorAll('[data-qty]').forEach(btn =>
+    btn.onclick = () => changeQty(btn.dataset.qty, Number(btn.dataset.delta)));
+  scope.querySelectorAll('[data-remove]').forEach(btn =>
+    btn.onclick = () => removeItem(btn.dataset.remove));
+}
+
+function updateCart() {
+  const count = cart.reduce((s, i) => s + i.qty, 0);
+  cartCountEl.textContent = count;
+  const emptyMsg = '<p style="color:var(--muted);font-weight:300;padding:16px 0">Your cart is currently empty.</p>';
+  cartItemsEl.innerHTML = cart.length ? cart.map(cartItemTemplate).join('') : emptyMsg;
+  cartModalItemsEl.innerHTML = cart.length ? cart.map(cartItemTemplate).join('') : emptyMsg;
+  bindCartControls(cartItemsEl);
+  bindCartControls(cartModalItemsEl);
+  const total = euro(subtotal());
+  drawerSubtotalEl.textContent = total;
+  modalSubtotalEl.textContent = total;
+  checkoutSummaryEl.innerHTML = cart.length
+    ? cart.map(i => `<div class="summary-row"><span style="font-size:.9rem;font-weight:300">${i.name} × ${i.qty}</span><strong>${euro(i.price * i.qty)}</strong></div>`).join('')
+    : '<p style="color:var(--muted);font-weight:300">No items selected yet.</p>';
+  checkoutTotalEl.textContent = total;
+}
+
+// ── Panels ──
+const overlay        = document.getElementById('overlay');
+const drawer         = document.getElementById('cartDrawer');
+const cartModal      = document.getElementById('cartModal');
+const checkoutModal  = document.getElementById('checkoutModal');
+const successModal   = document.getElementById('successModal');
+const wholesaleModal = document.getElementById('wholesaleModal');
+
+function clearPanels() {
+  drawer.classList.remove('show');
+  [cartModal, checkoutModal, successModal, wholesaleModal].forEach(m => m.classList.remove('show'));
+  overlay.classList.remove('show');
+}
+function openDrawer() { clearPanels(); overlay.classList.add('show'); drawer.classList.add('show'); }
+function openModal(el) { clearPanels(); overlay.classList.add('show'); el.classList.add('show'); }
+
+document.getElementById('openCartBtn').onclick = openDrawer;
+document.getElementById('openCartBtn2').onclick = openDrawer;
+document.getElementById('closeCartBtn').onclick = clearPanels;
+document.getElementById('viewCartBtn').onclick = () => openModal(cartModal);
+document.getElementById('closeCartModal').onclick = clearPanels;
+document.getElementById('continueShoppingBtn').onclick = clearPanels;
+document.getElementById('checkoutBtn').onclick = () => openModal(checkoutModal);
+document.getElementById('modalCheckoutBtn').onclick = () => openModal(checkoutModal);
+document.getElementById('closeCheckoutModal').onclick = clearPanels;
+document.getElementById('closeSuccessModal').onclick = clearPanels;
+document.getElementById('keepExploringBtn').onclick = clearPanels;
+document.getElementById('openWholesaleBtn').onclick = () => openModal(wholesaleModal);
+document.getElementById('openWholesaleBtn2').onclick = () => openModal(wholesaleModal);
+document.getElementById('closeWholesaleModal').onclick = clearPanels;
+overlay.onclick = clearPanels;
+
+// ── Checkout ──
+document.getElementById('placeOrderBtn').onclick = () => {
+  const errEl = document.getElementById('checkoutError');
+  errEl.style.display = 'none';
+  if (!cart.length) { errEl.textContent = 'Please add at least one item to continue.'; errEl.style.display = 'block'; return; }
+  const email = document.getElementById('coEmail').value.trim();
+  const name  = document.getElementById('coName').value.trim();
+  if (!email || !name) {
+    errEl.textContent = 'Please complete your contact details and delivery name before placing your order.';
+    errEl.style.display = 'block';
+    return;
+  }
+  const orderNo = 'SC-' + Math.floor(100000 + Math.random() * 900000);
+  document.getElementById('successOrderText').textContent =
+    `Order reference: ${orderNo}. A confirmation email will be sent to ${email}.`;
+  cart = []; saveCart(); updateCart(); openModal(successModal);
+};
+
+// ── Gift toggle ──
+const giftToggle  = document.getElementById('giftToggle');
+const giftMessage = document.getElementById('giftMessage');
+giftToggle.onchange = () => { giftMessage.style.display = giftToggle.checked ? 'block' : 'none'; };
+
+// ── Wholesale form ──
+document.getElementById('wholesaleForm').addEventListener('submit', e => {
+  e.preventDefault();
+  document.getElementById('wholesaleForm').style.display = 'none';
+  document.getElementById('wholesaleSuccess').style.display = 'block';
+});
+
+// ── Newsletter form ──
+document.getElementById('newsletterForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const emailVal = document.getElementById('newsletterEmail').value.trim();
+  if (!emailVal) return;
+  document.querySelector('.newsletter-form').style.display = 'none';
+  document.getElementById('newsletterSuccess').style.display = 'block';
+});
+
+// ── Mobile nav ──
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const mobileNav    = document.getElementById('mobileNav');
+const mobileNavClose = document.getElementById('mobileNavClose');
+
+function openMobileNav() {
+  mobileNav.classList.add('open');
+  hamburgerBtn.classList.add('open');
+  hamburgerBtn.setAttribute('aria-expanded', 'true');
+  document.body.style.overflow = 'hidden';
+}
+function closeMobileNav() {
+  mobileNav.classList.remove('open');
+  hamburgerBtn.classList.remove('open');
+  hamburgerBtn.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+}
+hamburgerBtn.onclick = openMobileNav;
+mobileNavClose.onclick = closeMobileNav;
+document.querySelectorAll('.mobile-nav-link').forEach(a => a.addEventListener('click', closeMobileNav));
+
+// ── Sticky header shadow ──
+const siteHeader = document.getElementById('siteHeader');
+window.addEventListener('scroll', () => {
+  siteHeader.classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
+
+// ── Scroll reveal ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── Mobile CTA ──
+const mobileCTABtn = document.getElementById('mobileCTABtn');
+if (mobileCTABtn) {
+  mobileCTABtn.onclick = () => {
+    document.getElementById('collection').scrollIntoView({ behavior: 'smooth' });
+  };
+  // After items in cart, switch CTA to open cart
+  const origUpdateCart = updateCart;
+  function updateCartWithMobileCTA() {
+    origUpdateCart();
+    const count = cart.reduce((s, i) => s + i.qty, 0);
+    if (count > 0) {
+      mobileCTABtn.textContent = `View Cart (${count})`;
+      mobileCTABtn.onclick = openDrawer;
+    } else {
+      mobileCTABtn.textContent = 'Discover the Collection';
+      mobileCTABtn.onclick = () => document.getElementById('collection').scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+}
+
+// ── Init ──
+renderProducts();
+updateCart();
+</script>
+</body>
+</html>

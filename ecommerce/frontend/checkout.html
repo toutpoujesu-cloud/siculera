@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Siculera — Secure Checkout">
+<title>Checkout — Siculera</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+:root {
+  --bg:#fbf7f1; --bg-soft:#f6efe3; --ink:#27312a; --ink-soft:#3c4a3f;
+  --muted:#6b7a6c; --accent:#7e9277; --gold:#b8975a; --gold-light:#d4b882;
+  --gold-pale:#f0e6d0; --line:#e8ddd0; --white:#fff;
+  --shadow-sm:0 8px 24px rgba(39,49,42,.06); --shadow:0 18px 48px rgba(39,49,42,.08);
+  --serif:'Cormorant Garamond',Georgia,serif; --sans:'Inter',system-ui,sans-serif;
+  --radius:16px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:400;line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,.serif{font-family:var(--serif);font-weight:400;letter-spacing:.015em;line-height:1.1;margin:0 0 .5rem}
+p{margin:.1rem 0 .8rem}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+
+/* ── Header ── */
+.checkout-header{
+  background:rgba(251,247,241,.95);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--line);
+  padding:18px 0;
+  position:sticky;top:0;z-index:20;
+}
+.header-inner{
+  max-width:1100px;margin:0 auto;padding:0 40px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo-text{font-family:var(--serif);font-size:1.6rem;letter-spacing:.06em;color:var(--ink)}
+.logo-text span{color:var(--gold)}
+.secure-badge{
+  display:flex;align-items:center;gap:6px;
+  font-size:.76rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;
+}
+.secure-badge svg{color:var(--accent)}
+.back-link{
+  display:flex;align-items:center;gap:6px;
+  font-size:.85rem;color:var(--muted);transition:color .2s;
+}
+.back-link:hover{color:var(--gold)}
+
+/* ── Layout ── */
+.checkout-wrap{
+  max-width:1100px;margin:0 auto;padding:48px 40px;
+  display:grid;grid-template-columns:1fr 400px;gap:48px;align-items:start;
+}
+@media(max-width:900px){
+  .checkout-wrap{grid-template-columns:1fr;padding:28px 20px;gap:32px}
+  .order-summary{order:-1}
+}
+
+/* ── Panels ── */
+.panel{background:var(--white);border-radius:var(--radius);border:1px solid var(--line);padding:28px 28px 32px}
+.panel+.panel{margin-top:20px}
+.panel-title{
+  font-family:var(--serif);font-size:1.18rem;
+  color:var(--ink);margin-bottom:20px;padding-bottom:14px;
+  border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;
+}
+.panel-title svg{color:var(--gold);flex-shrink:0}
+
+/* ── Form ── */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.form-row.full{grid-template-columns:1fr}
+.form-row.thirds{grid-template-columns:1fr 1fr 1fr}
+.form-group{display:flex;flex-direction:column;gap:5px}
+label{font-size:.8rem;color:var(--muted);font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+input,select{
+  height:46px;border:1.5px solid var(--line);border-radius:10px;
+  padding:0 14px;font-family:var(--sans);font-size:.93rem;color:var(--ink);
+  background:var(--bg);outline:none;transition:border-color .2s,box-shadow .2s;
+  -webkit-appearance:none;
+}
+input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(184,151,90,.12)}
+input.error,select.error{border-color:#e05c5c;box-shadow:0 0 0 3px rgba(224,92,92,.1)}
+.field-error{font-size:.76rem;color:#e05c5c;margin-top:2px;display:none}
+.field-error.show{display:block}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7a6c' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+
+/* ── Gift option ── */
+.gift-toggle{
+  display:flex;align-items:center;gap:10px;
+  padding:14px;background:var(--bg-soft);border-radius:10px;
+  border:1.5px solid var(--line);cursor:pointer;
+  transition:border-color .2s;margin-bottom:14px;
+}
+.gift-toggle:hover{border-color:var(--gold)}
+.gift-toggle input[type=checkbox]{width:18px;height:18px;accent-color:var(--gold);cursor:pointer;flex-shrink:0}
+.gift-text{flex:1}
+.gift-text strong{display:block;font-size:.9rem;color:var(--ink)}
+.gift-text span{font-size:.8rem;color:var(--muted)}
+.gift-message-wrap{display:none;margin-top:10px}
+.gift-message-wrap.show{display:block}
+textarea{
+  width:100%;min-height:88px;border:1.5px solid var(--line);border-radius:10px;
+  padding:12px 14px;font-family:var(--serif);font-size:1rem;color:var(--ink);
+  background:var(--bg);outline:none;resize:vertical;
+  transition:border-color .2s;
+}
+textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(184,151,90,.12)}
+
+/* ── Stripe elements ── */
+#stripe-element-container{
+  background:var(--bg);border:1.5px solid var(--line);border-radius:10px;
+  padding:14px;transition:border-color .2s;min-height:48px;
+}
+#stripe-element-container.focused{border-color:var(--gold);box-shadow:0 0 0 3px rgba(184,151,90,.12)}
+#stripe-element-container.error-state{border-color:#e05c5c}
+#stripe-card-errors{
+  font-size:.8rem;color:#e05c5c;margin-top:6px;min-height:18px;
+}
+
+/* ── Payment methods ── */
+.pay-method-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.pay-tab{
+  display:flex;align-items:center;gap:7px;
+  padding:9px 16px;border-radius:999px;border:1.5px solid var(--line);
+  background:var(--bg);cursor:pointer;font-size:.82rem;font-weight:500;
+  color:var(--muted);transition:all .2s;
+}
+.pay-tab:hover{border-color:var(--gold);color:var(--ink)}
+.pay-tab.active{border-color:var(--gold);background:var(--gold-pale);color:var(--ink)}
+.pay-tab svg{flex-shrink:0}
+.pay-panel{display:none}
+.pay-panel.active{display:block}
+.paypal-btn{
+  width:100%;height:50px;border-radius:12px;border:none;
+  background:#FFC43A;color:#003087;font-weight:700;font-size:1.02rem;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:filter .2s;
+}
+.paypal-btn:hover{filter:brightness(1.07)}
+.bank-info{
+  background:var(--bg-soft);border-radius:10px;padding:18px;font-size:.88rem;
+  border:1px solid var(--line);line-height:1.9;
+}
+.bank-info strong{color:var(--ink);font-weight:600}
+.cod-note{
+  background:#fffbf0;border:1px solid #f0d898;border-radius:10px;
+  padding:14px 16px;font-size:.86rem;color:#8a6d1a;
+}
+
+/* ── Order summary ── */
+.order-summary{position:sticky;top:100px}
+.summary-items{margin-bottom:18px}
+.s-item{
+  display:flex;align-items:center;gap:14px;
+  padding:12px 0;border-bottom:1px solid var(--line);
+}
+.s-item:last-child{border-bottom:none}
+.s-thumb{
+  width:52px;height:52px;border-radius:10px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--bg-warm),var(--gold-pale));
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.s-thumb img{width:100%;height:100%;object-fit:cover}
+.s-thumb.citrus{background:linear-gradient(135deg,#fef9ec,#fde68a)}
+.s-thumb.green{background:linear-gradient(135deg,#ecfdf5,#a7f3d0)}
+.s-thumb.rose{background:linear-gradient(135deg,#fff1f2,#fecdd3)}
+.s-info{flex:1;min-width:0}
+.s-name{font-size:.88rem;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.s-qty{font-size:.78rem;color:var(--muted)}
+.s-price{font-family:var(--serif);font-size:1.06rem;flex-shrink:0}
+.s-qty-badge{
+  background:var(--gold);color:var(--white);border-radius:50%;
+  width:20px;height:20px;display:flex;align-items:center;justify-content:center;
+  font-size:.68rem;font-weight:600;flex-shrink:0;
+}
+.summary-lines{font-size:.86rem;color:var(--muted)}
+.summary-line{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(39,49,42,.04)}
+.summary-line.total{
+  font-size:1.06rem;font-weight:600;color:var(--ink);
+  border-bottom:none;border-top:1px solid var(--line);
+  padding-top:12px;margin-top:4px;
+}
+.summary-line.total .amount{font-family:var(--serif);font-size:1.22rem}
+.promo-wrap{margin-top:14px}
+.promo-row{display:flex;gap:8px}
+.promo-row input{flex:1;height:40px;font-size:.85rem}
+.promo-btn{
+  height:40px;padding:0 16px;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--bg);cursor:pointer;font-size:.82rem;font-weight:500;
+  color:var(--muted);transition:all .2s;white-space:nowrap;
+}
+.promo-btn:hover{border-color:var(--gold);color:var(--gold)}
+.promo-msg{font-size:.78rem;margin-top:6px;min-height:16px}
+.promo-ok{color:var(--accent)}.promo-err{color:#e05c5c}
+
+/* ── Trust strip ── */
+.trust-strip{
+  display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
+  margin-top:20px;padding-top:18px;border-top:1px solid var(--line);
+}
+.trust-item{
+  display:flex;align-items:center;gap:5px;
+  font-size:.73rem;color:var(--muted);letter-spacing:.04em;
+}
+.trust-item svg{color:var(--accent)}
+
+/* ── Place order button ── */
+.place-order-btn{
+  width:100%;height:54px;border-radius:14px;border:none;
+  background:linear-gradient(135deg,var(--ink),var(--ink-soft));
+  color:#fdfaf5;font-family:var(--sans);font-size:.92rem;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:all .3s;margin-top:20px;position:relative;overflow:hidden;
+}
+.place-order-btn:hover:not(:disabled){
+  background:linear-gradient(135deg,#1f2820,#27312a);
+  box-shadow:0 10px 32px rgba(39,49,42,.28);transform:translateY(-1px);
+}
+.place-order-btn:disabled{opacity:.55;cursor:not-allowed;transform:none!important}
+.place-order-btn .btn-spinner{
+  width:18px;height:18px;border:2px solid rgba(255,255,255,.3);
+  border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none;
+}
+.place-order-btn.loading .btn-spinner{display:block}
+.place-order-btn.loading .btn-label{display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── Steps breadcrumb ── */
+.steps{
+  display:flex;align-items:center;gap:0;margin-bottom:28px;font-size:.8rem;
+}
+.step{
+  display:flex;align-items:center;gap:6px;color:var(--muted);padding:0 12px 0 0;
+}
+.step.active{color:var(--ink);font-weight:500}
+.step.done{color:var(--accent)}
+.step-num{
+  width:22px;height:22px;border-radius:50%;border:1.5px solid currentColor;
+  display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:600;
+  flex-shrink:0;
+}
+.step.done .step-num{background:var(--accent);border-color:var(--accent);color:#fff}
+.step.active .step-num{border-color:var(--gold);color:var(--gold)}
+.step-divider{width:28px;height:1px;background:var(--line);flex-shrink:0}
+
+/* ── Success screen ── */
+#success-screen{
+  display:none;min-height:60vh;
+  flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:60px 20px;
+}
+#success-screen.show{display:flex}
+.success-icon{
+  width:80px;height:80px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),#5a8a6e);
+  display:flex;align-items:center;justify-content:center;margin-bottom:24px;
+}
+.success-icon svg{color:#fff}
+#checkout-form-area{}
+
+/* ── Empty cart state ── */
+#empty-cart{
+  display:none;flex-direction:column;align-items:center;
+  padding:80px 20px;text-align:center;
+}
+#empty-cart.show{display:flex}
+
+/* ── Responsive ── */
+@media(max-width:600px){
+  .header-inner{padding:0 20px}
+  .form-row{grid-template-columns:1fr}
+  .form-row.thirds{grid-template-columns:1fr 1fr}
+  .panel{padding:20px 18px}
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="checkout-header">
+  <div class="header-inner">
+    <a href="/" class="back-link" aria-label="Back to shop">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Shop
+    </a>
+    <a href="/" class="logo-text" aria-label="Siculera home">Sicul<span>era</span></a>
+    <div class="secure-badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      Secure Checkout
+    </div>
+  </div>
+</header>
+
+<!-- Empty cart -->
+<div id="empty-cart">
+  <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="var(--line)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:20px"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 001.99 1.61h9.72a2 2 0 001.99-1.61L23 6H6"/></svg>
+  <h2 style="font-size:1.6rem;margin-bottom:8px">Your cart is empty</h2>
+  <p style="color:var(--muted);margin-bottom:24px">Add some Siculera products before checking out.</p>
+  <a href="/" class="place-order-btn" style="width:auto;padding:0 32px;text-decoration:none;font-size:.88rem">
+    <span class="btn-label">Explore the Collection</span>
+  </a>
+</div>
+
+<!-- Success screen -->
+<div id="success-screen">
+  <div class="success-icon">
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <h2 style="font-size:2.2rem;margin-bottom:10px">Order Confirmed</h2>
+  <p style="color:var(--muted);font-size:1.05rem;max-width:440px;margin:0 auto 8px">
+    Thank you for your order. A confirmation has been sent to <strong id="success-email"></strong>.
+  </p>
+  <p style="color:var(--muted);font-size:.9rem;margin-bottom:32px">Order <strong id="success-order-number"></strong></p>
+  <a href="/" class="place-order-btn" style="width:auto;padding:0 36px;text-decoration:none">
+    <span class="btn-label">Continue Shopping</span>
+  </a>
+</div>
+
+<!-- Main checkout -->
+<div id="checkout-form-area">
+<div class="checkout-wrap">
+
+  <!-- Left: forms -->
+  <div class="checkout-left">
+
+    <!-- Steps -->
+    <div class="steps" aria-label="Checkout steps">
+      <div class="step done" id="step1">
+        <div class="step-num">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <span>Cart</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="step active" id="step2">
+        <div class="step-num">2</div>
+        <span>Details</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="step" id="step3">
+        <div class="step-num">3</div>
+        <span>Payment</span>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="panel">
+      <div class="panel-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Contact Information
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="first-name">First Name *</label>
+          <input type="text" id="first-name" name="first_name" autocomplete="given-name" required>
+          <span class="field-error" id="err-first-name">Please enter your first name.</span>
+        </div>
+        <div class="form-group">
+          <label for="last-name">Last Name *</label>
+          <input type="text" id="last-name" name="last_name" autocomplete="family-name" required>
+          <span class="field-error" id="err-last-name">Please enter your last name.</span>
+        </div>
+      </div>
+      <div class="form-row full">
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" name="email" autocomplete="email" required>
+          <span class="field-error" id="err-email">Please enter a valid email address.</span>
+        </div>
+      </div>
+      <div class="form-row full">
+        <div class="form-group">
+          <label for="phone">Phone (optional)</label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel">
+        </div>
+      </div>
+    </div>
+
+    <!-- Shipping -->
+    <div class="panel">
+      <div class="panel-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        Shipping Address
+      </div>
+      <div class="form-row full">
+        <div class="form-group">
+          <label for="address-line1">Address Line 1 *</label>
+          <input type="text" id="address-line1" name="line1" autocomplete="address-line1" required>
+          <span class="field-error" id="err-line1">Please enter your address.</span>
+        </div>
+      </div>
+      <div class="form-row full">
+        <div class="form-group">
+          <label for="address-line2">Apartment, Suite, etc. (optional)</label>
+          <input type="text" id="address-line2" name="line2" autocomplete="address-line2">
+        </div>
+      </div>
+      <div class="form-row thirds">
+        <div class="form-group" style="grid-column:span 2">
+          <label for="city">City *</label>
+          <input type="text" id="city" name="city" autocomplete="address-level2" required>
+          <span class="field-error" id="err-city">Please enter your city.</span>
+        </div>
+        <div class="form-group">
+          <label for="postal">Postal Code *</label>
+          <input type="text" id="postal" name="postal_code" autocomplete="postal-code" required>
+          <span class="field-error" id="err-postal">Required.</span>
+        </div>
+      </div>
+      <div class="form-row full">
+        <div class="form-group">
+          <label for="country">Country *</label>
+          <select id="country" name="country" autocomplete="country" required>
+            <option value="">Select country…</option>
+            <option value="IT" selected>Italy</option>
+            <option value="DE">Germany</option>
+            <option value="FR">France</option>
+            <option value="ES">Spain</option>
+            <option value="GB">United Kingdom</option>
+            <option value="NL">Netherlands</option>
+            <option value="BE">Belgium</option>
+            <option value="AT">Austria</option>
+            <option value="CH">Switzerland</option>
+            <option value="PT">Portugal</option>
+            <option value="SE">Sweden</option>
+            <option value="NO">Norway</option>
+            <option value="DK">Denmark</option>
+            <option value="FI">Finland</option>
+            <option value="PL">Poland</option>
+            <option value="US">United States</option>
+            <option value="CA">Canada</option>
+            <option value="AU">Australia</option>
+            <option value="JP">Japan</option>
+            <option value="AE">UAE</option>
+          </select>
+          <span class="field-error" id="err-country">Please select a country.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gift -->
+    <div class="panel">
+      <div class="panel-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg>
+        Gift Options
+      </div>
+      <label class="gift-toggle" for="is-gift">
+        <input type="checkbox" id="is-gift" name="is_gift">
+        <div class="gift-text">
+          <strong>This is a gift</strong>
+          <span>Include a personalised message card at no extra cost</span>
+        </div>
+      </label>
+      <div class="gift-message-wrap" id="gift-message-wrap">
+        <div class="form-group">
+          <label for="gift-message">Gift Message</label>
+          <textarea id="gift-message" name="gift_message" placeholder="Your personal message will be printed on an elegant Siculera card…" maxlength="300"></textarea>
+          <span style="font-size:.74rem;color:var(--muted);text-align:right;display:block;margin-top:3px" id="gift-char-count">0 / 300</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="order-notes">Order Notes (optional)</label>
+        <textarea id="order-notes" name="notes" placeholder="Any special instructions…" style="min-height:64px" maxlength="500"></textarea>
+      </div>
+    </div>
+
+    <!-- Payment -->
+    <div class="panel" id="payment-panel">
+      <div class="panel-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Payment
+      </div>
+
+      <div class="pay-method-tabs" id="pay-tabs" role="tablist">
+        <!-- Tabs injected by JS based on enabled providers -->
+      </div>
+
+      <!-- Stripe -->
+      <div class="pay-panel" id="pay-stripe" role="tabpanel">
+        <div class="form-group" style="margin-bottom:14px">
+          <label>Card Number</label>
+          <div id="stripe-element-container" aria-label="Card number"></div>
+          <div id="stripe-card-errors" role="alert"></div>
+        </div>
+        <p style="font-size:.76rem;color:var(--muted);margin:0;display:flex;align-items:center;gap:5px">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          Secured by Stripe. We never store your card details.
+        </p>
+      </div>
+
+      <!-- PayPal -->
+      <div class="pay-panel" id="pay-paypal" role="tabpanel">
+        <p style="font-size:.88rem;color:var(--muted);margin-bottom:16px">You will be redirected to PayPal to complete your payment securely.</p>
+        <button class="paypal-btn" id="paypal-btn" type="button" onclick="submitPayPal()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.067 8.478c.492.315.844.825.844 1.618 0 2.788-1.975 4.23-4.896 4.23h-.583c-.352 0-.652.256-.707.604l-.708 4.472a.368.368 0 01-.364.312H10.9a.36.36 0 01-.357-.416l.044-.277 1.024-6.474.065-.41h.003c.055-.348.355-.604.707-.604h.584c2.921 0 4.896-1.441 4.896-4.23 0-.793-.352-1.303-.844-1.618z" opacity=".5"/><path d="M7.82 2h5.97c1.563 0 2.646.403 3.29 1.07-.638.175-1.199.508-1.665.944-.69.648-1.09 1.568-1.09 2.756 0 2.788-1.974 4.23-4.895 4.23h-.583c-.352 0-.652.256-.707.604l-.867 5.483-.033.208-.044.277L6.85 18.78a.36.36 0 01-.357.416H3.75a.369.369 0 01-.365-.416L5.39 4.616C5.637 3.062 6.985 2 8.539 2H7.82z"/></svg>
+          Pay with PayPal
+        </button>
+      </div>
+
+      <!-- Bank Transfer -->
+      <div class="pay-panel" id="pay-bank_transfer" role="tabpanel">
+        <div class="bank-info">
+          <strong>Bank Transfer (SEPA)</strong><br>
+          Your order will be reserved for 48 hours while we await your transfer.<br><br>
+          <strong>IBAN:</strong> IT00 X000 0000 0000 0000 0000 000<br>
+          <strong>BIC/SWIFT:</strong> XXXXITMMXXX<br>
+          <strong>Reference:</strong> Your order number (sent by email)<br>
+          <strong>Beneficiary:</strong> Siculera S.r.l.
+        </div>
+      </div>
+
+      <!-- Cash on Delivery -->
+      <div class="pay-panel" id="pay-cash_on_delivery" role="tabpanel">
+        <div class="cod-note">
+          <strong>Pay on delivery.</strong> You pay the courier when your order arrives.
+          A small handling fee may apply depending on your region.
+        </div>
+      </div>
+    </div>
+
+    <button class="place-order-btn" id="place-order-btn" type="button" onclick="placeOrder()">
+      <div class="btn-spinner"></div>
+      <span class="btn-label">Place Order — <span id="btn-total">€0.00</span></span>
+    </button>
+
+    <p style="font-size:.74rem;color:var(--muted);text-align:center;margin-top:12px">
+      By placing your order you agree to Siculera's
+      <a href="/terms" style="color:var(--gold)">Terms of Service</a> and
+      <a href="/privacy" style="color:var(--gold)">Privacy Policy</a>.
+    </p>
+  </div>
+
+  <!-- Right: order summary -->
+  <div class="order-summary">
+    <div class="panel">
+      <div class="panel-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 001.99 1.61h9.72a2 2 0 001.99-1.61L23 6H6"/></svg>
+        Order Summary
+      </div>
+
+      <div class="summary-items" id="summary-items"></div>
+
+      <div class="summary-lines">
+        <div class="summary-line"><span>Subtotal</span><span id="sum-subtotal">€0.00</span></div>
+        <div class="summary-line" id="sum-shipping-row"><span>Shipping</span><span id="sum-shipping">Calculated at next step</span></div>
+        <div class="summary-line" id="sum-discount-row" style="display:none;color:var(--accent)"><span>Discount</span><span id="sum-discount">−€0.00</span></div>
+        <div class="summary-line total"><span>Total</span><span class="amount" id="sum-total">€0.00</span></div>
+      </div>
+
+      <!-- Promo code -->
+      <div class="promo-wrap">
+        <div class="promo-row">
+          <input type="text" id="promo-input" placeholder="Promo code" aria-label="Promo code">
+          <button class="promo-btn" type="button" onclick="applyPromo()">Apply</button>
+        </div>
+        <div class="promo-msg" id="promo-msg"></div>
+      </div>
+
+      <!-- Trust strip -->
+      <div class="trust-strip">
+        <div class="trust-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          SSL Encrypted
+        </div>
+        <div class="trust-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          GDPR Compliant
+        </div>
+        <div class="trust-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          Free returns
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div><!-- /checkout-form-area -->
+
+<script>
+'use strict';
+
+// ── Config ──
+const API_BASE = (() => {
+  const port = window.location.port;
+  if (port === '8080' || port === '5500' || port === '3000') return 'http://localhost:4000';
+  return '';
+})();
+
+// ── Cart ──
+let cart = [];
+try { const s = localStorage.getItem('siculera_cart'); if (s) cart = JSON.parse(s); } catch(e) {}
+
+function euro(v) { return '€' + Number(v).toFixed(2); }
+function subtotal() { return cart.reduce((s, i) => s + i.price * i.qty, 0); }
+
+let shipping = 0;
+let discount = 0;
+let promoApplied = null;
+let stripeInstance = null;
+let stripeCardElement = null;
+let paymentConfig = null;
+let activeMethod = null;
+
+// ── Render summary ──
+function renderSummary() {
+  const items = document.getElementById('summary-items');
+  if (!items) return;
+  if (!cart.length) {
+    document.getElementById('checkout-form-area').style.display = 'none';
+    document.getElementById('empty-cart').classList.add('show');
+    return;
+  }
+  items.innerHTML = cart.map(i => `
+    <div class="s-item">
+      <div class="s-thumb ${i.className || ''}">
+        ${i.image ? `<img src="${i.image}" alt="${i.name}" loading="lazy">` : ''}
+      </div>
+      <div class="s-info">
+        <div class="s-name">${i.name}</div>
+        <div class="s-qty">Qty: ${i.qty}</div>
+      </div>
+      <div class="s-qty-badge">${i.qty}</div>
+      <div class="s-price">${euro(i.price * i.qty)}</div>
+    </div>`).join('');
+  updateTotals();
+}
+
+function updateTotals() {
+  const sub = subtotal();
+  const total = sub + shipping - discount;
+  document.getElementById('sum-subtotal').textContent = euro(sub);
+  document.getElementById('sum-shipping').textContent = shipping === 0 ? (sub >= 50 ? 'Free' : 'Calculated') : euro(shipping);
+  document.getElementById('sum-total').textContent = euro(Math.max(0, total));
+  document.getElementById('btn-total').textContent = euro(Math.max(0, total));
+  if (discount > 0) {
+    document.getElementById('sum-discount-row').style.display = 'flex';
+    document.getElementById('sum-discount').textContent = `−${euro(discount)}`;
+  }
+}
+
+// ── Promo codes ──
+const PROMO_CODES = { 'SICULERA10': 0.10, 'WELCOME15': 0.15, 'SICILY20': 0.20 };
+function applyPromo() {
+  const code = document.getElementById('promo-input').value.trim().toUpperCase();
+  const msg = document.getElementById('promo-msg');
+  if (!code) { msg.textContent = ''; return; }
+  if (PROMO_CODES[code]) {
+    const pct = PROMO_CODES[code];
+    discount = Math.round(subtotal() * pct * 100) / 100;
+    promoApplied = code;
+    msg.textContent = `✓ ${Math.round(pct*100)}% discount applied!`;
+    msg.className = 'promo-msg promo-ok';
+    updateTotals();
+  } else {
+    discount = 0; promoApplied = null;
+    msg.textContent = 'Invalid promo code.';
+    msg.className = 'promo-msg promo-err';
+    updateTotals();
+  }
+}
+
+// ── Load payment config from API ──
+async function loadPaymentConfig() {
+  try {
+    const res = await fetch(`${API_BASE}/api/payments/config/public`);
+    if (!res.ok) throw new Error();
+    paymentConfig = await res.json();
+  } catch(e) {
+    // Default: show Stripe + Cash on Delivery
+    paymentConfig = {
+      stripe:          { enabled: true,  publishable_key: '' },
+      paypal:          { enabled: false },
+      bank_transfer:   { enabled: false },
+      cash_on_delivery:{ enabled: false }
+    };
+  }
+  renderPaymentTabs();
+}
+
+function renderPaymentTabs() {
+  const tabsEl = document.getElementById('pay-tabs');
+  if (!tabsEl) return;
+
+  const methods = [
+    { key: 'stripe',          label: 'Card',           icon: cardIcon() },
+    { key: 'paypal',          label: 'PayPal',          icon: paypalIcon() },
+    { key: 'bank_transfer',   label: 'Bank Transfer',   icon: bankIcon() },
+    { key: 'cash_on_delivery',label: 'Pay on Delivery', icon: codIcon() },
+  ].filter(m => paymentConfig && paymentConfig[m.key] && paymentConfig[m.key].enabled);
+
+  if (!methods.length) {
+    tabsEl.innerHTML = '<p style="font-size:.85rem;color:var(--muted)">Payment methods loading…</p>';
+    return;
+  }
+
+  tabsEl.innerHTML = methods.map(m => `
+    <button class="pay-tab" role="tab" data-method="${m.key}"
+      onclick="selectPayMethod('${m.key}')" aria-selected="false" type="button">
+      ${m.icon} ${m.label}
+    </button>`).join('');
+
+  // Auto-select first
+  selectPayMethod(methods[0].key);
+
+  // Init Stripe if enabled
+  if (paymentConfig.stripe && paymentConfig.stripe.enabled && paymentConfig.stripe.publishable_key) {
+    initStripe(paymentConfig.stripe.publishable_key);
+  }
+}
+
+function selectPayMethod(method) {
+  activeMethod = method;
+  document.querySelectorAll('.pay-tab').forEach(t => {
+    const isActive = t.dataset.method === method;
+    t.classList.toggle('active', isActive);
+    t.setAttribute('aria-selected', isActive);
+  });
+  document.querySelectorAll('.pay-panel').forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById('pay-' + method);
+  if (panel) panel.classList.add('active');
+
+  // Mark step 3 as active when user reaches payment
+  document.getElementById('step3').classList.add('active');
+}
+
+// ── Stripe init ──
+function initStripe(pubKey) {
+  if (stripeInstance) return;
+  if (!pubKey || pubKey.startsWith('pk_test_REPLACE')) {
+    // No real key — show placeholder message
+    document.getElementById('stripe-element-container').innerHTML =
+      '<p style="font-size:.82rem;color:var(--muted);margin:6px 0">Configure your Stripe keys in the admin dashboard to enable card payments.</p>';
+    return;
+  }
+  try {
+    stripeInstance = Stripe(pubKey);
+    const elements = stripeInstance.elements({ locale: 'auto' });
+    stripeCardElement = elements.create('card', {
+      style: {
+        base: {
+          fontFamily: "'Inter', sans-serif", fontSize: '15px',
+          color: '#27312a', '::placeholder': { color: '#a8b4a9' }
+        },
+        invalid: { color: '#e05c5c' }
+      }
+    });
+    stripeCardElement.mount('#stripe-element-container');
+    stripeCardElement.on('change', e => {
+      const errEl = document.getElementById('stripe-card-errors');
+      const container = document.getElementById('stripe-element-container');
+      errEl.textContent = e.error ? e.error.message : '';
+      container.classList.toggle('error-state', !!e.error);
+      container.classList.toggle('focused', e.focused);
+    });
+    stripeCardElement.on('focus', () => document.getElementById('stripe-element-container').classList.add('focused'));
+    stripeCardElement.on('blur',  () => document.getElementById('stripe-element-container').classList.remove('focused'));
+  } catch(e) {
+    console.warn('[Checkout] Stripe init failed:', e.message);
+  }
+}
+
+// ── Gift toggle ──
+document.getElementById('is-gift').addEventListener('change', function() {
+  document.getElementById('gift-message-wrap').classList.toggle('show', this.checked);
+});
+document.getElementById('gift-message').addEventListener('input', function() {
+  document.getElementById('gift-char-count').textContent = `${this.value.length} / 300`;
+});
+
+// ── Validation ──
+function validate() {
+  let valid = true;
+  const required = [
+    ['first-name', 'err-first-name'],
+    ['last-name',  'err-last-name'],
+    ['email',      'err-email'],
+    ['address-line1','err-line1'],
+    ['city',       'err-city'],
+    ['postal',     'err-postal'],
+    ['country',    'err-country'],
+  ];
+  required.forEach(([id, errId]) => {
+    const el = document.getElementById(id);
+    const err = document.getElementById(errId);
+    const empty = !el.value.trim();
+    const emailInvalid = id === 'email' && el.value.trim() && !/^[^@]+@[^@]+\.[^@]+$/.test(el.value.trim());
+    const invalid = empty || emailInvalid;
+    el.classList.toggle('error', invalid);
+    err.classList.toggle('show', invalid);
+    if (invalid) valid = false;
+  });
+  return valid;
+}
+
+// ── Place order ──
+async function placeOrder() {
+  if (!validate()) {
+    document.querySelector('.checkout-left').scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+
+  const btn = document.getElementById('place-order-btn');
+  btn.classList.add('loading');
+  btn.disabled = true;
+
+  const email     = document.getElementById('email').value.trim();
+  const firstName = document.getElementById('first-name').value.trim();
+  const lastName  = document.getElementById('last-name').value.trim();
+  const address = {
+    full_name:   `${firstName} ${lastName}`,
+    line1:       document.getElementById('address-line1').value.trim(),
+    line2:       document.getElementById('address-line2').value.trim(),
+    city:        document.getElementById('city').value.trim(),
+    postal_code: document.getElementById('postal').value.trim(),
+    country:     document.getElementById('country').value,
+    phone:       document.getElementById('phone').value.trim()
+  };
+  const isGift     = document.getElementById('is-gift').checked;
+  const giftMsg    = document.getElementById('gift-message').value.trim();
+  const notes      = document.getElementById('order-notes').value.trim();
+  const sub        = subtotal();
+  const total      = Math.max(0, sub + shipping - discount);
+
+  const orderPayload = {
+    guest_email:      email,
+    items:            cart.map(i => ({ product_id: i.dbId || null, product_name: i.name, quantity: i.qty, unit_price_cents: Math.round(i.price * 100), total_cents: Math.round(i.price * i.qty * 100) })),
+    address,
+    subtotal_cents:   Math.round(sub * 100),
+    shipping_cents:   Math.round(shipping * 100),
+    total_cents:      Math.round(total * 100),
+    is_gift:          isGift,
+    gift_message:     isGift ? giftMsg : '',
+    notes,
+    payment_method:   activeMethod,
+    promo_code:       promoApplied
+  };
+
+  try {
+    if (activeMethod === 'stripe' && stripeCardElement) {
+      await placeStripeOrder(orderPayload, email, address);
+    } else {
+      await placeDirectOrder(orderPayload);
+    }
+  } catch(err) {
+    showError(err.message || 'Something went wrong. Please try again.');
+    btn.classList.remove('loading');
+    btn.disabled = false;
+  }
+}
+
+async function placeDirectOrder(payload) {
+  const res = await fetch(`${API_BASE}/api/orders`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Order creation failed');
+  showSuccess(payload.guest_email, data.order_number);
+}
+
+async function placeStripeOrder(payload, email, address) {
+  // 1. Create order + payment intent on backend
+  const res = await fetch(`${API_BASE}/api/orders`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ...payload, create_payment_intent: true })
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Order creation failed');
+
+  if (!data.client_secret) {
+    // No client secret — order saved, no charge needed (e.g. free)
+    showSuccess(email, data.order_number);
+    return;
+  }
+
+  // 2. Confirm card payment with Stripe
+  const result = await stripeInstance.confirmCardPayment(data.client_secret, {
+    payment_method: {
+      card: stripeCardElement,
+      billing_details: {
+        name:    address.full_name,
+        email:   email,
+        address: { line1: address.line1, line2: address.line2, city: address.city, postal_code: address.postal_code, country: address.country }
+      }
+    }
+  });
+
+  if (result.error) {
+    document.getElementById('stripe-card-errors').textContent = result.error.message;
+    throw new Error(result.error.message);
+  }
+
+  showSuccess(email, data.order_number);
+}
+
+function submitPayPal() {
+  // PayPal integration requires server-side OAuth — placeholder for now
+  alert('Redirecting to PayPal… (configure PayPal credentials in admin dashboard to enable)');
+}
+
+function showSuccess(email, orderNumber) {
+  // Clear cart
+  localStorage.removeItem('siculera_cart');
+  cart = [];
+
+  document.getElementById('checkout-form-area').style.display = 'none';
+  document.getElementById('success-email').textContent = email;
+  document.getElementById('success-order-number').textContent = orderNumber || '';
+  document.getElementById('success-screen').classList.add('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showError(msg) {
+  // Toast-style error
+  const t = document.createElement('div');
+  t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#e05c5c;color:#fff;padding:12px 22px;border-radius:10px;font-size:.88rem;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,.18);max-width:90vw;text-align:center';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 5000);
+}
+
+// ── SVG icons ──
+function cardIcon() { return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>`; }
+function paypalIcon() { return `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" fill="#003087"/><text x="12" y="16" text-anchor="middle" fill="#FFC43A" font-size="9" font-weight="bold" font-family="sans-serif">PP</text></svg>`; }
+function bankIcon() { return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>`; }
+function codIcon() { return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>`; }
+
+// ── Init ──
+renderSummary();
+loadPaymentConfig();
+</script>
+<!-- Siculera AI Chat Widget -->
+<script src="/assets/siculera-chat.js" defer></script>
+</body>
+</html>

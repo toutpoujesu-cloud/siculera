@@ -1,0 +1,29 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Siculera Static (Frontend only)",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", ".", "--listen", "tcp:8080"],
+      "port": 8080
+    },
+    {
+      "name": "Siculera Backend API (Node.js)",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["ecommerce/backend/server.js"],
+      "cwd": "${workspaceFolder}/ecommerce",
+      "port": 4000,
+      "env": {
+        "NODE_ENV": "development",
+        "PORT": "4000"
+      }
+    },
+    {
+      "name": "Siculera Full Stack (npm dev)",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "cwd": "${workspaceFolder}/ecommerce",
+      "port": 4000
+    }
+  ]
+}

@@ -1,0 +1,2339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Siculera — Authentic Sicilian almond pastry crafted for luxury gifting, refined dining, and memorable hospitality. Traditional, citrus, pistachio and fruit-filled creations from Sicily.">
+<meta property="og:title" content="Siculera — Luxury Sicilian Pastry House">
+<meta property="og:description" content="Authentic Sicilian almond creations, crafted with care and made for gifting, sharing, and refined everyday pleasure.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Siculera — Luxury Sicilian Pastry House">
+<title>Siculera — Luxury Sicilian Pastry House</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fbf7f1;
+  --bg-soft: #f6efe3;
+  --bg-warm: #f3eadb;
+  --ink: #27312a;
+  --ink-soft: #3c4a3f;
+  --muted: #6b7a6c;
+  --accent: #7e9277;
+  --gold: #b8975a;
+  --gold-light: #d4b882;
+  --gold-pale: #f0e6d0;
+  --line: #e8ddd0;
+  --white: #fff;
+  --shadow-sm: 0 8px 24px rgba(39,49,42,.06);
+  --shadow: 0 18px 48px rgba(39,49,42,.08);
+  --shadow-lg: 0 32px 72px rgba(39,49,42,.13);
+  --max: 1220px;
+  --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --ease-out: cubic-bezier(.22,.68,0,1.1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: linear-gradient(180deg, #fdfaf5 0%, var(--bg) 100%);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1, h2, h3, h4, .serif {
+  font-family: var(--serif);
+  font-weight: 400;
+  letter-spacing: .015em;
+  line-height: 1.1;
+  margin: 0 0 .6rem;
+  color: var(--ink);
+}
+p { margin: .15rem 0 1rem; }
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+.container { width: min(var(--max), calc(100% - 128px)); margin: 0 auto; }
+
+/* Skip link */
+.skip-link {
+  position: absolute; top: -100%; left: 1rem;
+  background: var(--ink); color: #fff;
+  padding: .5rem 1.2rem; border-radius: 999px;
+  z-index: 999; font-size: .88rem; transition: top .2s;
+}
+.skip-link:focus { top: 1rem; }
+
+/* ── Topbar ── */
+.topbar {
+  background: var(--ink);
+  color: rgba(253,250,245,.65);
+  text-align: center;
+  font-size: .76rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: .75rem 1rem;
+  font-weight: 400;
+}
+.topbar strong { color: var(--gold-light); font-weight: 500; }
+
+/* ── Header ── */
+.site-header {
+  position: sticky; top: 0; z-index: 30;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(251,247,241,.92);
+  border-bottom: 1px solid rgba(39,49,42,.06);
+  transition: box-shadow .3s ease;
+}
+.site-header.scrolled { box-shadow: 0 4px 28px rgba(39,49,42,.08); }
+.nav {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  gap: 24px; padding: 16px 0;
+}
+.brand { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+.brand img {
+  height: 52px; border-radius: 10px;
+  background: #f8f2e8;
+  box-shadow: 0 6px 18px rgba(39,49,42,.1);
+  object-fit: cover;
+}
+.brand-text { display: flex; flex-direction: column; gap: 2px; }
+.brand-name {
+  font-family: var(--serif); font-size: 1.5rem;
+  font-weight: 400; letter-spacing: .05em; line-height: 1;
+}
+.brand-sub {
+  font-size: .68rem; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .22em; font-weight: 400;
+}
+.nav-links {
+  display: flex; align-items: center;
+  gap: 28px; color: var(--muted);
+  font-size: .84rem; font-weight: 400; letter-spacing: .04em;
+}
+.nav-links a { position: relative; transition: color .2s; }
+.nav-links a::after {
+  content: ''; position: absolute;
+  left: 0; bottom: -5px; width: 0; height: 1px;
+  background: var(--gold); transition: width .25s ease;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-links a:hover::after { width: 100%; }
+.nav-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.lang-toggle {
+  padding: 11px 14px; border-radius: 999px;
+  border: 1px solid rgba(39,49,42,.12);
+  background: rgba(255,255,255,.82);
+  color: var(--ink); font-size: .78rem; font-weight: 600;
+  cursor: pointer; transition: all .2s ease;
+}
+.lang-toggle:hover {
+  background: #fff; border-color: rgba(39,49,42,.2);
+}
+.cart-button {
+  display: flex; align-items: center; gap: 9px;
+  padding: 9px 18px; border-radius: 999px;
+  border: 1px solid rgba(39,49,42,.1);
+  background: rgba(255,255,255,.82);
+  cursor: pointer; font-weight: 500; font-size: .84rem;
+  font-family: var(--sans); color: var(--ink);
+  transition: all .22s ease; letter-spacing: .03em;
+}
+.cart-button:hover {
+  background: #fff; border-color: rgba(39,49,42,.2);
+  box-shadow: 0 4px 14px rgba(39,49,42,.09);
+}
+.cart-count {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 22px; height: 22px; padding: 0 6px;
+  border-radius: 999px; background: var(--accent);
+  color: #fff; font-size: .76rem; font-weight: 600;
+}
+
+/* Hamburger */
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  padding: 9px; background: transparent; border: none;
+  cursor: pointer; border-radius: 8px;
+}
+.hamburger span {
+  display: block; width: 22px; height: 1.5px;
+  background: var(--ink); transition: all .28s ease;
+  transform-origin: center;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Mobile nav */
+.mobile-nav {
+  display: none; position: fixed; inset: 0;
+  background: rgba(253,250,245,.97);
+  backdrop-filter: blur(24px);
+  z-index: 29; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 4px; opacity: 0; pointer-events: none;
+  transition: opacity .3s ease;
+}
+.mobile-nav.open { opacity: 1; pointer-events: auto; }
+.mobile-nav a {
+  font-family: var(--serif); font-size: 2.4rem;
+  font-weight: 300; color: var(--ink);
+  padding: .55rem 0; letter-spacing: .04em;
+  transition: color .2s;
+}
+.mobile-nav a:hover { color: var(--gold); }
+.mobile-nav-close {
+  position: absolute; top: 22px; right: 22px;
+  background: transparent; border: none;
+  font-size: 1.6rem; cursor: pointer;
+  color: var(--muted); padding: 8px;
+  transition: color .2s;
+}
+.mobile-nav-close:hover { color: var(--ink); }
+
+/* ── Eyebrow ── */
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 12px;
+  margin-bottom: 18px; color: var(--gold);
+  text-transform: uppercase; letter-spacing: .22em;
+  font-size: .7rem; font-weight: 500;
+}
+.eyebrow::before, .eyebrow::after {
+  content: ''; display: block; width: 22px; height: 1px;
+  background: currentColor; opacity: .7;
+}
+
+/* ── Hero ── */
+.hero {
+  padding: 104px 0 80px;
+  background:
+    radial-gradient(ellipse at 8% 0%, rgba(184,151,90,.13), transparent 32%),
+    radial-gradient(ellipse at 90% 12%, rgba(126,146,119,.09), transparent 24%),
+    linear-gradient(180deg, #fdfaf5 0%, #fbf7f1 100%);
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute;
+  top: -60px; right: -100px;
+  width: 560px; height: 560px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(184,151,90,.06), transparent 70%);
+  pointer-events: none;
+}
+.hero-grid {
+  display: grid; grid-template-columns: 1.1fr .9fr;
+  gap: 60px; align-items: center;
+}
+.hero h1 {
+  font-size: clamp(3rem, 5.5vw, 5.2rem);
+  font-weight: 300; max-width: 11ch;
+  letter-spacing: -.01em; line-height: 1.04;
+  margin-bottom: 1.2rem;
+}
+.hero h1 em { font-style: italic; color: var(--gold); }
+.hero > .container > .hero-grid > div > p {
+  font-size: .98rem; color: var(--muted);
+  max-width: 44ch; line-height: 1.75; font-weight: 300;
+}
+
+/* ── Buttons ── */
+.cta-row {
+  display: flex; gap: 13px; flex-wrap: wrap; margin-top: 28px;
+}
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 9px; border-radius: 999px; padding: 13px 26px;
+  cursor: pointer; font-weight: 500; font-family: var(--sans);
+  transition: all .25s ease; border: 1px solid transparent;
+  font-size: .82rem; letter-spacing: .08em; text-transform: uppercase;
+  position: relative; overflow: hidden;
+}
+.btn-primary {
+  background: var(--ink); color: #faf7f1;
+  box-shadow: 0 8px 22px rgba(39,49,42,.12);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(39,49,42,.2);
+  background: var(--ink-soft);
+}
+.btn-secondary {
+  background: transparent; color: var(--ink);
+  border-color: rgba(39,49,42,.18);
+}
+.btn-secondary:hover {
+  background: rgba(39,49,42,.04);
+  border-color: rgba(39,49,42,.3);
+  transform: translateY(-1px);
+}
+.btn-gold {
+  background: linear-gradient(135deg, #c8a96e, #a87d44);
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(184,151,90,.28);
+}
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(184,151,90,.36);
+}
+
+/* Hero card */
+.hero-card {
+  background: rgba(255,255,255,.62);
+  border: 1px solid rgba(39,49,42,.07);
+  border-radius: 38px; padding: 22px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(8px);
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+.hero-image {
+  border-radius: 28px;
+  overflow: hidden;
+  margin-bottom: 18px;
+  box-shadow: inset 0 0 0 1px rgba(39,49,42,.05), var(--shadow-sm);
+}
+.hero-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.hero-card-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 13px; }
+.product-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.product-tile {
+  background: rgba(255,255,255,.9); border: 1px solid var(--line);
+  border-radius: 22px; overflow: hidden;
+  transition: transform .32s var(--ease-out), box-shadow .32s ease;
+}
+.product-tile:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 22px 44px rgba(39,49,42,.1);
+}
+
+/* Product photo gradients */
+.product-photo {
+  aspect-ratio: 1/1; position: relative;
+  background: radial-gradient(circle at 28% 24%, rgba(255,255,255,.96), rgba(255,255,255,.28)),
+    linear-gradient(135deg,#ead7b4,#ceb083 42%,#f3ead7 88%);
+}
+.product-photo.citrus {
+  background: radial-gradient(circle at 28% 24%, rgba(255,255,255,.96), rgba(255,255,255,.28)),
+    linear-gradient(135deg,#f4df98,#d99b45 42%,#f5ecd2 88%);
+}
+.product-photo.green {
+  background: radial-gradient(circle at 28% 24%, rgba(255,255,255,.96), rgba(255,255,255,.28)),
+    linear-gradient(135deg,#dce4c7,#8fa271 42%,#eef1e2 88%);
+}
+.product-photo.rose {
+  background: radial-gradient(circle at 28% 24%, rgba(255,255,255,.96), rgba(255,255,255,.28)),
+    linear-gradient(135deg,#ecd0c6,#bf7c6f 42%,#f8e9e4 88%);
+}
+.pastry {
+  position: absolute; inset: 18% 19%;
+  border-radius: 42% 58% 46% 54%/58% 43% 57% 42%;
+  background: linear-gradient(145deg,#f6e3bf,#dcc096 52%,#c79f70);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.65), 0 16px 24px rgba(39,49,42,.11);
+  transform: rotate(-10deg);
+}
+.pastry::after {
+  content: ''; position: absolute;
+  inset: 16% 22% 48% 18%;
+  border-radius: 999px;
+  background: rgba(255,255,255,.34); filter: blur(1px);
+}
+.tile-body { padding: 14px 14px 16px; }
+.tile-title {
+  font-family: var(--serif); font-size: 1.06rem;
+  font-weight: 500; margin-bottom: .2rem;
+}
+.tile-note { font-size: .84rem; color: var(--muted); font-weight: 300; }
+
+/* ── Ornament divider ── */
+.ornament {
+  display: flex; align-items: center; gap: 14px;
+  justify-content: center; margin: 0 auto 52px;
+  max-width: 220px;
+}
+.ornament::before, .ornament::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+}
+.ornament-diamond {
+  width: 7px; height: 7px;
+  background: var(--gold); transform: rotate(45deg); flex-shrink: 0;
+}
+
+/* ── Sections ── */
+.section { padding: 104px 0; border-top: 1px solid rgba(39,49,42,.04); }
+.section-soft {
+  background: linear-gradient(180deg, rgba(243,234,219,.32), rgba(251,247,241,.5));
+}
+
+.transition { text-align: center; margin-bottom: 20px; }
+.transition h3 {
+  font-family: var(--serif); font-weight: 300;
+  font-size: clamp(1.55rem, 2.8vw, 2.3rem);
+  margin-bottom: .4rem; letter-spacing: .01em;
+}
+.transition p {
+  color: var(--muted); max-width: 48ch; margin: 0 auto;
+  font-size: .94rem; font-weight: 300; line-height: 1.7;
+}
+
+/* ── Trust strip ── */
+.trust-strip {
+  padding: 28px 0;
+  background: rgba(255,255,255,.55);
+  border-top: 1px solid rgba(39,49,42,.05);
+  border-bottom: 1px solid rgba(39,49,42,.05);
+}
+.trust-items {
+  display: flex; align-items: center;
+  justify-content: center; flex-wrap: wrap;
+}
+.trust-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 28px; color: var(--muted);
+  font-size: .76rem; letter-spacing: .12em;
+  text-transform: uppercase; font-weight: 400;
+  position: relative;
+}
+.trust-item + .trust-item::before {
+  content: ''; position: absolute;
+  left: 0; top: 20%; height: 60%; width: 1px;
+  background: rgba(39,49,42,.1);
+}
+.trust-icon { font-size: 1rem; color: var(--gold); }
+
+/* ── Split layout ── */
+.split {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 60px; align-items: center;
+}
+.content-card { padding: 8px 0; }
+.content-card h2 {
+  font-family: var(--serif);
+  font-size: clamp(2.1rem, 4vw, 3.4rem);
+  font-weight: 300; max-width: 13ch;
+  margin-bottom: .85rem; letter-spacing: -.01em; line-height: 1.08;
+}
+.content-card h2 em { font-style: italic; color: var(--gold); }
+.content-card p {
+  color: var(--muted); max-width: 52ch;
+  font-size: .95rem; font-weight: 300; line-height: 1.75;
+}
+.bullets { display: grid; gap: 16px; margin-top: 28px; }
+.bullets div {
+  padding-top: 14px;
+  border-top: 1px solid rgba(39,49,42,.07);
+  color: var(--muted); font-size: .93rem; font-weight: 300;
+}
+.bullets strong {
+  color: var(--ink); font-weight: 500;
+  display: block; margin-bottom: .2rem;
+}
+
+/* Visual illustration box */
+.visual {
+  min-height: 480px; border-radius: 36px;
+  position: relative; overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 16%, rgba(184,151,90,.12), transparent 28%),
+    linear-gradient(180deg, #fffdf8 0%, #f5ede1 100%);
+  border: 1px solid rgba(39,49,42,.05);
+  box-shadow: var(--shadow);
+}
+.visual .plate {
+  position: absolute; width: 58%; aspect-ratio: 1/1;
+  border-radius: 50%; background: linear-gradient(145deg,#f9f4eb,#ddd0ba);
+  left: 22%; top: 14%;
+  box-shadow: 0 28px 52px rgba(39,49,42,.1);
+}
+.visual .mini-pastry {
+  position: absolute; width: 18%; aspect-ratio: 1/1;
+  border-radius: 42% 58% 43% 57%/58% 45% 55% 42%;
+  background: linear-gradient(145deg,#f3deba,#cfb085 58%,#c69a69);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.65), 0 14px 18px rgba(39,49,42,.1);
+}
+.visual .mini-pastry.green { background: linear-gradient(145deg,#e0e8cb,#9aad7d 58%,#73864f); }
+.visual .mini-pastry.orange { background: linear-gradient(145deg,#f8dc95,#df9f43 58%,#c07a29); }
+.visual .mini-pastry.rose { background: linear-gradient(145deg,#eed1c9,#c88576 58%,#97493e); }
+.visual img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Section header centered */
+.section-center {
+  max-width: 680px; margin: 0 auto 44px; text-align: center;
+}
+.section-center h2 {
+  font-family: var(--serif);
+  font-size: clamp(2.1rem, 4vw, 3.4rem);
+  font-weight: 300; margin-bottom: .55rem; letter-spacing: -.01em;
+}
+.section-center p { color: var(--muted); font-size: .95rem; font-weight: 300; }
+
+/* ── Flavour grid ── */
+.grid6 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.flavour-card {
+  background: rgba(255,255,255,.84); border: 1px solid rgba(39,49,42,.06);
+  border-radius: 22px; padding: 28px 24px;
+  box-shadow: var(--shadow-sm);
+  transition: transform .3s var(--ease-out), box-shadow .3s ease;
+  position: relative; overflow: hidden;
+}
+.flavour-card::after {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0; transition: opacity .3s;
+}
+.flavour-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+.flavour-card:hover::after { opacity: 1; }
+.flavour-card h4 {
+  font-family: var(--serif); font-size: 1.22rem;
+  font-weight: 500; margin-bottom: .5rem;
+}
+.flavour-card p { color: var(--muted); font-size: .91rem; margin: 0; font-weight: 300; }
+
+/* ── Products grid ── */
+.products-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+.collection-card {
+  background: rgba(255,255,255,.9); border: 1px solid rgba(39,49,42,.06);
+  border-radius: 28px; overflow: hidden;
+  box-shadow: 0 12px 30px rgba(39,49,42,.06);
+  transition: transform .35s var(--ease-out), box-shadow .35s ease;
+}
+.collection-card:hover { transform: translateY(-7px); box-shadow: var(--shadow-lg); }
+.collection-card .product-photo { aspect-ratio: 4/3; }
+.collection-card .body { padding: 20px 22px 22px; }
+.tag {
+  display: inline-block; font-size: .66rem;
+  text-transform: uppercase; letter-spacing: .2em;
+  color: var(--gold); font-weight: 500; margin-bottom: 8px;
+}
+.collection-card h3 {
+  font-family: var(--serif); font-size: 1.3rem;
+  font-weight: 400; line-height: 1.18; margin-bottom: .5rem;
+}
+.collection-card p {
+  color: var(--muted); font-size: .89rem;
+  font-weight: 300; line-height: 1.62; min-height: 58px;
+}
+.tile-bottom {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-top: 16px; padding-top: 16px;
+  border-top: 1px solid rgba(39,49,42,.06);
+}
+.price { font-family: var(--serif); font-size: 1.26rem; font-weight: 400; }
+.small-btn {
+  padding: 9px 18px; border-radius: 999px;
+  background: var(--ink); color: #faf7f1; border: none;
+  cursor: pointer; font-weight: 500; font-family: var(--sans);
+  font-size: .78rem; letter-spacing: .07em; text-transform: uppercase;
+  transition: all .25s ease;
+}
+.small-btn:hover {
+  background: var(--ink-soft); transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(39,49,42,.2);
+}
+
+/* ── Testimonials ── */
+.testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+.testimonial-card {
+  background: rgba(255,255,255,.84); border: 1px solid rgba(39,49,42,.06);
+  border-radius: 24px; padding: 30px 26px;
+  box-shadow: var(--shadow-sm); position: relative;
+}
+.testimonial-card::before {
+  content: '\201C'; font-family: var(--serif);
+  font-size: 4.5rem; color: var(--gold); opacity: .3;
+  position: absolute; top: 10px; left: 20px; line-height: 1;
+}
+.stars { color: var(--gold); font-size: .78rem; letter-spacing: 3px; margin-bottom: 6px; }
+.testimonial-text {
+  font-family: var(--serif); font-size: 1.08rem;
+  font-weight: 400; font-style: italic;
+  line-height: 1.65; color: var(--ink);
+  margin-bottom: 20px; padding-top: 24px;
+}
+.testimonial-author { display: flex; align-items: center; gap: 12px; }
+.testimonial-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--bg-warm), var(--gold-light));
+  flex-shrink: 0;
+}
+.testimonial-name { font-weight: 500; font-size: .9rem; color: var(--ink); }
+.testimonial-role { font-size: .8rem; color: var(--muted); font-weight: 300; }
+
+/* ── Newsletter ── */
+.newsletter-section { background: var(--ink); padding: 88px 0; }
+.newsletter-inner { max-width: 560px; margin: 0 auto; text-align: center; }
+.newsletter-inner .eyebrow { justify-content: center; color: var(--gold-light); }
+.newsletter-inner .eyebrow::before,
+.newsletter-inner .eyebrow::after { background: var(--gold-light); }
+.newsletter-inner h2 {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 3.2vw, 2.9rem);
+  font-weight: 300; color: #faf7f1;
+  letter-spacing: -.01em; margin-bottom: .75rem;
+}
+.newsletter-inner > p {
+  color: rgba(250,247,241,.56); font-size: .93rem;
+  font-weight: 300; margin-bottom: 30px;
+}
+.newsletter-form { display: flex; gap: 10px; max-width: 420px; margin: 0 auto; }
+.newsletter-form input {
+  flex: 1; padding: 13px 20px;
+  border-radius: 999px; border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.08); color: #faf7f1;
+  font-family: var(--sans); font-size: .9rem;
+  outline: none; transition: border-color .2s;
+}
+.newsletter-form input::placeholder { color: rgba(255,255,255,.36); }
+.newsletter-form input:focus { border-color: rgba(255,255,255,.38); }
+.newsletter-form button {
+  padding: 13px 22px; border-radius: 999px;
+  background: var(--gold); color: #fff; border: none;
+  cursor: pointer; font-weight: 500; font-family: var(--sans);
+  font-size: .8rem; letter-spacing: .08em; text-transform: uppercase;
+  transition: all .25s ease; white-space: nowrap;
+}
+.newsletter-form button:hover { background: #c8a96e; transform: translateY(-1px); }
+.newsletter-note {
+  font-size: .76rem; color: rgba(250,247,241,.34);
+  margin-top: 16px; letter-spacing: .04em;
+}
+#newsletterSuccess {
+  display: none;
+  color: var(--gold-light);
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-style: italic;
+  margin-top: 8px;
+}
+
+/* ── CTA banner ── */
+.cta-banner {
+  background: linear-gradient(135deg, #f7f0e5 0%, #f0e2cc 100%);
+  border: 1px solid rgba(39,49,42,.06);
+  color: var(--ink); border-radius: 36px;
+  padding: 56px 60px; box-shadow: var(--shadow);
+  position: relative; overflow: hidden;
+}
+.cta-banner::before {
+  content: ''; position: absolute;
+  top: -60px; right: -60px;
+  width: 320px; height: 320px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(184,151,90,.1), transparent 70%);
+  pointer-events: none;
+}
+.cta-banner h2 {
+  font-family: var(--serif);
+  font-size: clamp(2.1rem, 3.6vw, 3.2rem);
+  font-weight: 300; max-width: 14ch; letter-spacing: -.01em;
+}
+.cta-banner p { color: var(--muted); font-weight: 300; }
+
+/* ── FAQ ── */
+.faq-item {
+  background: rgba(255,255,255,.8); border: 1px solid rgba(39,49,42,.06);
+  border-radius: 20px; padding: 26px 24px;
+  box-shadow: var(--shadow-sm);
+  transition: transform .3s var(--ease-out), box-shadow .3s ease;
+}
+.faq-item:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.faq-item h4 {
+  font-family: var(--serif); font-size: 1.08rem;
+  font-weight: 500; margin-bottom: .5rem;
+}
+.faq-item p { color: var(--muted); font-size: .92rem; margin: 0; font-weight: 300; line-height: 1.7; }
+
+/* ── Footer ── */
+.footer {
+  padding: 72px 0 32px;
+  background: #27312a; color: rgba(250,247,241,.7);
+  border-top: none;
+}
+.footer-grid {
+  display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+  gap: 32px; padding-bottom: 52px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.footer-brand .brand-name-footer {
+  font-family: var(--serif); font-size: 1.56rem;
+  font-weight: 400; color: #faf7f1;
+  letter-spacing: .06em; margin-bottom: 10px; display: block;
+}
+.footer-brand p {
+  font-size: .88rem; line-height: 1.75;
+  max-width: 26ch; font-weight: 300;
+  color: rgba(250,247,241,.5);
+}
+.footer h4 {
+  font-family: var(--sans); font-size: .7rem;
+  font-weight: 500; color: rgba(250,247,241,.4);
+  text-transform: uppercase; letter-spacing: .2em; margin-bottom: 16px;
+}
+.footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.footer li, .footer a { color: rgba(250,247,241,.52); font-size: .88rem; font-weight: 300; }
+.footer a:hover { color: rgba(250,247,241,.88); }
+.social-links { display: flex; gap: 11px; margin-top: 22px; }
+.social-link {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.14);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(250,247,241,.46); font-size: .78rem; font-weight: 600;
+  transition: all .2s; cursor: pointer;
+}
+.social-link:hover { border-color: var(--gold); color: var(--gold); background: rgba(184,151,90,.08); }
+.footer-bottom {
+  margin-top: 28px; display: flex;
+  justify-content: space-between; gap: 16px;
+  flex-wrap: wrap; color: rgba(250,247,241,.28); font-size: .8rem;
+}
+.footer-bottom a { color: rgba(250,247,241,.32); }
+.footer-bottom a:hover { color: rgba(250,247,241,.68); }
+
+/* ── Scroll reveal ── */
+.reveal {
+  opacity: 0; transform: translateY(36px);
+  transition: opacity .82s ease, transform .82s ease;
+}
+.reveal.in-view { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: .1s; }
+.reveal-d2 { transition-delay: .2s; }
+.reveal-d3 { transition-delay: .3s; }
+.reveal-d4 { transition-delay: .4s; }
+.reveal-d5 { transition-delay: .5s; }
+
+/* ── Overlay & Drawer ── */
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(28,36,30,.28);
+  backdrop-filter: blur(6px);
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s ease; z-index: 70;
+}
+.overlay.show { opacity: 1; pointer-events: auto; }
+.drawer {
+  position: fixed; top: 0; right: 0;
+  width: min(480px,100vw); height: 100vh;
+  background: var(--white);
+  transform: translateX(102%);
+  transition: transform .3s ease; z-index: 80;
+  box-shadow: -24px 0 56px rgba(39,49,42,.14);
+  display: flex; flex-direction: column;
+}
+.drawer.show { transform: translateX(0); }
+.drawer-header, .modal-header {
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 12px;
+  padding: 24px 24px 16px; border-bottom: 1px solid var(--line);
+}
+.drawer-content { padding: 20px 24px; overflow: auto; flex: 1; }
+.drawer-footer {
+  padding: 18px 24px 28px;
+  border-top: 1px solid var(--line); background: #fbf7f1;
+}
+.close {
+  background: transparent; border: none;
+  font-size: 1.4rem; cursor: pointer;
+  color: var(--muted); padding: 8px; border-radius: 8px;
+  transition: color .2s, background .2s;
+  line-height: 1;
+}
+.close:hover { color: var(--ink); background: rgba(39,49,42,.06); }
+
+/* ── Cart ── */
+.cart-item {
+  display: grid; grid-template-columns: 80px 1fr auto;
+  gap: 14px; align-items: start;
+  padding: 16px 0; border-bottom: 1px solid var(--line);
+}
+.thumb {
+  border-radius: 14px; aspect-ratio: 1/1;
+  background: linear-gradient(135deg,#ead7b4,#ceb083 42%,#f3ead7 88%);
+}
+.thumb.citrus { background: linear-gradient(135deg,#f4df98,#d99b45 42%,#f5ecd2 88%); }
+.thumb.green { background: linear-gradient(135deg,#dce4c7,#8fa271 42%,#eef1e2 88%); }
+.thumb.rose { background: linear-gradient(135deg,#ecd0c6,#bf7c6f 42%,#f8e9e4 88%); }
+.thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; display: block; }
+.cart-meta h4 { font-size: .97rem; margin-bottom: .2rem; font-weight: 500; }
+.cart-meta p { font-size: .87rem; color: var(--muted); margin: 0 0 .4rem; font-weight: 300; }
+.qty-row { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+.qty-btn {
+  width: 28px; height: 28px; border-radius: 999px;
+  border: 1px solid var(--line); background: #fff;
+  cursor: pointer; font-size: 1rem;
+  transition: all .2s; display: flex; align-items: center; justify-content: center;
+}
+.qty-btn:hover { border-color: var(--ink); background: var(--ink); color: #fff; }
+.remove-link { font-size: .82rem; color: var(--muted); cursor: pointer; text-decoration: underline; }
+.note {
+  font-size: .88rem; color: var(--muted); background: #f8f2e8;
+  padding: 12px 14px; border-radius: 14px; margin: 14px 0 0; font-weight: 300;
+}
+.summary-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; margin: 10px 0; font-size: .93rem;
+}
+.gift-box { display: grid; gap: 10px; margin: 14px 0; }
+.gift-box textarea, .field input, .field select, .field textarea {
+  width: 100%; border: 1px solid var(--line); background: #fff;
+  border-radius: 12px; padding: 12px 14px;
+  font: inherit; font-family: var(--sans); color: var(--ink);
+  transition: border-color .2s; outline: none;
+  font-size: .93rem;
+}
+.gift-box textarea:focus, .field input:focus,
+.field select:focus, .field textarea:focus { border-color: var(--accent); }
+.checkbox { display: flex; align-items: flex-start; gap: 10px; font-size: .93rem; }
+
+/* ── Modal ── */
+.modal {
+  position: fixed; left: 50%; top: 50%;
+  transform: translate(-50%,-48%) scale(.97);
+  width: min(1060px,calc(100vw - 24px));
+  max-height: 92vh; overflow: auto;
+  background: var(--white); border-radius: 30px;
+  box-shadow: 0 36px 90px rgba(39,49,42,.18);
+  z-index: 90; opacity: 0; pointer-events: none;
+  transition: all .28s ease;
+}
+.modal.show { opacity: 1; pointer-events: auto; transform: translate(-50%,-50%) scale(1); }
+.modal-body { padding: 24px; }
+.cart-layout { display: grid; grid-template-columns: 1.35fr .85fr; gap: 24px; }
+.summary-card {
+  background: #fcf8f1; border: 1px solid var(--line);
+  border-radius: 22px; padding: 24px; position: sticky; top: 20px;
+}
+.checkout-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 24px; }
+.field { margin-bottom: 14px; }
+.field label { display: block; margin-bottom: 7px; font-weight: 500; font-size: .88rem; }
+.checkout-section {
+  border: 1px solid var(--line); border-radius: 20px;
+  padding: 22px; margin-bottom: 16px; background: #fffdfa;
+}
+.checkout-section .serif {
+  font-family: var(--serif); font-size: 1.2rem; font-weight: 400;
+}
+.success { text-align: center; padding: 44px 20px 20px; }
+.success-mark {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: rgba(126,146,119,.14);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px; font-size: 1.8rem; color: var(--accent);
+}
+.wholesale-form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.full { grid-column: 1 / -1; }
+
+/* ── Form error / validation ── */
+.field-error {
+  font-size: .82rem; color: #c0392b;
+  margin-top: 5px; display: none;
+}
+.field input.invalid, .field select.invalid { border-color: #c0392b; }
+
+/* ── Focus styles ── */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px; border-radius: 4px;
+}
+
+/* ── Sticky mobile CTA ── */
+.mobile-cta {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  z-index: 60;
+  padding: 12px 20px;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  background: rgba(251,247,241,.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(39,49,42,.08);
+  box-shadow: 0 -8px 32px rgba(39,49,42,.08);
+}
+.mobile-cta .btn { width: 100%; justify-content: center; padding: 15px 26px; font-size: .85rem; }
+
+/* ── Responsive ── */
+@media (max-width: 980px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .split { grid-template-columns: 1fr; }
+  .cart-layout, .checkout-grid { grid-template-columns: 1fr; }
+  .testimonials-grid { grid-template-columns: repeat(2,1fr); }
+  .products-grid { grid-template-columns: repeat(2,1fr); }
+  .grid6 { grid-template-columns: repeat(2,1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr 1fr; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .mobile-nav { display: flex; }
+  .split .visual { min-height: 320px; }
+  .section { padding: 64px 0; }
+  .hero { padding: 64px 0 48px; }
+  .cta-banner { padding: 40px 30px; }
+  .hero-card { margin-top: 28px; }
+  .hero-grid > div:first-child { text-align: center; }
+  .hero-grid > div:first-child .cta-row { justify-content: center; }
+  .hero-grid > div:first-child .eyebrow { justify-content: center; }
+  .nav-right { gap: 10px; }
+}
+
+@media (max-width: 720px) {
+  .container { width: min(var(--max), calc(100% - 48px)); }
+  .hero-card-grid { grid-template-columns: 1fr; }
+  .brand-sub { display: none; }
+  .cta-row { flex-direction: column; align-items: stretch; }
+  .cta-row .btn { justify-content: center; min-height: 50px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .wholesale-form { grid-template-columns: 1fr; }
+  .cart-item { grid-template-columns: 72px 1fr; }
+  .cart-item > :last-child { grid-column: 2; }
+  .cta-banner { padding: 34px 24px; }
+  .section { padding: 50px 0; }
+  .trust-item { font-size: .75rem; padding: 10px 14px; }
+  .trust-items { gap: 0; }
+  .newsletter-form { flex-direction: column; }
+  .newsletter-form input,
+  .newsletter-form button { width: 100%; min-height: 50px; }
+  .split .visual { display: none; }
+  .split { gap: 0; }
+  .content-card { padding: 0; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .small-btn { min-height: 44px; padding: 12px 18px; }
+  .cart-button { min-height: 46px; }
+  .qty-btn { width: 38px; height: 38px; }
+  .modal {
+    left: 0; top: auto; bottom: 0;
+    width: 100vw;
+    max-height: 92vh;
+    border-radius: 24px 24px 0 0;
+    transform: translateY(100%) scale(1);
+  }
+  .modal.show { transform: translateY(0) scale(1); }
+  .drawer { width: 100vw; }
+  .mobile-cta { display: block; }
+  .footer { padding-bottom: calc(32px + 86px); }
+  .nav { padding: 14px 0; }
+  .nav-right { width: 100%; justify-content: flex-end; }
+  .cart-button, .lang-toggle { flex: 1 1 auto; min-width: 0; }
+}
+
+@media (max-width: 620px) {
+  .products-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: clamp(2.4rem, 8vw, 2.8rem); }
+  .hero { padding: 54px 0 38px; }
+  .section { padding: 44px 0; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .hero-card { padding: 18px; }
+  .hero-card-grid { gap: 12px; }
+  .brand img { height: 42px; }
+  .brand-name { font-size: 1.25rem; }
+  .cta-banner { padding: 28px 20px; border-radius: 24px; }
+  .flavour-card, .faq-item { padding: 20px 16px; }
+  .collection-card .body { padding: 16px 16px 16px; }
+  .testimonial-card { padding: 22px 18px; }
+  .newsletter-section { padding: 54px 0; }
+  .trust-items { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding: 0 6px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .trust-items::-webkit-scrollbar { display: none; }
+  .trust-item + .trust-item::before { display: none; }
+  .trust-item { flex-shrink: 0; }
+  .btn { min-height: 50px; padding: 14px 20px; }
+  .drawer-header { padding: 18px 18px 14px; }
+  .drawer-content { padding: 16px 18px; }
+  .drawer-footer { padding: 14px 18px 18px; padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px)); }
+  .modal-body { padding: 16px; }
+  .modal-header { padding: 18px 18px 14px; }
+  .checkout-grid { gap: 14px; }
+  .summary-card { position: static; }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<div class="topbar" data-i18n="topbar">Carefully crafted in Sicily &nbsp;·&nbsp; <strong>Complimentary gift wrapping</strong> on all orders</div>
+
+<header class="site-header" id="siteHeader">
+  <div class="container nav">
+    <a class="brand" href="#top" aria-label="Siculera — return to top">
+      <img src="assets/images/siculera-logo.jpeg" alt="Siculera" width="52" height="52">
+      <div class="brand-text">
+        <div class="brand-name">Siculera</div>
+        <div class="brand-sub" data-i18n="brandSub">Pasticceria Siciliana</div>
+      </div>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="#collection" data-i18n="navShop">Shop</a>
+      <a href="#flavours" data-i18n="navFlavours">Flavours</a>
+      <a href="#gifting" data-i18n="navGifting">Gifting</a>
+      <a href="#wholesale" data-i18n="navWholesale">Wholesale</a>
+      <a href="#story" data-i18n="navStory">Our Story</a>
+      <a href="#contact" data-i18n="navContact">Contact</a>
+      <a href="/account.html" id="nav-account-link" data-i18n="navAccount">Account</a>
+    </nav>
+    <div class="nav-right">
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">EN / IT</button>
+      <button class="cart-button" id="openCartBtn" aria-label="Open shopping cart" type="button">
+        <span id="cartButtonText" data-i18n="cartLabel">Cart</span>
+        <span class="cart-count" id="cartCount" aria-live="polite">0</span>
+      </button>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Open navigation menu" aria-expanded="false" type="button">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+  <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close navigation menu" type="button">×</button>
+  <button class="lang-toggle mobile-lang-toggle" id="langToggleMobile" type="button" aria-label="Switch language">EN / IT</button>
+  <a href="#collection" class="mobile-nav-link" data-i18n="navShop">Shop</a>
+  <a href="#flavours" class="mobile-nav-link" data-i18n="navFlavours">Flavours</a>
+  <a href="#gifting" class="mobile-nav-link" data-i18n="navGifting">Gifting</a>
+  <a href="#wholesale" class="mobile-nav-link" data-i18n="navWholesale">Wholesale</a>
+  <a href="#story" class="mobile-nav-link" data-i18n="navStory">Our Story</a>
+  <a href="#contact" class="mobile-nav-link" data-i18n="navContact">Contact</a>
+</nav>
+
+<main id="main-content">
+
+  <!-- ── Hero ── -->
+  <section class="hero" id="top">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow" data-i18n="heroEyebrow">Luxury Sicilian Pastry House</span>
+        <h1 data-i18n="heroTitle">Sicilian almond pastry, <em>reimagined</em> with elegance</h1>
+        <p data-i18n="heroText">Traditional, citrus, pistachio, and fruit-filled creations made for gifting, sharing, and refined everyday pleasure.</p>
+        <div class="cta-row">
+          <a href="#collection" class="btn btn-primary" data-i18n="discoverCollection">Discover the Collection</a>
+          <a href="#flavours" class="btn btn-secondary" data-i18n="exploreFlavours">Explore the Flavours</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-image">
+          <img src="assets/images/Siculera Hero Image.png" alt="Siculera artisanal Sicilian pastries">
+        </div>
+        <div class="hero-card-grid">
+          <article class="product-tile">
+            <div class="product-photo"><img src="assets/images/Traditional Sicilian Almond.png" alt="Traditional Sicilian Almond"></div>
+            <div class="tile-body"><div class="tile-title" data-i18n="tileTraditionalTitle">Traditional</div><div class="tile-note" data-i18n="tileTraditionalNote">Timeless, elegant, unmistakably Sicilian.</div></div>
+          </article>
+          <article class="product-tile">
+            <div class="product-photo citrus"><img src="assets/images/Orange Almond.png" alt="Orange Almond"></div>
+            <div class="tile-body"><div class="tile-title" data-i18n="tileLemonOrangeTitle">Lemon &amp; Orange</div><div class="tile-note" data-i18n="tileLemonOrangeNote">Bright citrus depth with Mediterranean warmth.</div></div>
+          </article>
+          <article class="product-tile">
+            <div class="product-photo green"><img src="assets/images/Pistachio Almond.png" alt="Pistachio Almond"></div>
+            <div class="tile-body"><div class="tile-title" data-i18n="tilePistachioTitle">Pistachio</div><div class="tile-note" data-i18n="tilePistachioNote">Richer, softer, more indulgent.</div></div>
+          </article>
+          <article class="product-tile">
+            <div class="product-photo rose"><img src="assets/images/Almond Paste with Apricot Jam.png" alt="Apricot Almond Paste"></div>
+            <div class="tile-body"><div class="tile-title" data-i18n="tileFruitFilledTitle">Fruit-Filled</div><div class="tile-note" data-i18n="tileFruitFilledNote">Apricot and cherry for memorable gifting.</div></div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Trust strip ── -->
+  <div class="trust-strip">
+    <div class="container">
+      <div class="trust-items">
+        <div class="trust-item reveal" data-i18n="trust1"><span class="trust-icon">✦</span> Crafted in Sicily</div>
+        <div class="trust-item reveal reveal-d1" data-i18n="trust2"><span class="trust-icon">✦</span> Luxury gift packaging</div>
+        <div class="trust-item reveal reveal-d2" data-i18n="trust3"><span class="trust-icon">✦</span> Europe-wide delivery</div>
+        <div class="trust-item reveal reveal-d3" data-i18n="trust4"><span class="trust-icon">✦</span> Wholesale available</div>
+        <div class="trust-item reveal reveal-d4" data-i18n="trust5"><span class="trust-icon">✦</span> 100% authentic ingredients</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Story ── -->
+  <section class="section" id="story">
+    <div class="container">
+      <div class="transition reveal">
+        <h3 data-i18n="storyHeading">The taste of Sicily, interpreted with care</h3>
+        <p data-i18n="storyText">A softer, more refined way to experience a timeless tradition.</p>
+      </div>
+      <div class="ornament reveal"><div class="ornament-diamond"></div></div>
+      <div class="split">
+        <div class="content-card reveal">
+          <h2 data-i18n="storyTitle">A pastry tradition shaped by flavour, light, and <em>place</em></h2>
+          <p data-i18n="storyPara1">Siculera brings together almond, citrus, fruit, and Sicilian warmth in a collection designed to feel both familiar and elevated.</p>
+          <p data-i18n="storyPara2">At Siculera, each creation begins with a simple idea: to honour the character of Sicilian pastry through ingredients, balance, and quiet refinement.</p>
+          <p data-i18n="storyPara3">From the depth of traditional almond paste to the brightness of citrus, the richness of pistachio, and the delicacy of fruit-filled variations, every piece is shaped to feel elegant, memorable, and easy to share.</p>
+          <div class="bullets">
+            <div><strong data-i18n="storyBullet1Title">Authentic Sicilian inspiration</strong><span data-i18n="storyBullet1Text">Flavours rooted in tradition and regional character.</span></div>
+            <div><strong data-i18n="storyBullet2Title">Crafted to be shared</strong><span data-i18n="storyBullet2Text">Perfect for gifting, gatherings, and quiet moments of indulgence.</span></div>
+            <div><strong data-i18n="storyBullet3Title">Distinctive flavour collection</strong><span data-i18n="storyBullet3Text">Classic, citrus, pistachio, and fruit-filled almond creations.</span></div>
+          </div>
+          <div class="cta-row"><a href="#collection" class="btn btn-primary" data-i18n="discoverSignatureCollection">Discover the Signature Collection</a></div>
+        </div>
+        <div class="visual reveal reveal-d2">
+          <img src="assets/images/Man Baking.png" alt="Man baking Siculera pastries">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Flavours ── -->
+  <section class="section section-soft" id="flavours">
+    <div class="container">
+      <div class="transition reveal">
+        <h3>Begin with the flavour that suits the moment</h3>
+        <p>Some are classic. Some feel brighter. Others are softer, deeper, or more indulgent.</p>
+      </div>
+      <div class="section-center reveal">
+        <h2>Six creations, each with its own Sicilian character</h2>
+        <p>A collection shaped by contrast, balance, and the richness of Mediterranean flavour.</p>
+      </div>
+      <div class="ornament reveal"><div class="ornament-diamond"></div></div>
+      <div class="grid6">
+        <div class="flavour-card reveal"><h4>Traditional</h4><p>For those who love the classic Sicilian taste — deep, warm, and enduring.</p></div>
+        <div class="flavour-card reveal reveal-d1"><h4>Lemon</h4><p>Fresh, bright, and lightly vibrant with a clean Mediterranean lift.</p></div>
+        <div class="flavour-card reveal reveal-d2"><h4>Orange</h4><p>Citrus-forward and warmly Mediterranean, full of Sicilian sun.</p></div>
+        <div class="flavour-card reveal reveal-d3"><h4>Pistachio</h4><p>Richer, smoother, and more indulgent — a favourite for true connoisseurs.</p></div>
+        <div class="flavour-card reveal reveal-d4"><h4>Apricot Jam</h4><p>Soft, delicate, and gently fruity with a refined almond finish.</p></div>
+        <div class="flavour-card reveal reveal-d5"><h4>Caramelized Cherry</h4><p>Elegant, distinctive, and made for memorable gifting occasions.</p></div>
+      </div>
+      <div class="cta-row" style="justify-content:center;margin-top:32px">
+        <a href="#collection" class="btn btn-primary">Find Your Flavour</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Collection ── -->
+  <section class="section" id="collection">
+    <div class="container">
+      <div class="transition reveal">
+        <h3>A collection to choose slowly</h3>
+        <p>For your table, for a gift, or for the pleasure of discovering something beautifully made.</p>
+      </div>
+      <div class="section-center reveal">
+        <h2>The Siculera collection</h2>
+        <p>Six almond creations, composed with elegance and distinct character.</p>
+      </div>
+      <div class="ornament reveal"><div class="ornament-diamond"></div></div>
+      <div class="products-grid" id="productGrid"></div>
+    </div>
+  </section>
+
+  <!-- ── Feature split 1 ── -->
+  <section class="section section-soft">
+    <div class="container">
+      <div class="transition reveal">
+        <h3 data-i18n="featureHeading">What gives Siculera its presence</h3>
+        <p data-i18n="featureText">Not only flavour, but atmosphere, care, and the memory it leaves behind.</p>
+      </div>
+      <div class="split">
+        <div class="visual reveal">
+          <img src="assets/images/Second Section.png" alt="Siculera artisan baking atmosphere">
+        </div>
+        <div class="content-card reveal reveal-d2">
+          <h2 data-i18n="featureTitle">Rooted in Sicily. Composed with <em>restraint.</em></h2>
+          <p data-i18n="featurePara1">Each creation is shaped to bring together flavour, elegance, and the quiet generosity of Sicilian hospitality.</p>
+          <p data-i18n="featurePara2">Siculera draws from the flavours that belong naturally to Sicily: almond, citrus, pistachio, fruit, warmth, and welcome.</p>
+          <p data-i18n="featurePara3">What makes the collection distinctive is not only what it tastes like, but the way it feels — measured, refined, and made to be remembered.</p>
+          <div class="cta-row"><a href="#collection" class="btn btn-primary" data-i18n="whySiculera">Why Siculera</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Gifting ── -->
+  <section class="section" id="gifting">
+    <div class="container">
+      <div class="transition reveal">
+        <h3 data-i18n="giftingHeading">Made for graceful occasions</h3>
+        <p data-i18n="giftingText">For gifting, sharing, and the moments that deserve something considered.</p>
+      </div>
+      <div class="split">
+        <div class="content-card reveal">
+          <h2 data-i18n="giftingTitle">For gifts, tables, and <em>memorable</em> gestures</h2>
+          <p data-i18n="giftingPara1">A collection designed for moments where taste becomes part of the experience.</p>
+          <p data-i18n="giftingPara2">Some things are chosen not simply for flavour, but for the atmosphere they create.</p>
+          <p data-i18n="giftingPara3">Siculera is made for thoughtful gifts, elegant tables, warm welcomes, and celebrations that call for something distinctive yet understated.</p>
+          <div class="cta-row"><a href="#collection" class="btn btn-primary" data-i18n="giftingButton">Explore Giftable Selections</a></div>
+        </div>
+        <div class="visual reveal reveal-d2">
+          <img src="assets/images/Third Section.png" alt="Siculera gift presentation">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Testimonials ── -->
+  <section class="section section-soft">
+    <div class="container">
+      <div class="transition reveal">
+        <h3>Chosen with care, remembered with warmth</h3>
+        <p>A few words from those who have made Siculera part of their table.</p>
+      </div>
+      <div class="ornament reveal"><div class="ornament-diamond"></div></div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"An extraordinary gift. The pistachio almond paste was unlike anything I had tried before — refined, elegant, and unmistakably Sicilian."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar"><img src="assets/images/Prof image 1.png" alt="Isabella"></div>
+            <div><div class="testimonial-name">Isabella M.</div><div class="testimonial-role">Milan, Italy</div></div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal reveal-d2">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"We serve Siculera at our boutique hotel and guests ask about it every season. The packaging alone conveys the quality inside."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar"><img src="assets/images/Prof image 3.png" alt="Thomas"></div>
+            <div><div class="testimonial-name">Thomas R.</div><div class="testimonial-role">Head of Hospitality, Côte d'Azur</div></div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal reveal-d4">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"I sent a box of the caramelized cherry to a client in London. The response was immediate — she asked where to order more. Impeccable."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar"><img src="assets/images/Prof Image 4.png" alt="Camille"></div>
+            <div><div class="testimonial-name">Camille D.</div><div class="testimonial-role">Corporate Gifting, Paris</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Wholesale ── -->
+  <section class="section" id="wholesale">
+    <div class="container">
+      <div class="transition reveal">
+        <h3 data-i18n="wholesaleHeading">Also shaped for hospitality and refined retail</h3>
+        <p data-i18n="wholesaleText">A Sicilian offering suited to hotels, cafés, boutiques, and considered business gifting.</p>
+      </div>
+      <div class="split">
+        <div class="content-card reveal">
+          <h2 data-i18n="wholesaleTitle">For hospitality, retail, and <em>business</em> gifting</h2>
+          <p data-i18n="wholesalePara1">A refined Sicilian collection for partners who want to offer something memorable and beautifully received.</p>
+          <p data-i18n="wholesalePara2">Siculera is designed not only for individual orders, but also for boutique hospitality, gourmet retail, and thoughtful corporate gifting.</p>
+          <p data-i18n="wholesalePara3">Presented with care, the collection can become part of a welcome, a curated retail selection, or a gesture that leaves a lasting impression.</p>
+          <div class="cta-row">
+            <button class="btn btn-primary" id="openWholesaleBtn" type="button" data-i18n="wholesaleButton">Enquire About Wholesale</button>
+          </div>
+        </div>
+        <div class="visual reveal reveal-d2">
+          <img src="assets/images/Pistachio Image.png" alt="Pistachio almond offering">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ── -->
+  <section class="section section-soft" id="faq">
+    <div class="container">
+      <div class="transition reveal">
+        <h3 data-i18n="faqHeading">A few simple clarifications</h3>
+        <p data-i18n="faqText">For personal orders, gifts, and business enquiries.</p>
+      </div>
+      <div class="section-center reveal">
+        <h2 data-i18n="faqTitle">Questions before choosing Siculera</h2>
+        <p data-i18n="faqIntro">Everything should feel clear, calm, and easy from the beginning.</p>
+      </div>
+      <div class="ornament reveal"><div class="ornament-diamond"></div></div>
+      <div class="grid6">
+        <div class="faq-item reveal"><h4 data-i18n="faqQ1">Can I order Siculera online for personal delivery?</h4><p data-i18n="faqA1">Yes. You can explore the collection online and choose the flavours or selection that best fits the occasion.</p></div>
+        <div class="faq-item reveal reveal-d1"><h4 data-i18n="faqQ2">Is Siculera suitable for gifting?</h4><p data-i18n="faqA2">Absolutely. The collection is designed to feel thoughtful, elegant, and easy to share — ideal for gifts and special moments.</p></div>
+        <div class="faq-item reveal reveal-d2"><h4 data-i18n="faqQ3">Can businesses order for hotels, retail, or client gifting?</h4><p data-i18n="faqA3">Yes. We welcome enquiries from boutique hotels, cafés, gourmet shops, and businesses looking for memorable gifting options.</p></div>
+        <div class="faq-item reveal reveal-d3"><h4 data-i18n="faqQ4">Do I need to know exactly what I want before contacting you?</h4><p data-i18n="faqA4">Not at all. Whether you already have something specific in mind or simply want guidance, we can help you find the right option.</p></div>
+        <div class="faq-item reveal reveal-d4"><h4 data-i18n="faqQ5">Can I choose flavours based on the occasion?</h4><p data-i18n="faqA5">Yes. Some prefer a classic selection, while others choose citrus, pistachio, or fruit-filled varieties depending on the mood or season.</p></div>
+        <div class="faq-item reveal reveal-d5"><h4 data-i18n="faqQ6">Is there a wholesale or partnership option?</h4><p data-i18n="faqA6">Yes. If you are interested in retail, hospitality, or larger gifting orders, you can contact us through the business enquiry path.</p></div>
+      </div>
+      <div class="cta-row" style="justify-content:center;margin-top:32px">
+        <button class="btn btn-primary" id="openCartBtn2" type="button" data-i18n="orderOrEnquire">Order or Enquire</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Newsletter ── -->
+  <section class="newsletter-section">
+    <div class="container">
+      <div class="newsletter-inner">
+        <span class="eyebrow" data-i18n="newsletterEyebrow">Stay in touch</span>
+        <h2 data-i18n="newsletterTitle">Seasonal stories, new flavours, and quiet invitations</h2>
+        <p data-i18n="newsletterText">Receive occasional notes from Siculera — never frequent, always considered.</p>
+        <form class="newsletter-form" id="newsletterForm" novalidate>
+          <input type="email" placeholder="Your email address" aria-label="Email address" id="newsletterEmail" required>
+          <button type="submit" data-i18n="subscribeButton">Subscribe</button>
+        </form>
+        <p id="newsletterSuccess" data-i18n="newsletterSuccess">Thank you — you will hear from us soon.</p>
+        <p class="newsletter-note" data-i18n="newsletterNote">No noise. Unsubscribe at any time.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA banner ── -->
+  <section class="section">
+    <div class="container">
+      <div class="cta-banner reveal">
+        <span class="eyebrow" data-i18n="ctaInvitationEyebrow">An Invitation</span>
+        <h2 data-i18n="ctaInvitationTitle">Bring a refined taste of Sicily into the moment</h2>
+        <p data-i18n="ctaInvitationText1">Siculera is created to be chosen with pleasure, shared with ease, and remembered with warmth.</p>
+        <p data-i18n="ctaInvitationText2">Whether you are discovering the collection for the first time or already know what you want, the path forward should feel simple and considered.</p>
+        <div class="cta-row">
+          <a href="#collection" class="btn btn-primary" data-i18n="discoverCollection">Discover the Collection</a>
+          <button class="btn btn-secondary" id="openWholesaleBtn2" type="button" data-i18n="wholesaleEnquiries">Wholesale Enquiries</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── Footer ── -->
+<footer class="footer" id="contact">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="brand-name-footer">Siculera</span>
+        <p>Authentic Sicilian almond specialties made for gifting, sharing, and memorable moments of refined pleasure.</p>
+        <div class="social-links" aria-label="Social media">
+          <a class="social-link" href="#" aria-label="Instagram">in</a>
+          <a class="social-link" href="#" aria-label="Facebook">f</a>
+          <a class="social-link" href="#" aria-label="Pinterest">p</a>
+        </div>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#collection">Shop All</a></li>
+          <li><a href="#collection">Traditional Almond Paste</a></li>
+          <li><a href="#collection">Lemon Almond Paste</a></li>
+          <li><a href="#collection">Orange Almond Paste</a></li>
+          <li><a href="#collection">Gift Selections</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>About</h4>
+        <ul>
+          <li><a href="#story">Our Story</a></li>
+          <li><a href="#flavours">Flavours</a></li>
+          <li><a href="#gifting">Gifting</a></li>
+          <li><a href="#wholesale">Wholesale &amp; Hospitality</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Customer Care</h4>
+        <ul>
+          <li>Shipping Information</li>
+          <li>Returns &amp; Refunds</li>
+          <li>Ordering Information</li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li>hello@siculera.it</li>
+          <li>wholesale@siculera.it</li>
+          <li>Sicily, Italy</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>We respect your privacy and handle your information with care, in line with applicable data protection requirements.</div>
+      <div>© 2026 Siculera. All rights reserved. &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- ── Overlay ── -->
+<!-- ── Mobile Sticky CTA ── -->
+<div class="mobile-cta" id="mobileCta" aria-label="Quick order">
+  <button class="btn btn-primary" id="mobileCTABtn" type="button" data-i18n="discoverCollection">Discover the Collection</button>
+</div>
+
+<div class="overlay" id="overlay" role="presentation"></div>
+
+<!-- ── Cart Drawer ── -->
+<aside class="drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Shopping cart">
+  <div class="drawer-header">
+    <div>
+      <div class="serif" style="font-family:var(--serif);font-size:1.5rem;font-weight:400" data-i18n="cartSelectionTitle">Your selection</div>
+      <div style="color:var(--muted);font-size:.88rem;font-weight:300" data-i18n="cartSelectionSubtitle">Review your Siculera creations.</div>
+    </div>
+    <button class="close" id="closeCartBtn" aria-label="Close cart" type="button">×</button>
+  </div>
+  <div class="drawer-content">
+    <div id="cartItems"></div>
+    <div class="note" data-i18n="cartDrawerNote">Shipping and delivery options are shown at checkout.</div>
+    <div class="gift-box">
+      <label class="checkbox">
+        <input type="checkbox" id="giftToggle">
+        <span data-i18n="giftOrderLabel">This order is a gift</span>
+      </label>
+      <textarea id="giftMessage" rows="3" placeholder="Add a gift message (optional)" style="display:none" aria-label="Gift message"></textarea>
+    </div>
+  </div>
+  <div class="drawer-footer">
+    <div class="summary-row"><span data-i18n="subtotalLabel">Subtotal</span><strong id="drawerSubtotal">€0.00</strong></div>
+    <div class="cta-row" style="margin-top:16px">
+      <button class="btn btn-primary" id="checkoutBtn" type="button" style="width:100%" data-i18n="checkoutButton">Checkout</button>
+      <button class="btn btn-secondary" id="viewCartBtn" type="button" style="width:100%" data-i18n="viewCart">View Full Cart</button>
+    </div>
+  </div>
+</aside>
+
+<!-- ── Cart Modal ── -->
+<section class="modal" id="cartModal" role="dialog" aria-modal="true" aria-label="Your cart">
+  <div class="modal-header">
+    <div>
+      <div style="font-family:var(--serif);font-size:1.65rem;font-weight:400" data-i18n="cartSelectionTitle">Your selection</div>
+      <div style="color:var(--muted);font-size:.88rem;font-weight:300" data-i18n="cartModalSubtitle">Review your Siculera creations before checkout.</div>
+    </div>
+    <button class="close" id="closeCartModal" aria-label="Close" type="button">×</button>
+  </div>
+  <div class="modal-body">
+    <div class="cart-layout">
+      <div id="cartModalItems"></div>
+      <div class="summary-card">
+        <div style="font-family:var(--serif);font-size:1.3rem;font-weight:400;margin-bottom:12px" data-i18n="orderSummary">Order summary</div>
+        <div class="summary-row"><span data-i18n="subtotalLabel">Subtotal</span><strong id="modalSubtotal">€0.00</strong></div>
+        <div class="summary-row"><span data-i18n="estimatedShipping">Estimated shipping</span><span style="color:var(--muted)" data-i18n="calculatedAtCheckout">Calculated at checkout</span></div>
+        <div class="note" style="margin:14px 0 0" data-i18n="cartSecureNote">Secure checkout. Prepared with care. Gift and business options available.</div>
+        <div class="cta-row" style="margin-top:16px">
+          <button class="btn btn-primary" id="modalCheckoutBtn" type="button" style="width:100%" data-i18n="proceedToCheckout">Proceed to Checkout</button>
+          <button class="btn btn-secondary" id="continueShoppingBtn" type="button" style="width:100%" data-i18n="continueShopping">Continue Shopping</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Checkout Modal ── -->
+<section class="modal" id="checkoutModal" role="dialog" aria-modal="true" aria-label="Checkout">
+  <div class="modal-header">
+    <div>
+      <div style="font-family:var(--serif);font-size:1.65rem;font-weight:400">Checkout</div>
+      <div style="color:var(--muted);font-size:.88rem;font-weight:300">Your order will be prepared with care and confirmed by email.</div>
+    </div>
+    <button class="close" id="closeCheckoutModal" aria-label="Close" type="button">×</button>
+  </div>
+  <div class="modal-body">
+    <div class="checkout-grid">
+      <div>
+        <div class="checkout-section">
+          <div class="checkout-section serif" style="font-family:var(--serif);font-size:1.2rem;font-weight:400;margin-bottom:14px">Contact</div>
+          <div class="field">
+            <label for="coEmail">Email</label>
+            <input type="email" id="coEmail" placeholder="you@example.com" autocomplete="email">
+          </div>
+          <div class="field">
+            <label for="coPhone">Phone</label>
+            <input type="tel" id="coPhone" placeholder="+39" autocomplete="tel">
+          </div>
+        </div>
+        <div class="checkout-section">
+          <div style="font-family:var(--serif);font-size:1.2rem;font-weight:400;margin-bottom:14px">Delivery</div>
+          <div class="field"><label for="coName">Full name</label><input id="coName" placeholder="Your full name" autocomplete="name"></div>
+          <div class="field"><label for="coAddress">Address</label><input id="coAddress" placeholder="Street address" autocomplete="street-address"></div>
+          <div class="field"><label for="coCity">City</label><input id="coCity" placeholder="City" autocomplete="address-level2"></div>
+          <div class="field"><label for="coPost">Postal code</label><input id="coPost" placeholder="Postal code" autocomplete="postal-code"></div>
+          <div class="field"><label for="coCountry">Country</label><input id="coCountry" placeholder="Country" autocomplete="country-name"></div>
+        </div>
+        <div class="checkout-section">
+          <div style="font-family:var(--serif);font-size:1.2rem;font-weight:400;margin-bottom:14px">Shipping</div>
+          <div class="field">
+            <label for="coShip">Shipping method</label>
+            <select id="coShip">
+              <option>Standard Delivery (3–5 days)</option>
+              <option>Express Delivery (1–2 days)</option>
+            </select>
+          </div>
+        </div>
+        <div class="checkout-section">
+          <div style="font-family:var(--serif);font-size:1.2rem;font-weight:400;margin-bottom:14px">Payment</div>
+          <div class="field">
+            <label for="coPay">Payment method</label>
+            <select id="coPay">
+              <option>Card</option>
+              <option>PayPal</option>
+              <option>Apple Pay</option>
+              <option>Google Pay</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="summary-card">
+        <div style="font-family:var(--serif);font-size:1.3rem;font-weight:400;margin-bottom:12px">Order summary</div>
+        <div id="checkoutSummary"></div>
+        <div class="summary-row" style="border-top:1px solid var(--line);padding-top:10px;margin-top:6px">
+          <span style="font-weight:500">Total</span>
+          <strong id="checkoutTotal">€0.00</strong>
+        </div>
+        <div class="note" style="margin-top:14px">Secure checkout. Carefully prepared for delivery.</div>
+        <div id="checkoutError" style="display:none;font-size:.88rem;color:#c0392b;margin-top:10px;padding:10px 12px;background:rgba(192,57,43,.06);border-radius:10px"></div>
+        <div class="cta-row" style="margin-top:16px">
+          <button class="btn btn-primary" id="placeOrderBtn" type="button" style="width:100%">Place Order</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Success Modal ── -->
+<section class="modal" id="successModal" role="dialog" aria-modal="true" aria-label="Order confirmed">
+  <div class="modal-header">
+    <div>
+      <div style="font-family:var(--serif);font-size:1.65rem;font-weight:400">Order confirmed</div>
+      <div style="color:var(--muted);font-size:.88rem;font-weight:300">Thank you for choosing Siculera.</div>
+    </div>
+    <button class="close" id="closeSuccessModal" aria-label="Close" type="button">×</button>
+  </div>
+  <div class="modal-body success">
+    <div class="success-mark" aria-hidden="true">✓</div>
+    <h2 style="font-family:var(--serif);font-weight:400">Thank you for your order</h2>
+    <p>Your Siculera selection has been received and will be prepared with care.</p>
+    <p id="successOrderText" style="color:var(--muted);font-weight:300;font-size:.94rem"></p>
+    <div class="cta-row" style="justify-content:center;margin-top:24px">
+      <a href="#collection" class="btn btn-primary" id="keepExploringBtn">Continue Exploring</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Wholesale Modal ── -->
+<section class="modal" id="wholesaleModal" role="dialog" aria-modal="true" aria-label="Wholesale enquiry">
+  <div class="modal-header">
+    <div>
+      <div style="font-family:var(--serif);font-size:1.65rem;font-weight:400">Wholesale &amp; hospitality enquiry</div>
+      <div style="color:var(--muted);font-size:.88rem;font-weight:300">Tell us a little about your business and we will be in touch shortly.</div>
+    </div>
+    <button class="close" id="closeWholesaleModal" aria-label="Close" type="button">×</button>
+  </div>
+  <div class="modal-body">
+    <form class="wholesale-form" id="wholesaleForm" novalidate>
+      <div class="field"><label for="wName">Full name</label><input id="wName" required placeholder="Your name"></div>
+      <div class="field"><label for="wBiz">Business name</label><input id="wBiz" required placeholder="Business name"></div>
+      <div class="field"><label for="wEmail">Email</label><input id="wEmail" required type="email" placeholder="Email"></div>
+      <div class="field"><label for="wPhone">Phone</label><input id="wPhone" placeholder="Phone"></div>
+      <div class="field"><label for="wCountry">Country</label><input id="wCountry" placeholder="Country"></div>
+      <div class="field">
+        <label for="wType">Business type</label>
+        <select id="wType">
+          <option>Hotel / Resort</option>
+          <option>Café</option>
+          <option>Gourmet Shop</option>
+          <option>Retailer</option>
+          <option>Corporate Gifting</option>
+          <option>Distributor</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="field full"><label for="wQty">Estimated quantity or order type</label><input id="wQty" placeholder="Tell us what you are looking for"></div>
+      <div class="field full"><label for="wMsg">Message</label><textarea id="wMsg" rows="5" placeholder="How would you like to work with Siculera?"></textarea></div>
+      <div class="full cta-row"><button class="btn btn-primary" type="submit">Send Enquiry</button></div>
+    </form>
+    <div id="wholesaleSuccess" style="display:none" class="success">
+      <div class="success-mark" aria-hidden="true">✓</div>
+      <h2 style="font-family:var(--serif);font-weight:400">Thank you for your enquiry</h2>
+      <p>We have received your request and will be in touch shortly.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+// ── Products (loaded dynamically from API) ──
+let products = [];
+
+const translations = {
+  en: {
+    topbar: 'Carefully crafted in Sicily &nbsp;·&nbsp; <strong>Complimentary gift wrapping</strong> on all orders',
+    brandSub: 'Pasticceria Siciliana',
+    navShop: 'Shop',
+    navFlavours: 'Flavours',
+    navGifting: 'Gifting',
+    navWholesale: 'Wholesale',
+    navStory: 'Our Story',
+    navContact: 'Contact',
+    navAccount: 'Account',
+    heroEyebrow: 'Luxury Sicilian Pastry House',
+    heroTitle: 'Sicilian almond pastry, <em>reimagined</em> with elegance',
+    heroText: 'Traditional, citrus, pistachio, and fruit-filled creations made for gifting, sharing, and refined everyday pleasure.',
+    discoverCollection: 'Discover the Collection',
+    exploreFlavours: 'Explore the Flavours',
+    tileTraditionalTitle: 'Traditional',
+    tileTraditionalNote: 'Timeless, elegant, unmistakably Sicilian.',
+    tileLemonOrangeTitle: 'Lemon & Orange',
+    tileLemonOrangeNote: 'Bright citrus depth with Mediterranean warmth.',
+    tilePistachioTitle: 'Pistachio',
+    tilePistachioNote: 'Richer, softer, more indulgent.',
+    tileFruitFilledTitle: 'Fruit-Filled',
+    tileFruitFilledNote: 'Apricot and cherry for memorable gifting.',
+    cartLabel: 'Cart',
+    outOfStock: 'Out of Stock',
+    signatureFlavour: 'Signature flavour',
+    addToCart: 'Add to Cart',
+    yourCartEmpty: 'Your cart is currently empty.',
+    viewCart: 'View Cart',
+    viewCartCount: 'View Cart ({count})',
+    continueShopping: 'Continue Shopping',
+    checkoutButton: 'Checkout',
+    proceedToCheckout: 'Proceed to Checkout',
+    subtotalLabel: 'Subtotal',
+    cartSelectionTitle: 'Your selection',
+    cartSelectionSubtitle: 'Review your Siculera creations.',
+    cartModalSubtitle: 'Review your Siculera creations before checkout.',
+    orderSummary: 'Order summary',
+    estimatedShipping: 'Estimated shipping',
+    calculatedAtCheckout: 'Calculated at checkout',
+    cartDrawerNote: 'Shipping and delivery options are shown at checkout.',
+    cartSecureNote: 'Secure checkout. Prepared with care. Gift and business options available.',
+    giftOrderLabel: 'This order is a gift',
+    giftMessagePlaceholder: 'Add a gift message (optional)',
+    giftMessageAria: 'Gift message',
+    emptyCartSummary: 'No items selected yet.',
+    decreaseQty: 'Decrease quantity',
+    increaseQty: 'Increase quantity',
+    removeItem: 'Remove',
+    openCartAria: 'Open shopping cart',
+    trust1: 'Crafted in Sicily',
+    trust2: 'Luxury gift packaging',
+    trust3: 'Europe-wide delivery',
+    trust4: 'Wholesale available',
+    trust5: '100% authentic ingredients',
+    storyHeading: 'The taste of Sicily, interpreted with care',
+    storyText: 'A softer, more refined way to experience a timeless tradition.',
+    storyTitle: 'A pastry tradition shaped by flavour, light, and <em>place</em>',
+    storyPara1: 'Siculera brings together almond, citrus, fruit, and Sicilian warmth in a collection designed to feel both familiar and elevated.',
+    storyPara2: 'At Siculera, each creation begins with a simple idea: to honour the character of Sicilian pastry through ingredients, balance, and quiet refinement.',
+    storyPara3: 'From the depth of traditional almond paste to the brightness of citrus, the richness of pistachio, and the delicacy of fruit-filled variations, every piece is shaped to feel elegant, memorable, and easy to share.',
+    storyBullet1Title: 'Authentic Sicilian inspiration',
+    storyBullet1Text: 'Flavours rooted in tradition and regional character.',
+    storyBullet2Title: 'Crafted to be shared',
+    storyBullet2Text: 'Perfect for gifting, gatherings, and quiet moments of indulgence.',
+    storyBullet3Title: 'Distinctive flavour collection',
+    storyBullet3Text: 'Classic, citrus, pistachio, and fruit-filled almond creations.',
+    discoverSignatureCollection: 'Discover the Signature Collection',
+    featureHeading: 'What gives Siculera its presence',
+    featureText: 'Not only flavour, but atmosphere, care, and the memory it leaves behind.',
+    featureTitle: 'Rooted in Sicily. Composed with <em>restraint.</em>',
+    featurePara1: 'Each creation is shaped to bring together flavour, elegance, and the quiet generosity of Sicilian hospitality.',
+    featurePara2: 'Siculera draws from the flavours that belong naturally to Sicily: almond, citrus, pistachio, fruit, warmth, and welcome.',
+    featurePara3: 'What makes the collection distinctive is not only what it tastes like, but the way it feels — measured, refined, and made to be remembered.',
+    whySiculera: 'Why Siculera',
+    giftingHeading: 'Made for graceful occasions',
+    giftingText: 'For gifting, sharing, and the moments that deserve something considered.',
+    giftingTitle: 'For gifts, tables, and <em>memorable</em> gestures',
+    giftingPara1: 'A collection designed for moments where taste becomes part of the experience.',
+    giftingPara2: 'Some things are chosen not simply for flavour, but for the atmosphere they create.',
+    giftingPara3: 'Siculera is made for thoughtful gifts, elegant tables, warm welcomes, and celebrations that call for something distinctive yet understated.',
+    giftingButton: 'Explore Giftable Selections',
+    wholesaleHeading: 'Also shaped for hospitality and refined retail',
+    wholesaleText: 'A Sicilian offering suited to hotels, cafés, boutiques, and considered business gifting.',
+    wholesaleTitle: 'For hospitality, retail, and <em>business</em> gifting',
+    wholesalePara1: 'A refined Sicilian collection for partners who want to offer something memorable and beautifully received.',
+    wholesalePara2: 'Siculera is designed not only for individual orders, but also for boutique hospitality, gourmet retail, and thoughtful corporate gifting.',
+    wholesalePara3: 'Presented with care, the collection can become part of a welcome, a curated retail selection, or a gesture that leaves a lasting impression.',
+    wholesaleButton: 'Enquire About Wholesale',
+    faqHeading: 'A few simple clarifications',
+    faqText: 'For personal orders, gifts, and business enquiries.',
+    faqTitle: 'Questions before choosing Siculera',
+    faqIntro: 'Everything should feel clear, calm, and easy from the beginning.',
+    faqQ1: 'Can I order Siculera online for personal delivery?',
+    faqA1: 'Yes. You can explore the collection online and choose the flavours or selection that best fits the occasion.',
+    faqQ2: 'Is Siculera suitable for gifting?',
+    faqA2: 'Absolutely. The collection is designed to feel thoughtful, elegant, and easy to share — ideal for gifts and special moments.',
+    faqQ3: 'Can businesses order for hotels, retail, or client gifting?',
+    faqA3: 'Yes. We welcome enquiries from boutique hotels, cafés, gourmet shops, and businesses looking for memorable gifting options.',
+    faqQ4: 'Do I need to know exactly what I want before contacting you?',
+    faqA4: 'Not at all. Whether you already have something specific in mind or simply want guidance, we can help you find the right option.',
+    faqQ5: 'Can I choose flavours based on the occasion?',
+    faqA5: 'Yes. Some prefer a classic selection, while others choose citrus, pistachio, or fruit-filled varieties depending on the mood or season.',
+    faqQ6: 'Is there a wholesale or partnership option?',
+    faqA6: 'Yes. If you are interested in retail, hospitality, or larger gifting orders, you can contact us through the business enquiry path.',
+    orderOrEnquire: 'Order or Enquire',
+    newsletterEyebrow: 'Stay in touch',
+    newsletterTitle: 'Seasonal stories, new flavours, and quiet invitations',
+    newsletterText: 'Receive occasional notes from Siculera — never frequent, always considered.',
+    subscribeButton: 'Subscribe',
+    newsletterSuccess: 'Thank you — you will hear from us soon.',
+    newsletterNote: 'No noise. Unsubscribe at any time.',
+    ctaInvitationEyebrow: 'An Invitation',
+    ctaInvitationTitle: 'Bring a refined taste of Sicily into the moment',
+    ctaInvitationText1: 'Siculera is created to be chosen with pleasure, shared with ease, and remembered with warmth.',
+    ctaInvitationText2: 'Whether you are discovering the collection for the first time or already know what you want, the path forward should feel simple and considered.',
+    wholesaleEnquiries: 'Wholesale Enquiries',
+    languageToggle: 'EN / IT'
+  },
+  it: {
+    topbar: 'Realizzato con cura in Sicilia &nbsp;·&nbsp; <strong>Confezione regalo omaggio</strong> su tutti gli ordini',
+    brandSub: 'Pasticceria Siciliana',
+    navShop: 'Shop',
+    navFlavours: 'Sapori',
+    navGifting: 'Regali',
+    navWholesale: 'Ingrosso',
+    navStory: 'La Storia',
+    navContact: 'Contatti',
+    navAccount: 'Account',
+    heroEyebrow: 'Pasticceria siciliana di lusso',
+    heroTitle: 'Pasticceria di mandorla siciliana, <em>reinventata</em> con eleganza',
+    heroText: 'Creazioni tradizionali, agrumate, al pistacchio e farcite con frutta, pensate per regalare, condividere e vivere un piacere quotidiano raffinato.',
+    discoverCollection: 'Scopri la Collezione',
+    exploreFlavours: 'Esplora i Sapori',
+    tileTraditionalTitle: 'Tradizionale',
+    tileTraditionalNote: 'Semplice, elegante, inconfondibilmente siciliano.',
+    tileLemonOrangeTitle: 'Limone & Arancia',
+    tileLemonOrangeNote: 'Profondità agrumata con calore mediterraneo.',
+    tilePistachioTitle: 'Pistacchio',
+    tilePistachioNote: 'Più ricco, morbido e naturalmente più goloso.',
+    tileFruitFilledTitle: 'Farcito di frutta',
+    tileFruitFilledNote: 'Albicocca e ciliegia per un regalo memorabile.',
+    cartLabel: 'Carrello',
+    outOfStock: 'Esaurito',
+    signatureFlavour: 'Gusto di punta',
+    addToCart: 'Aggiungi al carrello',
+    yourCartEmpty: 'Il tuo carrello è vuoto.',
+    viewCart: 'Vedi Carrello',
+    viewCartCount: 'Vedi Carrello ({count})',
+    continueShopping: 'Continua gli acquisti',
+    checkoutButton: 'Vai al checkout',
+    proceedToCheckout: 'Vai al pagamento',
+    subtotalLabel: 'Totale parziale',
+    cartSelectionTitle: 'La tua selezione',
+    cartSelectionSubtitle: 'Rivedi le tue creazioni Siculera.',
+    cartModalSubtitle: 'Rivedi le tue creazioni Siculera prima del checkout.',
+    orderSummary: 'Riepilogo ordine',
+    estimatedShipping: 'Spedizione stimata',
+    calculatedAtCheckout: 'Calcolata al pagamento',
+    cartDrawerNote: 'Le opzioni di spedizione e consegna saranno mostrate al checkout.',
+    cartSecureNote: 'Checkout sicuro. Preparato con cura. Opzioni regalo e business disponibili.',
+    giftOrderLabel: 'Questo ordine è un regalo',
+    giftMessagePlaceholder: 'Aggiungi un messaggio regalo (opzionale)',
+    giftMessageAria: 'Messaggio regalo',
+    emptyCartSummary: 'Nessun articolo selezionato al momento.',
+    decreaseQty: 'Diminuisci quantità',
+    increaseQty: 'Aumenta quantità',
+    removeItem: 'Rimuovi',
+    openCartAria: 'Apri il carrello',
+    trust1: 'Realizzato in Sicilia',
+    trust2: 'Confezione regalo di lusso',
+    trust3: 'Consegna in tutta Europa',
+    trust4: 'Disponibile all’ingrosso',
+    trust5: 'Ingredienti 100% autentici',
+    storyHeading: 'Il gusto della Sicilia interpretato con cura',
+    storyText: 'Un modo più morbido e raffinato per vivere una tradizione senza tempo.',
+    storyTitle: 'Una tradizione dolciaria plasmata da sapore, luce e <em>luogo</em>',
+    storyPara1: 'Siculera unisce mandorla, agrumi, frutta e calore siciliano in una collezione pensata per risultare familiare ed elevata al tempo stesso.',
+    storyPara2: 'Da Siculera ogni creazione nasce da un’idea semplice: onorare il carattere della pasticceria siciliana attraverso ingredienti, equilibrio e raffinata misura.',
+    storyPara3: 'Dalla profondità della pasta di mandorla tradizionale alla luminosità degli agrumi, dalla ricchezza del pistacchio alla delicatezza delle varianti farcite, ogni pezzo è pensato per essere elegante, memorabile e facile da condividere.',
+    storyBullet1Title: 'Ispirazione siciliana autentica',
+    storyBullet1Text: 'Sapori radicati nella tradizione e nel carattere regionale.',
+    storyBullet2Title: 'Creato per essere condiviso',
+    storyBullet2Text: 'Perfetto per regali, incontri e momenti di pura indulgenza.',
+    storyBullet3Title: 'Collezione di sapori distintiva',
+    storyBullet3Text: 'Creazioni di mandorla classiche, agrumate, al pistacchio e farcite.',
+    discoverSignatureCollection: 'Scopri la Collezione Signature',
+    featureHeading: 'Ciò che conferisce presenza a Siculera',
+    featureText: 'Non solo sapore, ma atmosfera, cura e l’impressione che lascia.',
+    featureTitle: 'Radicata in Sicilia. Composta con <em>controllo.</em>',
+    featurePara1: 'Ogni creazione è pensata per unire sapore, eleganza e la quieta generosità dell’ospitalità siciliana.',
+    featurePara2: 'Siculera si ispira ai sapori che appartengono naturalmente alla Sicilia: mandorla, agrumi, pistacchio, frutta, calore e accoglienza.',
+    featurePara3: 'Ciò che rende la collezione distintiva non è solo il gusto, ma la sensazione che lascia — misurata, raffinata e pensata per essere ricordata.',
+    whySiculera: 'Perché Siculera',
+    giftingHeading: 'Pensato per occasioni raffinate',
+    giftingText: 'Per regali, condivisione e momenti che meritano qualcosa di attento.',
+    giftingTitle: 'Per regali, tavole e gesti <em>memorabili</em>',
+    giftingPara1: 'Una collezione studiata per momenti in cui il gusto diventa parte dell’esperienza.',
+    giftingPara2: 'Alcune scelte non riguardano solo il sapore, ma l’atmosfera che creano.',
+    giftingPara3: 'Siculera è pensata per regali raffinati, tavole eleganti, accoglienze calde e celebrazioni che vogliono qualcosa di distintivo ma sobrio.',
+    giftingButton: 'Esplora le selezioni regalo',
+    wholesaleHeading: 'Pensato anche per ospitalità e retail raffinato',
+    wholesaleText: 'Un’offerta siciliana adatta a hotel, caffè, boutique e regali aziendali curati.',
+    wholesaleTitle: 'Per ospitalità, retail e regali <em>business</em>',
+    wholesalePara1: 'Una collezione siciliana raffinata per partner che desiderano qualcosa di memorabile e ben ricevuto.',
+    wholesalePara2: 'Siculera è pensata non solo per ordini individuali, ma anche per ospitalità boutique, retail gourmet e regali aziendali selezionati.',
+    wholesalePara3: 'Presentata con cura, la collezione può diventare parte di un’accoglienza, di una selezione curata o di un gesto che lascia il segno.',
+    wholesaleButton: 'Richiedi informazioni all’ingrosso',
+    faqHeading: 'Alcune semplici domande',
+    faqText: 'Per ordini personali, regali e richieste business.',
+    faqTitle: 'Domande prima di scegliere Siculera',
+    faqIntro: 'Tutto dovrebbe risultare chiaro, tranquillo e facile fin dall’inizio.',
+    faqQ1: 'Posso ordinare Siculera online per consegna personale?',
+    faqA1: 'Sì. Puoi esplorare la collezione online e scegliere i sapori o la selezione che meglio si adattano all’occasione.',
+    faqQ2: 'Siculera è adatta per i regali?',
+    faqA2: 'Assolutamente. La collezione è pensata per risultare attenta, elegante e facile da condividere — ideale per regali e momenti speciali.',
+    faqQ3: 'Le aziende possono ordinare per hotel, retail o regali ai clienti?',
+    faqA3: 'Sì. Accogliamo richieste da hotel boutique, caffè, negozi gourmet e aziende che cercano opzioni regalo memorabili.',
+    faqQ4: 'Devo sapere esattamente cosa voglio prima di contattarvi?',
+    faqA4: 'Per niente. Che tu abbia già un’idea precisa o desideri semplicemente una guida, possiamo aiutarti a trovare la soluzione giusta.',
+    faqQ5: 'Posso scegliere i sapori in base all’occasione?',
+    faqA5: 'Sì. Alcuni preferiscono una selezione classica, mentre altri scelgono agrumi, pistacchio o varianti farcite a seconda dell’umore o della stagione.',
+    faqQ6: 'Esiste un’opzione all’ingrosso o partnership?',
+    faqA6: 'Sì. Se sei interessato a retail, ospitalità o ordini più grandi, puoi contattarci tramite il percorso di richiesta business.',
+    orderOrEnquire: 'Ordina o Richiedi',
+    newsletterEyebrow: 'Rimani in contatto',
+    newsletterTitle: 'Racconti stagionali, nuovi sapori e inviti discreti',
+    newsletterText: 'Ricevi occasionali aggiornamenti da Siculera — mai frequenti, sempre pensati.',
+    subscribeButton: 'Iscriviti',
+    newsletterSuccess: 'Grazie — riceverai presto nostre notizie.',
+    newsletterNote: 'Niente rumore. Annulla l’iscrizione in qualsiasi momento.',
+    ctaInvitationEyebrow: 'Un invito',
+    ctaInvitationTitle: 'Porta un gusto raffinato di Sicilia nel momento',
+    ctaInvitationText1: 'Siculera è creata per essere scelta con piacere, condivisa con facilità e ricordata con calore.',
+    ctaInvitationText2: 'Che tu stia scoprendo la collezione per la prima volta o già sappia cosa desideri, il percorso deve risultare semplice e pensato.',
+    wholesaleEnquiries: 'Richieste all’ingrossità',
+    increaseQty: 'Aumenta quantità',
+    removeItem: 'Rimuovi',
+    openCartAria: 'Apri il carrello',
+    trust1: 'Realizzato in Sicilia',
+    trust2: 'Confezione regalo di lusso',
+    trust3: 'Consegna in tutta Europa',
+    trust4: 'Disponibile all’ingrosso',
+    trust5: 'Ingredienti 100% autentici',
+    storyHeading: 'Il gusto della Sicilia interpretato con cura',
+    storyText: 'Un modo più morbido e raffinato per vivere una tradizione senza tempo.',
+    storyTitle: 'Una tradizione dolciaria plasmata da sapore, luce e <em>luogo</em>',
+    storyPara1: 'Siculera unisce mandorla, agrumi, frutta e calore siciliano in una collezione pensata per risultare familiare ed elevata al tempo stesso.',
+    storyPara2: 'Da Siculera ogni creazione nasce da un’idea semplice: onorare il carattere della pasticceria siciliana attraverso ingredienti, equilibrio e raffinata misura.',
+    storyPara3: 'Dalla profondità della pasta di mandorla tradizionale alla luminosità degli agrumi, dalla ricchezza del pistacchio alla delicatezza delle varianti farcite, ogni pezzo è pensato per essere elegante, memorabile e facile da condividere.',
+    storyBullet1Title: 'Ispirazione siciliana autentica',
+    storyBullet1Text: 'Sapori radicati nella tradizione e nel carattere regionale.',
+    storyBullet2Title: 'Creato per essere condiviso',
+    storyBullet2Text: 'Perfetto per regali, incontri e momenti di pura indulgenza.',
+    storyBullet3Title: 'Collezione di sapori distintiva',
+    storyBullet3Text: 'Creazioni di mandorla classiche, agrumate, al pistacchio e farcite.',
+    discoverSignatureCollection: 'Scopri la Collezione Signature',
+    featureHeading: 'Ciò che conferisce presenza a Siculera',
+    featureText: 'Non solo sapore, ma atmosfera, cura e l’impressione che lascia.',
+    featureTitle: 'Radicata in Sicilia. Composta con <em>controllo.</em>',
+    featurePara1: 'Ogni creazione è pensata per unire sapore, eleganza e la quieta generosità dell’ospitalità siciliana.',
+    featurePara2: 'Siculera si ispira ai sapori che appartengono naturalmente alla Sicilia: mandorla, agrumi, pistacchio, frutta, calore e accoglienza.',
+    featurePara3: 'Ciò che rende la collezione distintiva non è solo il gusto, ma la sensazione che lascia — misurata, raffinata e pensata per essere ricordata.',
+    whySiculera: 'Perché Siculera',
+    giftingHeading: 'Pensato per occasioni raffinate',
+    giftingText: 'Per regali, condivisione e momenti che meritano qualcosa di attento.',
+    giftingTitle: 'Per regali, tavole e gesti <em>memorabili</em>',
+    giftingPara1: 'Una collezione studiata per momenti in cui il gusto diventa parte dell’esperienza.',
+    giftingPara2: 'Alcune scelte non riguardano solo il sapore, ma l’atmosfera che creano.',
+    giftingPara3: 'Siculera è pensata per regali raffinati, tavole eleganti, accoglienze calde e celebrazioni che vogliono qualcosa di distintivo ma sobrio.',
+    giftingButton: 'Esplora le selezioni regalo',
+    wholesaleHeading: 'Pensato anche per ospitalità e retail raffinato',
+    wholesaleText: 'Un’offerta siciliana adatta a hotel, caffè, boutique e regali aziendali curati.',
+    wholesaleTitle: 'Per ospitalità, retail e regali <em>business</em>',
+    wholesalePara1: 'Una collezione siciliana raffinata per partner che desiderano qualcosa di memorabile e ben ricevuto.',
+    wholesalePara2: 'Siculera è pensata non solo per ordini individuali, ma anche per ospitalità boutique, retail gourmet e regali aziendali selezionati.',
+    wholesalePara3: 'Presentata con cura, la collezione può diventare parte di un’accoglienza, di una selezione curata o di un gesto che lascia il segno.',
+    wholesaleButton: 'Richiedi informazioni all’ingrosso',
+    faqHeading: 'Alcune semplici domande',
+    faqText: 'Per ordini personali, regali e richieste business.',
+    faqTitle: 'Domande prima di scegliere Siculera',
+    faqIntro: 'Tutto dovrebbe risultare chiaro, tranquillo e facile fin dall’inizio.',
+    faqQ1: 'Posso ordinare Siculera online per consegna personale?',
+    faqA1: 'Sì. Puoi esplorare la collezione online e scegliere i sapori o la selezione che meglio si adattano all’occasione.',
+    faqQ2: 'Siculera è adatta per i regali?',
+    faqA2: 'Assolutamente. La collezione è pensata per risultare attenta, elegante e facile da condividere — ideale per regali e momenti speciali.',
+    faqQ3: 'Le aziende possono ordinare per hotel, retail o regali ai clienti?',
+    faqA3: 'Sì. Accogliamo richieste da hotel boutique, caffè, negozi gourmet e aziende che cercano opzioni regalo memorabili.',
+    faqQ4: 'Devo sapere esattamente cosa voglio prima di contattarvi?',
+    faqA4: 'Per niente. Che tu abbia già un’idea precisa o desideri semplicemente una guida, possiamo aiutarti a trovare la soluzione giusta.',
+    faqQ5: 'Posso scegliere i sapori in base all’occasione?',
+    faqA5: 'Sì. Alcuni preferiscono una selezione classica, mentre altri scelgono agrumi, pistacchio o varianti farcite a seconda dell’umore o della stagione.',
+    faqQ6: 'Esiste un’opzione all’ingrosso o partnership?',
+    faqA6: 'Sì. Se sei interessato a retail, ospitalità o ordini più grandi, puoi contattarci tramite il percorso di richiesta business.',
+    orderOrEnquire: 'Ordina o Richiedi',
+    newsletterEyebrow: 'Rimani in contatto',
+    newsletterTitle: 'Racconti stagionali, nuovi sapori e inviti discreti',
+    newsletterText: 'Ricevi occasionali aggiornamenti da Siculera — mai frequenti, sempre pensati.',
+    subscribeButton: 'Iscriviti',
+    newsletterSuccess: 'Grazie — riceverai presto nostre notizie.',
+    newsletterNote: 'Niente rumore. Annulla l’iscrizione in qualsiasi momento.',
+    ctaInvitationEyebrow: 'Un invito',
+    ctaInvitationTitle: 'Porta un gusto raffinato di Sicilia nel momento',
+    ctaInvitationText1: 'Siculera è creata per essere scelta con piacere, condivisa con facilità e ricordata con calore.',
+    ctaInvitationText2: 'Che tu stia scoprendo la collezione per la prima volta o già sappia cosa desideri, il percorso deve risultare semplice e pensato.',
+    wholesaleEnquiries: 'Richieste all’ingrosso',
+    languageToggle: 'EN / IT'
+  }
+};
+
+let currentLocale = 'en';
+
+function translate(key, vars = {}) {
+  const locale = translations[currentLocale] ? translations[currentLocale] : translations.en;
+  let value = locale[key] || translations.en[key] || key;
+  return value.replace(/\{(\w+)\}/g, (_, name) => vars[name] || '');
+}
+
+function translatePage() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (!key) return;
+    el.innerHTML = translate(key);
+  });
+  const openCart = document.getElementById('openCartBtn');
+  if (openCart) openCart.setAttribute('aria-label', translate('openCartAria'));
+  const giftMessage = document.getElementById('giftMessage');
+  if (giftMessage) {
+    giftMessage.placeholder = translate('giftMessagePlaceholder');
+    giftMessage.setAttribute('aria-label', translate('giftMessageAria'));
+  }
+  const langToggleBtn = document.getElementById('langToggle');
+  if (langToggleBtn) langToggleBtn.textContent = translate('languageToggle');
+  const langToggleMobileBtn = document.getElementById('langToggleMobile');
+  if (langToggleMobileBtn) langToggleMobileBtn.textContent = translate('languageToggle');
+}
+
+function getLanguage() {
+  const saved = localStorage.getItem('siculera_locale');
+  if (saved && translations[saved]) return saved;
+  return navigator.language && navigator.language.startsWith('it') ? 'it' : 'en';
+}
+
+function setLanguage(lang) {
+  if (!translations[lang]) lang = 'en';
+  currentLocale = lang;
+  localStorage.setItem('siculera_locale', lang);
+  translatePage();
+  updateCart();
+  window.dispatchEvent(new CustomEvent('siculeraLanguageChange', { detail: { lang } }));
+}
+
+function toggleLanguage() {
+  setLanguage(currentLocale === 'en' ? 'it' : 'en');
+}
+
+function attachLanguageListeners() {
+  const langToggleBtn = document.getElementById('langToggle');
+  if (langToggleBtn) langToggleBtn.onclick = toggleLanguage;
+  const langToggleMobileBtn = document.getElementById('langToggleMobile');
+  if (langToggleMobileBtn) langToggleMobileBtn.onclick = toggleLanguage;
+}
+
+const API_BASE = (() => {
+  // In production the frontend is served from the same origin as the API.
+  // In development (e.g. npx serve on :8080) point to the backend port.
+  const port = window.location.port;
+  if (port === '8080' || port === '5500' || port === '3000') {
+    return 'http://localhost:4000';
+  }
+  return ''; // same origin
+})();
+
+function flavourClass(flavour) {
+  const map = { lemon:'citrus', orange:'citrus', pistachio:'green', apricot:'rose', cherry:'rose' };
+  return map[flavour] || '';
+}
+
+function localProductImage(slug) {
+  const map = {
+    'traditional-almond-paste': 'assets/images/Traditional Sicilian Almond.png',
+    'lemon-almond-paste': 'assets/images/Lemon Almond.png',
+    'orange-almond-paste': 'assets/images/Orange Almond.png',
+    'pistachio-almond-paste': 'assets/images/Pistachio Almond.png',
+    'apricot-jam-almond-paste': 'assets/images/Almond Paste with Apricot Jam.png',
+    'caramelized-cherry-almond': 'assets/images/Almond Paste with Caramelized Cherry.png'
+  };
+  return map[slug] || null;
+}
+
+// Fallback products shown while API loads or if API is unreachable
+const FALLBACK_PRODUCTS = [
+  {id:'traditional-almond-paste', name:'Traditional Sicilian Almond Paste', note:'The timeless classic, simple and unmistakably Sicilian.', price:18, className:'', image:localProductImage('traditional-almond-paste'), stock: 10},
+  {id:'lemon-almond-paste',       name:'Lemon Almond Paste',                note:'Fresh citrus brightness with a delicate almond base.',   price:19, className:'citrus', image:localProductImage('lemon-almond-paste'), stock: 10},
+  {id:'orange-almond-paste',      name:'Orange Almond Paste',               note:'Warm, fragrant, and full of Mediterranean character.',    price:19, className:'citrus', image:localProductImage('orange-almond-paste'), stock: 10},
+  {id:'pistachio-almond-paste',   name:'Pistachio Almond Paste',            note:'Smooth, richer, and naturally more indulgent.',           price:22, className:'green', image:localProductImage('pistachio-almond-paste'), stock: 10},
+  {id:'apricot-jam-almond-paste', name:'Almond Paste with Apricot Jam',     note:'Soft fruit sweetness with a refined almond finish.',      price:21, className:'rose', image:localProductImage('apricot-jam-almond-paste'), stock: 10},
+  {id:'caramelized-cherry-almond',name:'Almond Paste with Caramelized Cherry', note:'Elegant, distinctive, and made for memorable gifting.',price:23, className:'rose', image:localProductImage('caramelized-cherry-almond'), stock: 10}
+];
+
+async function loadProducts() {
+  try {
+    const res = await fetch(`${API_BASE}/api/products`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    // Normalise DB rows into the shape the cart/render expects
+    products = data.map(p => ({
+      id:        p.slug,
+      name:      p.name,
+      note:      p.description || '',
+      price:     p.price_cents / 100,
+      className: flavourClass(p.flavour),
+      stock:     p.stock,
+      image:     p.image_url || localProductImage(p.slug),
+      dbId:      p.id
+    }));
+  } catch (e) {
+    console.warn('[Siculera] Could not load products from API, using fallback.', e.message);
+    products = FALLBACK_PRODUCTS;
+  }
+  renderProducts();
+}
+
+// ── Cart state (with localStorage persistence) ──
+let cart = [];
+try {
+  const s = localStorage.getItem('siculera_cart');
+  if (s) {
+    cart = JSON.parse(s).map(item => ({
+      ...item,
+      image: item.image || localProductImage(item.id),
+      className: item.className || '',
+      note: item.note || item.description || ''
+    }));
+  }
+} catch(e) {}
+function saveCart() {
+  try {
+    localStorage.setItem('siculera_cart', JSON.stringify(cart));
+    window.dispatchEvent(new CustomEvent('siculeraCartUpdate', { detail: { cart, source: 'landing' } }));
+  } catch(e) {}
+}
+
+// Listen for cart updates from the AI chat widget (ignore own events)
+window.addEventListener('siculeraCartUpdate', (e) => {
+  try {
+    if (e.detail && e.detail.source === 'landing') return; // our own event, skip
+    if (e.detail && e.detail.cart) {
+      cart = e.detail.cart;
+      updateCart();
+    }
+  } catch(err) {}
+});
+
+const productGrid     = document.getElementById('productGrid');
+const cartCountEl     = document.getElementById('cartCount');
+const cartItemsEl     = document.getElementById('cartItems');
+const cartModalItemsEl= document.getElementById('cartModalItems');
+const drawerSubtotalEl= document.getElementById('drawerSubtotal');
+const modalSubtotalEl = document.getElementById('modalSubtotal');
+const checkoutSummaryEl=document.getElementById('checkoutSummary');
+const checkoutTotalEl = document.getElementById('checkoutTotal');
+
+function euro(v) { return '€' + v.toFixed(2); }
+
+function renderProducts() {
+  if (!products.length) {
+    productGrid.innerHTML = '<p style="text-align:center;color:var(--muted);padding:40px 0">No products available right now.</p>';
+    return;
+  }
+  productGrid.innerHTML = products.map((p, i) => {
+    const outOfStock = typeof p.stock === 'number' && p.stock <= 0;
+    const photoInner = p.image
+      ? `<img src="${p.image}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" loading="lazy">`
+      : `<div class="pastry"></div>`;
+    return `
+    <article class="collection-card reveal" style="transition-delay:${i * .08}s${outOfStock ? ';opacity:.75' : ''}">
+      <div class="product-photo ${p.className}">${photoInner}</div>
+      <div class="body">
+        <span class="tag">${translate(outOfStock ? 'outOfStock' : 'signatureFlavour')}</span>
+        <h3>${p.name}</h3>
+        <p>${p.note}</p>
+        <div class="tile-bottom">
+          <div class="price">${euro(p.price)}</div>
+          <button class="small-btn" data-add="${p.id}" type="button"
+            aria-label="${translate('addToCart')} ${p.name}"${outOfStock ? ' disabled style="opacity:.45;cursor:not-allowed"' : ''}>
+            ${translate(outOfStock ? 'outOfStock' : 'addToCart')}
+          </button>
+        </div>
+      </div>
+    </article>`;
+  }).join('');
+
+  document.querySelectorAll('[data-add]').forEach(btn =>
+    btn.addEventListener('click', () => {
+      addToCart(btn.dataset.add);
+      btn.textContent = 'Added ✓';
+      btn.style.background = 'var(--accent)';
+      setTimeout(() => { btn.textContent = 'Add to Cart'; btn.style.background = ''; }, 1800);
+    })
+  );
+  // Re-observe new cards
+  document.querySelectorAll('#productGrid .reveal').forEach(el => observer.observe(el));
+}
+
+function addToCart(id) {
+  const existing = cart.find(x => x.id === id);
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    const p = products.find(x => x.id === id);
+    if (!p) return;
+    // Normalise to a flat cart shape that works whether data came from API or fallback
+    cart.push({
+      id:        p.id,
+      name:      p.name,
+      note:      p.note || p.description || '',
+      price:     typeof p.price === 'number' ? p.price : (p.price_cents || 0) / 100,
+      className: p.className || '',
+      image:     p.image || localProductImage(p.id),
+      qty:       1
+    });
+  }
+  saveCart(); updateCart(); openDrawer();
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(x => x.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) cart = cart.filter(x => x.id !== id);
+  saveCart(); updateCart();
+}
+
+function removeItem(id) {
+  cart = cart.filter(x => x.id !== id);
+  saveCart(); updateCart();
+}
+
+function subtotal() { return cart.reduce((s, i) => s + i.price * i.qty, 0); }
+
+function cartItemTemplate(i) {
+  const thumbContent = i.image
+    ? `<img src="${i.image}" alt="${i.name}" loading="lazy">`
+    : '';
+  return `<div class="cart-item">
+    <div class="thumb ${i.className}" role="img" aria-label="${i.name}">${thumbContent}</div>
+    <div class="cart-meta">
+      <h4>${i.name}</h4>
+      <p>${i.note}</p>
+      <div class="qty-row">
+        <button class="qty-btn" data-qty="${i.id}" data-delta="-1" aria-label="${translate('decreaseQty')}" type="button">−</button>
+        <strong aria-live="polite">${i.qty}</strong>
+        <button class="qty-btn" data-qty="${i.id}" data-delta="1" aria-label="${translate('increaseQty')}" type="button">+</button>
+        <span class="remove-link" data-remove="${i.id}" role="button" tabindex="0" aria-label="${translate('removeItem')} ${i.name}">${translate('removeItem')}</span>
+      </div>
+    </div>
+    <strong>${euro(i.price * i.qty)}</strong>
+  </div>`;
+}
+
+function bindCartControls(scope) {
+  scope.querySelectorAll('[data-qty]').forEach(btn =>
+    btn.onclick = () => changeQty(btn.dataset.qty, Number(btn.dataset.delta)));
+  scope.querySelectorAll('[data-remove]').forEach(btn =>
+    btn.onclick = () => removeItem(btn.dataset.remove));
+}
+
+function updateCart() {
+  const count = cart.reduce((s, i) => s + i.qty, 0);
+  cartCountEl.textContent = count;
+  const emptyMsg = `<p style="color:var(--muted);font-weight:300;padding:16px 0">${translate('yourCartEmpty')}</p>`;
+  cartItemsEl.innerHTML = cart.length ? cart.map(cartItemTemplate).join('') : emptyMsg;
+  cartModalItemsEl.innerHTML = cart.length ? cart.map(cartItemTemplate).join('') : emptyMsg;
+  bindCartControls(cartItemsEl);
+  bindCartControls(cartModalItemsEl);
+  const total = euro(subtotal());
+  drawerSubtotalEl.textContent = total;
+  modalSubtotalEl.textContent = total;
+  checkoutSummaryEl.innerHTML = cart.length
+    ? cart.map(i => `<div class="summary-row"><span style="font-size:.9rem;font-weight:300">${i.name} × ${i.qty}</span><strong>${euro(i.price * i.qty)}</strong></div>`).join('')
+    : `<p style="color:var(--muted);font-weight:300">${translate('emptyCartSummary')}</p>`;
+  checkoutTotalEl.textContent = total;
+}
+
+// ── Panels ──
+const overlay        = document.getElementById('overlay');
+const drawer         = document.getElementById('cartDrawer');
+const cartModal      = document.getElementById('cartModal');
+const checkoutModal  = document.getElementById('checkoutModal');
+const successModal   = document.getElementById('successModal');
+const wholesaleModal = document.getElementById('wholesaleModal');
+
+function clearPanels() {
+  drawer.classList.remove('show');
+  [cartModal, checkoutModal, successModal, wholesaleModal].forEach(m => m.classList.remove('show'));
+  overlay.classList.remove('show');
+}
+function openDrawer() { clearPanels(); overlay.classList.add('show'); drawer.classList.add('show'); }
+function openModal(el) { clearPanels(); overlay.classList.add('show'); el.classList.add('show'); }
+
+document.getElementById('openCartBtn').onclick = openDrawer;
+document.getElementById('openCartBtn2').onclick = openDrawer;
+document.getElementById('closeCartBtn').onclick = clearPanels;
+document.getElementById('viewCartBtn').onclick = () => openModal(cartModal);
+document.getElementById('closeCartModal').onclick = clearPanels;
+document.getElementById('continueShoppingBtn').onclick = clearPanels;
+// Redirect to dedicated checkout page
+function goToCheckout() {
+  if (!cart.length) return;
+  window.location.href = '/checkout.html';
+}
+document.getElementById('checkoutBtn').onclick = goToCheckout;
+document.getElementById('modalCheckoutBtn').onclick = goToCheckout;
+document.getElementById('closeCheckoutModal').onclick = clearPanels;
+document.getElementById('closeSuccessModal').onclick = clearPanels;
+document.getElementById('keepExploringBtn').onclick = clearPanels;
+document.getElementById('openWholesaleBtn').onclick = () => openModal(wholesaleModal);
+document.getElementById('openWholesaleBtn2').onclick = () => openModal(wholesaleModal);
+document.getElementById('closeWholesaleModal').onclick = clearPanels;
+overlay.onclick = clearPanels;
+
+// ── Checkout (in-page modal — redirects to full checkout page) ──
+document.getElementById('placeOrderBtn').onclick = goToCheckout;
+
+// ── Gift toggle ──
+const giftToggle  = document.getElementById('giftToggle');
+const giftMessage = document.getElementById('giftMessage');
+giftToggle.onchange = () => { giftMessage.style.display = giftToggle.checked ? 'block' : 'none'; };
+
+// ── Wholesale form ──
+document.getElementById('wholesaleForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const form = e.target;
+  const submitBtn = form.querySelector('button[type=submit]');
+  const errEl = form.querySelector('.wholesale-error') || (() => {
+    const d = document.createElement('p');
+    d.className = 'wholesale-error';
+    d.style.cssText = 'color:#c0392b;font-size:.86rem;margin-top:8px';
+    form.appendChild(d);
+    return d;
+  })();
+  errEl.textContent = '';
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending…'; }
+  try {
+    const payload = {
+      full_name:     (form.querySelector('[name=full_name]') || form.querySelector('#wsName'))?.value.trim() || '',
+      business_name: (form.querySelector('[name=business_name]') || form.querySelector('#wsCompany'))?.value.trim() || '',
+      email:         (form.querySelector('[name=email]') || form.querySelector('#wsEmail'))?.value.trim() || '',
+      phone:         (form.querySelector('[name=phone]') || form.querySelector('#wsPhone'))?.value.trim() || '',
+      country:       (form.querySelector('[name=country]') || form.querySelector('#wsCountry'))?.value.trim() || '',
+      business_type: (form.querySelector('[name=business_type]') || form.querySelector('#wsType'))?.value.trim() || '',
+      quantity_info: (form.querySelector('[name=quantity_info]') || form.querySelector('#wsQty'))?.value.trim() || '',
+      message:       (form.querySelector('[name=message]') || form.querySelector('#wsMessage'))?.value.trim() || ''
+    };
+    const res = await fetch(`${API_BASE}/api/payments/wholesale-enquiry`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) { const d = await res.json(); throw new Error(d.error || 'Submission failed'); }
+    form.style.display = 'none';
+    document.getElementById('wholesaleSuccess').style.display = 'block';
+  } catch (err) {
+    errEl.textContent = err.message || 'Something went wrong. Please try again.';
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Send Enquiry'; }
+  }
+});
+
+// ── Newsletter form ──
+document.getElementById('newsletterForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const emailInput = document.getElementById('newsletterEmail');
+  const emailVal   = emailInput ? emailInput.value.trim() : '';
+  if (!emailVal) return;
+  const submitBtn  = e.target.querySelector('button[type=submit]');
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = '…'; }
+  try {
+    await fetch(`${API_BASE}/api/payments/newsletter`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: emailVal })
+    });
+  } catch (_) { /* Fail silently — subscriber still shows success UX */ }
+  const formWrap = document.querySelector('.newsletter-form');
+  if (formWrap) formWrap.style.display = 'none';
+  const successEl = document.getElementById('newsletterSuccess');
+  if (successEl) successEl.style.display = 'block';
+});
+
+// ── Mobile nav ──
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const mobileNav    = document.getElementById('mobileNav');
+const mobileNavClose = document.getElementById('mobileNavClose');
+
+function openMobileNav() {
+  mobileNav.classList.add('open');
+  hamburgerBtn.classList.add('open');
+  hamburgerBtn.setAttribute('aria-expanded', 'true');
+  document.body.style.overflow = 'hidden';
+}
+function closeMobileNav() {
+  mobileNav.classList.remove('open');
+  hamburgerBtn.classList.remove('open');
+  hamburgerBtn.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+}
+hamburgerBtn.onclick = openMobileNav;
+mobileNavClose.onclick = closeMobileNav;
+document.querySelectorAll('.mobile-nav-link').forEach(a => a.addEventListener('click', closeMobileNav));
+
+// ── Sticky header shadow ──
+const siteHeader = document.getElementById('siteHeader');
+window.addEventListener('scroll', () => {
+  siteHeader.classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
+
+// ── Scroll reveal ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── Mobile CTA ──
+const mobileCTABtn = document.getElementById('mobileCTABtn');
+if (mobileCTABtn) {
+  mobileCTABtn.onclick = () => {
+    document.getElementById('collection').scrollIntoView({ behavior: 'smooth' });
+  };
+  // After items in cart, switch CTA to open cart
+  const origUpdateCart = updateCart;
+  function updateCartWithMobileCTA() {
+    origUpdateCart();
+    const count = cart.reduce((s, i) => s + i.qty, 0);
+    if (count > 0) {
+      mobileCTABtn.textContent = translate('viewCartCount', { count });
+      mobileCTABtn.onclick = openDrawer;
+    } else {
+      mobileCTABtn.textContent = translate('discoverCollection');
+      mobileCTABtn.onclick = () => document.getElementById('collection').scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+  updateCart = updateCartWithMobileCTA;
+}
+
+// ── Customer account nav ──
+(function updateAccountLink() {
+  const link = document.getElementById('nav-account-link');
+  if (!link) return;
+  try {
+    const user = JSON.parse(localStorage.getItem('siculera_user') || 'null');
+    if (user && localStorage.getItem('siculera_user_token')) {
+      link.textContent = user.first_name || 'My Account';
+    }
+  } catch(_) {}
+})();
+
+// ── Init ──
+attachLanguageListeners();
+setLanguage(getLanguage());
+loadProducts(); // async: fetches from API then calls renderProducts()
+updateCart();
+</script>
+<!-- Siculera AI Chat Widget -->
+<script>
+  (function() {
+    var devPorts = ['8080', '5500', '3000', '5173', '4173'];
+    var origin = devPorts.indexOf(window.location.port) !== -1 ? 'http://localhost:4000' : '';
+    var s = document.createElement('script');
+    s.src = origin + '/assets/siculera-chat.js';
+    s.onerror = function() { console.warn('[Siculera] Chat widget failed to load from', s.src); };
+    document.body.appendChild(s);
+  })();
+</script>
+</body>
+</html>

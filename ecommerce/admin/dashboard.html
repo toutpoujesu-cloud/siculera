@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Siculera — Admin Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--sb:#1a2420;--sw:260px;--gold:#b8975a;--gl:#d4b882;--ink:#27312a;--mu:#6b7a6c;--ac:#7e9277;--bg:#f8f7f4;--wh:#fff;--ln:#e8ddd0;--red:#c0392b;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--r:14px;--sh:0 4px 24px rgba(39,49,42,.07);--shl:0 8px 40px rgba(39,49,42,.12);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);display:flex;min-height:100vh;-webkit-font-smoothing:antialiased;}
+.sb{position:fixed;left:0;top:0;bottom:0;width:var(--sw);background:var(--sb);display:flex;flex-direction:column;z-index:100;transition:transform .3s;overflow-y:auto;}
+.sb-logo{padding:24px 20px 16px;border-bottom:1px solid rgba(255,255,255,.07);}
+.logo-row{display:flex;align-items:center;gap:12px;}
+.lm{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#c8a96e,#a87d44);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.3rem;color:#fff;font-weight:500;flex-shrink:0;}
+.lt .brand{font-family:var(--serif);font-size:1.18rem;color:#faf7f1;letter-spacing:.06em;}
+.lt .sub{font-size:.61rem;color:rgba(250,247,241,.35);text-transform:uppercase;letter-spacing:.2em;margin-top:2px;}
+.sb-nav{flex:1;padding:12px 10px;}
+.nl{font-size:.6rem;color:rgba(250,247,241,.25);text-transform:uppercase;letter-spacing:.22em;padding:14px 12px 6px;font-weight:500;}
+.ni{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;cursor:pointer;color:rgba(250,247,241,.5);font-size:.82rem;font-weight:400;transition:all .2s;border:none;background:transparent;width:100%;text-align:left;border-left:2px solid transparent;}
+.ni svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+.ni:hover{color:rgba(250,247,241,.85);background:rgba(255,255,255,.06);}
+.ni.active{color:var(--gl);background:rgba(184,151,90,.11);border-left-color:var(--gold);}
+.sb-user{padding:14px;border-top:1px solid rgba(255,255,255,.07);}
+.ur{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.ua{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#a87d44);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:600;color:#fff;flex-shrink:0;}
+.un{font-size:.81rem;color:rgba(250,247,241,.7);font-weight:500;}
+.uro{font-size:.67rem;color:rgba(250,247,241,.3);text-transform:uppercase;letter-spacing:.1em;}
+.btn-lo{width:100%;padding:9px;border-radius:8px;background:rgba(192,57,43,.12);border:1px solid rgba(192,57,43,.2);color:rgba(220,110,100,.9);font-size:.77rem;cursor:pointer;font-family:var(--sans);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px;}
+.btn-lo:hover{background:rgba(192,57,43,.22);}
+.btn-lo svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;}
+.main{margin-left:var(--sw);flex:1;display:flex;flex-direction:column;min-height:100vh;}
+.tb{position:sticky;top:0;z-index:50;background:rgba(248,247,244,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--ln);padding:0 30px;height:60px;display:flex;align-items:center;justify-content:space-between;}
+.tb-title{font-family:var(--serif);font-size:1.35rem;font-weight:400;}
+.tb-r{display:flex;align-items:center;gap:13px;}
+.ib{width:35px;height:35px;border-radius:50%;border:1px solid var(--ln);background:var(--wh);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;color:var(--mu);}
+.ib:hover{border-color:var(--gold);color:var(--gold);}
+.ib svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;}
+.ta{width:35px;height:35px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#a87d44);display:flex;align-items:center;justify-content:center;font-size:.76rem;font-weight:600;color:#fff;cursor:pointer;}
+.cnt{padding:26px 30px;flex:1;}
+.sec{display:none;}.sec.active{display:block;}
+.card{background:var(--wh);border-radius:var(--r);border:1px solid var(--ln);box-shadow:var(--sh);padding:20px;}
+.ct{font-family:var(--serif);font-size:1.1rem;font-weight:500;margin-bottom:14px;}
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
+.sc{background:var(--wh);border-radius:var(--r);border:1px solid var(--ln);box-shadow:var(--sh);padding:18px 20px;border-top:3px solid var(--gold);}
+.sl{font-size:.69rem;text-transform:uppercase;letter-spacing:.15em;color:var(--mu);font-weight:500;margin-bottom:9px;}
+.sv{font-family:var(--serif);font-size:2rem;font-weight:400;line-height:1;}
+.st{font-size:.73rem;color:var(--ac);margin-top:5px;}
+.tw{overflow-x:auto;border-radius:var(--r);border:1px solid var(--ln);}
+table{width:100%;border-collapse:collapse;background:var(--wh);}
+thead th{background:#f5f3ef;font-size:.69rem;text-transform:uppercase;letter-spacing:.13em;color:var(--mu);font-weight:500;padding:10px 14px;text-align:left;border-bottom:1px solid var(--ln);}
+tbody tr{border-bottom:1px solid rgba(232,221,208,.45);transition:background .15s;}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:#fdf9f4;}
+tbody td{padding:11px 14px;font-size:.85rem;}
+.dm{color:var(--mu);font-size:.79rem;}
+.bdg{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:.67rem;font-weight:500;letter-spacing:.04em;text-transform:uppercase;}
+.bg{background:rgba(39,174,96,.1);color:#1e8449;}
+.bo{background:rgba(184,151,90,.12);color:#8a6a2a;}
+.bb{background:rgba(52,152,219,.1);color:#1a6fa0;}
+.br{background:rgba(192,57,43,.1);color:var(--red);}
+.bgy{background:rgba(107,122,108,.1);color:var(--mu);}
+.bp{background:rgba(142,68,173,.1);color:#6c3483;}
+.bor{background:rgba(243,156,18,.1);color:#9a6100;}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:999px;font-size:.78rem;font-weight:500;font-family:var(--sans);cursor:pointer;transition:all .22s;border:1px solid transparent;letter-spacing:.04em;}
+.btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;}
+.bp2{background:var(--ink);color:#faf7f1;}
+.bp2:hover{background:#3c4a3f;transform:translateY(-1px);}
+.bg2{background:linear-gradient(135deg,#c8a96e,#a87d44);color:#fff;box-shadow:0 4px 12px rgba(184,151,90,.25);}
+.bg2:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(184,151,90,.33);}
+.bo2{background:transparent;color:var(--ink);border-color:rgba(39,49,42,.16);}
+.bo2:hover{background:rgba(39,49,42,.04);}
+.bsm{padding:5px 11px;font-size:.72rem;}
+.bic{padding:6px;border-radius:7px;background:transparent;border:1px solid var(--ln);color:var(--mu);}
+.bic:hover{border-color:var(--gold);color:var(--gold);}
+.bic svg{width:13px;height:13px;}
+.fg{margin-bottom:13px;}
+.fg label{display:block;font-size:.8rem;font-weight:500;margin-bottom:5px;}
+.fc{width:100%;padding:8px 12px;border:1px solid var(--ln);border-radius:9px;font-family:var(--sans);font-size:.86rem;color:var(--ink);background:var(--wh);outline:none;transition:border-color .2s;}
+.fc:focus{border-color:var(--gold);}
+select.fc{cursor:pointer;}
+textarea.fc{resize:vertical;min-height:75px;}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.ff{grid-column:1/-1;}
+.tgl{position:relative;width:40px;height:22px;cursor:pointer;flex-shrink:0;display:inline-block;}
+.tgl input{opacity:0;width:0;height:0;position:absolute;}
+.tt{position:absolute;inset:0;border-radius:999px;background:rgba(39,49,42,.13);transition:background .25s;}
+.tgl input:checked + .tt{background:var(--gold);}
+.th{position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.13);transition:transform .25s;}
+.tgl input:checked ~ .th{transform:translateX(18px);}
+.tw2{display:flex;align-items:center;gap:9px;}
+.tl{font-size:.85rem;}
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.pc{background:var(--wh);border:1px solid var(--ln);border-radius:var(--r);padding:18px;box-shadow:var(--sh);transition:border-color .2s;}
+.pc.on{border-color:var(--gold);}
+.ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.pi{display:flex;align-items:center;gap:10px;}
+.pico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;}
+.pn{font-family:var(--serif);font-size:1.06rem;font-weight:500;}
+.ps{font-size:.72rem;color:var(--mu);margin-top:1px;}
+.pconf{border-top:1px solid var(--ln);padding-top:13px;margin-top:2px;display:none;}
+.pc.on .pconf{display:block;}
+.ov{position:fixed;inset:0;background:rgba(28,36,30,.38);backdrop-filter:blur(6px);z-index:200;opacity:0;pointer-events:none;transition:opacity .25s;}
+.ov.show{opacity:1;pointer-events:auto;}
+.md{position:fixed;top:50%;left:50%;transform:translate(-50%,-48%) scale(.97);z-index:201;background:var(--wh);border-radius:18px;box-shadow:var(--shl);max-height:90vh;overflow-y:auto;opacity:0;pointer-events:none;transition:all .28s;width:min(600px,calc(100vw - 28px));}
+.md.wide{width:min(860px,calc(100vw - 28px));}
+.md.show{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1);}
+.mh{display:flex;align-items:center;justify-content:space-between;padding:18px 20px 13px;border-bottom:1px solid var(--ln);}
+.mt{font-family:var(--serif);font-size:1.32rem;font-weight:400;}
+.mb{padding:20px;}
+.mf{padding:13px 20px;border-top:1px solid var(--ln);display:flex;justify-content:flex-end;gap:9px;}
+.cb{width:30px;height:30px;border-radius:7px;border:none;background:transparent;cursor:pointer;color:var(--mu);display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.cb:hover{background:rgba(39,49,42,.06);color:var(--ink);}
+.cb svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;}
+.tw3{position:fixed;top:20px;right:20px;z-index:999;display:flex;flex-direction:column;gap:8px;pointer-events:none;}
+.tst{padding:10px 14px;border-radius:10px;font-size:.82rem;font-weight:500;min-width:200px;display:flex;align-items:center;gap:8px;animation:sIn .3s ease;box-shadow:var(--shl);pointer-events:auto;}
+.tst svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0;}
+.ts{background:#1e8449;color:#fff;}
+.te{background:var(--red);color:#fff;}
+.ti{background:var(--ink);color:#faf7f1;}
+@keyframes sIn{from{opacity:0;transform:translateX(40px);}to{opacity:1;transform:translateX(0);}}
+@keyframes sOut{to{opacity:0;transform:translateX(40px);}}
+.tlb{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap;}
+.sw{position:relative;flex:1;max-width:300px;}
+.sw svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--mu);fill:none;stroke-width:1.8;pointer-events:none;}
+.si{width:100%;padding:8px 12px 8px 30px;border:1px solid var(--ln);border-radius:999px;font-family:var(--sans);font-size:.83rem;color:var(--ink);background:var(--wh);outline:none;transition:border-color .2s;}
+.si:focus{border-color:var(--gold);}
+.tabs{display:flex;gap:3px;background:rgba(39,49,42,.05);border-radius:9px;padding:3px;margin-bottom:16px;flex-wrap:wrap;}
+.tab{padding:7px 13px;border-radius:7px;border:none;background:transparent;font-family:var(--sans);font-size:.78rem;font-weight:500;cursor:pointer;color:var(--mu);transition:all .2s;}
+.tab.active{background:var(--wh);color:var(--ink);box-shadow:0 2px 7px rgba(39,49,42,.08);}
+.cl{display:grid;gap:8px;}
+.ci{display:flex;align-items:flex-start;gap:10px;padding:12px;background:rgba(39,174,96,.03);border:1px solid rgba(39,174,96,.11);border-radius:9px;}
+.cic{width:20px;height:20px;border-radius:50%;background:rgba(39,174,96,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.cic svg{width:11px;height:11px;stroke:#1e8449;fill:none;stroke-width:2.5;}
+.ctx strong{display:block;font-size:.85rem;font-weight:500;}
+.ctx span{font-size:.77rem;color:var(--mu);}
+.tc{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.cc{background:var(--wh);border:1px solid var(--ln);border-radius:var(--r);padding:16px;box-shadow:var(--sh);}
+.cc.on{border-color:var(--gold);}
+.chd{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;}
+.cn{font-weight:600;font-size:.91rem;}
+.cconf{display:none;border-top:1px solid var(--ln);padding-top:11px;margin-top:2px;}
+.cc.on .cconf{display:block;}
+.tml{display:flex;flex-direction:column;}
+.tmi{display:flex;gap:13px;padding:10px 0;}
+.tmd{width:10px;height:10px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:4px;position:relative;}
+.tmd::after{content:'';position:absolute;left:3.5px;top:10px;width:2px;height:calc(100% + 8px);background:var(--ln);}
+.tmi:last-child .tmd::after{display:none;}
+.tss{font-weight:600;font-size:.85rem;}
+.tsl{font-size:.78rem;color:var(--mu);}
+.tst2{font-size:.73rem;color:var(--mu);margin-top:2px;}
+.sp{width:32px;height:32px;border:3px solid var(--ln);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin:32px auto;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.hb{display:none;position:fixed;top:12px;left:12px;z-index:150;width:36px;height:36px;border-radius:8px;border:1px solid var(--ln);background:var(--wh);cursor:pointer;align-items:center;justify-content:center;flex-direction:column;gap:4px;}
+.hb span{display:block;width:16px;height:1.5px;background:var(--ink);}
+@media(max-width:900px){.sg{grid-template-columns:1fr 1fr;}.pg,.cg,.tc,.fg2{grid-template-columns:1fr;}}
+@media(max-width:768px){.sb{transform:translateX(-100%);}.sb.open{transform:translateX(0);}.main{margin-left:0;}.hb{display:flex;}.cnt{padding:16px;}.tb{padding:0 16px;}.sg{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<svg style="display:none"><defs>
+<symbol id="ih" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
+<symbol id="ib2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></symbol>
+<symbol id="iu" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></symbol>
+<symbol id="ir" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5h20v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></symbol>
+<symbol id="ic" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></symbol>
+<symbol id="icl" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+<symbol id="itr" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></symbol>
+<symbol id="ish" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+<symbol id="ig" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></symbol>
+<symbol id="ie" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="idt" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></symbol>
+<symbol id="ipen" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></symbol>
+<symbol id="idl" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
+<symbol id="ibl" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></symbol>
+<symbol id="ipl" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+<symbol id="ix" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+<symbol id="ick" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+<symbol id="ise" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+<symbol id="ilo" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></symbol>
+<symbol id="ifl" viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></symbol>
+<symbol id="imp" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></symbol>
+<symbol id="ichat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></symbol>
+<symbol id="istaff" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></symbol>
+<symbol id="ianalytics" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></symbol>
+</defs></svg>
+
+<button class="hb" id="hb"><span></span><span></span><span></span></button>
+
+<aside class="sb" id="sb">
+  <div class="sb-logo"><div class="logo-row"><div class="lm">S</div><div class="lt"><div class="brand">Siculera</div><div class="sub">Admin Panel</div></div></div></div>
+  <nav class="sb-nav">
+    <div class="nl">Dashboard</div>
+    <button class="ni active" data-s="overview"><svg><use href="#ih"/></svg>Overview</button>
+    <div class="nl">Catalogue</div>
+    <button class="ni" data-s="products"><svg><use href="#ib2"/></svg>Products</button>
+    <div class="nl">Commerce</div>
+    <button class="ni" data-s="customers"><svg><use href="#iu"/></svg>Customers</button>
+    <button class="ni" data-s="orders"><svg><use href="#ir"/></svg>Orders</button>
+    <button class="ni" data-s="payments"><svg><use href="#ic"/></svg>Payments</button>
+    <button class="ni" data-s="pay-history"><svg><use href="#icl"/></svg>Payment History</button>
+    <div class="nl">Logistics</div>
+    <button class="ni" data-s="shipping"><svg><use href="#itr"/></svg>Shipping &amp; Tracking</button>
+    <div class="nl">AI &amp; Chat</div>
+    <button class="ni" data-s="ai-chat" id="nav-ai-chat"><svg><use href="#ichat"/></svg>AI Chat<span id="ai-chat-badge" style="display:none;background:#e74c3c;color:#fff;border-radius:10px;font-size:10px;padding:1px 6px;margin-left:6px;"></span></button>
+    <div class="nl">System</div>
+    <button class="ni" data-s="staff"><svg><use href="#istaff"/></svg>Staff &amp; Roles</button>
+    <button class="ni" data-s="analytics"><svg><use href="#ianalytics"/></svg>Analytics</button>
+    <button class="ni" data-s="security"><svg><use href="#ish"/></svg>Security &amp; GDPR</button>
+    <button class="ni" data-s="settings"><svg><use href="#ig"/></svg>Settings</button>
+  </nav>
+  <div class="sb-user">
+    <div class="ur"><div class="ua" id="aAvt">A</div><div><div class="un" id="aNm">Admin</div><div class="uro" id="aRl">Superadmin</div></div></div>
+    <button class="btn-lo" id="loBtn"><svg><use href="#ilo"/></svg>Sign Out</button>
+  </div>
+</aside>
+
+<div class="main">
+  <header class="tb">
+    <div class="tb-title" id="pgTitle">Overview</div>
+    <div class="tb-r"><button class="ib"><svg><use href="#ibl"/></svg></button><div class="ta" id="tbAvt">A</div></div>
+  </header>
+  <div class="cnt">
+
+    <!-- OVERVIEW -->
+    <section id="s-overview" class="sec active">
+      <div class="sg">
+        <div class="sc"><div class="sl">Total Revenue</div><div class="sv" id="stRev">—</div><div class="st">All time</div></div>
+        <div class="sc"><div class="sl">Total Orders</div><div class="sv" id="stOrd">—</div><div class="st">All time</div></div>
+        <div class="sc"><div class="sl">Customers</div><div class="sv" id="stCus">—</div><div class="st">Registered</div></div>
+        <div class="sc"><div class="sl">Active Products</div><div class="sv" id="stPro">—</div><div class="st">In catalogue</div></div>
+      </div>
+      <div class="tc">
+        <div class="card"><div class="ct">Recent Orders</div><div class="tw"><table><thead><tr><th>Order #</th><th>Customer</th><th>Total</th><th>Status</th></tr></thead><tbody id="roTb"><tr><td colspan="4"><div class="sp"></div></td></tr></tbody></table></div></div>
+        <div class="card"><div class="ct">Recent Payments</div><div class="tw"><table><thead><tr><th>Amount</th><th>Provider</th><th>Status</th><th>Date</th></tr></thead><tbody id="rpTb"><tr><td colspan="4"><div class="sp"></div></td></tr></tbody></table></div></div>
+      </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section id="s-products" class="sec">
+      <div class="tlb"><div class="sw"><svg><use href="#ise"/></svg><input class="si" id="prSrch" placeholder="Search products…" oninput="filterProds()"></div><button class="btn bg2" onclick="openProdMd()"><svg><use href="#ipl"/></svg>Add Product</button></div>
+      <div class="tw"><table><thead><tr><th>Name</th><th>Flavour</th><th>Price</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead><tbody id="prTb"><tr><td colspan="6"><div class="sp"></div></td></tr></tbody></table></div>
+    </section>
+
+    <!-- CUSTOMERS -->
+    <section id="s-customers" class="sec">
+      <div class="tlb"><div class="sw"><svg><use href="#ise"/></svg><input class="si" id="cuSrch" placeholder="Search by name or email…" oninput="loadCusts()"></div></div>
+      <div class="tw"><table><thead><tr><th>Customer</th><th>Email</th><th>Phone</th><th>Orders</th><th>Spent</th><th>Joined</th><th>Actions</th></tr></thead><tbody id="cuTb"><tr><td colspan="7"><div class="sp"></div></td></tr></tbody></table></div>
+    </section>
+
+    <!-- ORDERS -->
+    <section id="s-orders" class="sec">
+      <div class="tabs" id="ordTabs">
+        <button class="tab active" data-st="">All</button>
+        <button class="tab" data-st="pending">Pending</button>
+        <button class="tab" data-st="paid">Paid</button>
+        <button class="tab" data-st="processing">Processing</button>
+        <button class="tab" data-st="shipped">Shipped</button>
+        <button class="tab" data-st="delivered">Delivered</button>
+        <button class="tab" data-st="cancelled">Cancelled</button>
+      </div>
+      <div class="tw"><table><thead><tr><th>Order #</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th>Tracking</th><th>Date</th><th>Actions</th></tr></thead><tbody id="orTb"><tr><td colspan="8"><div class="sp"></div></td></tr></tbody></table></div>
+    </section>
+
+    <!-- PAYMENTS CONFIG -->
+    <section id="s-payments" class="sec">
+      <p style="color:var(--mu);font-size:.87rem;margin-bottom:20px;">Enable and configure your payment providers. All secret keys are encrypted at rest with AES-256.</p>
+      <div class="pg">
+        <div class="pc" id="cp-stripe">
+          <div class="ph"><div class="pi"><div class="pico" style="background:#f0eaff;color:#6772e5;font-size:1.2rem;font-weight:900;">S</div><div><div class="pn">Stripe</div><div class="ps">Visa · Mastercard · Apple Pay · Google Pay</div></div></div><label class="tgl"><input type="checkbox" id="ts" onchange="togProv('stripe')"><div class="tt"></div><div class="th"></div></label></div>
+          <div class="pconf"><div class="fg"><label>Secret Key</label><input class="fc" type="password" id="s-sk" placeholder="sk_live_…"></div><div class="fg"><label>Publishable Key</label><input class="fc" type="text" id="s-pk" placeholder="pk_live_…"></div><div class="fg"><label>Webhook Secret</label><input class="fc" type="password" id="s-wh" placeholder="whsec_…"></div><button class="btn bo2 bsm" onclick="testProv('stripe')">Test Connection</button></div>
+        </div>
+        <div class="pc" id="cp-paypal">
+          <div class="ph"><div class="pi"><div class="pico" style="background:#e8f4fd;color:#003087;font-weight:900;font-size:.9rem;">PP</div><div><div class="pn">PayPal</div><div class="ps">PayPal · Cards via PayPal</div></div></div><label class="tgl"><input type="checkbox" id="tp" onchange="togProv('paypal')"><div class="tt"></div><div class="th"></div></label></div>
+          <div class="pconf"><div class="fg"><label>Client ID</label><input class="fc" type="text" id="p-ci" placeholder="Client ID"></div><div class="fg"><label>Client Secret</label><input class="fc" type="password" id="p-cs" placeholder="Client Secret"></div><div class="fg"><label>Mode</label><select class="fc" id="p-md"><option value="sandbox">Sandbox (testing)</option><option value="live">Live (production)</option></select></div><button class="btn bo2 bsm" onclick="testProv('paypal')">Test Connection</button></div>
+        </div>
+        <div class="pc" id="cp-square">
+          <div class="ph"><div class="pi"><div class="pico" style="background:#f0f0f0;color:#111;font-size:1.3rem;font-weight:900;">&#9632;</div><div><div class="pn">Square</div><div class="ps">Cards · Cash App Pay</div></div></div><label class="tgl"><input type="checkbox" id="tsq" onchange="togProv('square')"><div class="tt"></div><div class="th"></div></label></div>
+          <div class="pconf"><div class="fg"><label>Application ID</label><input class="fc" type="text" id="sq-ai" placeholder="sq0idp-…"></div><div class="fg"><label>Access Token</label><input class="fc" type="password" id="sq-at" placeholder="EAAAl…"></div><div class="fg"><label>Location ID</label><input class="fc" type="text" id="sq-li" placeholder="Location ID"></div><button class="btn bo2 bsm" onclick="testProv('square')">Test Connection</button></div>
+        </div>
+        <div class="pc" id="cp-klarna">
+          <div class="ph"><div class="pi"><div class="pico" style="background:#ffd8e7;color:#e5226e;font-weight:900;">K</div><div><div class="pn">Klarna</div><div class="ps">Buy Now Pay Later</div></div></div><label class="tgl"><input type="checkbox" id="tk" onchange="togProv('klarna')"><div class="tt"></div><div class="th"></div></label></div>
+          <div class="pconf"><div class="fg"><label>Merchant ID</label><input class="fc" type="text" id="k-mi" placeholder="Merchant ID"></div><div class="fg"><label>Password</label><input class="fc" type="password" id="k-pw" placeholder="API Password"></div><button class="btn bo2 bsm" onclick="testProv('klarna')">Test Connection</button></div>
+        </div>
+        <div class="pc" id="cp-bank_transfer">
+          <div class="ph"><div class="pi"><div class="pico" style="background:#f0f5ea;font-size:1.1rem;">&#127970;</div><div><div class="pn">Bank Transfer</div><div class="ps">SEPA · SWIFT</div></div></div><label class="tgl"><input type="checkbox" id="tbt" onchange="togProv('bank_transfer')"><div class="tt"></div><div class="th"></div></label></div>
+          <div class="pconf"><div class="fg"><label>Bank Name</label><input class="fc" type="text" id="bt-bn" placeholder="e.g. UniCredit"></div><div class="fg"><label>IBAN</label><input class="fc" type="text" id="bt-ib" placeholder="IT60 X054…"></div><div class="fg"><label>BIC / SWIFT</label><input class="fc" type="text" id="bt-bc" placeholder="UNCRITMM"></div><div class="fg"><label>Account Holder</label><input class="fc" type="text" id="bt-ah" placeholder="Siculera S.r.l."></div></div>
+        </div>
+        <div class="pc" id="cp-cash_on_delivery">
+          <div class="ph"><div class="pi"><div class="pico" style="background:#fffbea;font-size:1.1rem;">&#128182;</div><div><div class="pn">Cash on Delivery</div><div class="ps">Pay on arrival</div></div></div><label class="tgl"><input type="checkbox" id="tco" onchange="togProv('cash_on_delivery')"><div class="tt"></div><div class="th"></div></label></div>
+          <div class="pconf"><div class="fg"><label>Surcharge (&#8364;)</label><input class="fc" type="number" id="co-su" placeholder="0.00" step="0.01" min="0"></div></div>
+        </div>
+      </div>
+      <div style="margin-top:22px;display:flex;justify-content:flex-end;"><button class="btn bg2" onclick="savePay()">Save Payment Configuration</button></div>
+    </section>
+
+    <!-- PAYMENT HISTORY -->
+    <section id="s-pay-history" class="sec">
+      <div class="tlb" style="flex-wrap:wrap;gap:9px;margin-bottom:14px;">
+        <input type="date" class="fc" id="phF" style="width:140px"><input type="date" class="fc" id="phT" style="width:140px">
+        <select class="fc" id="phPr" style="width:140px"><option value="">All Providers</option><option value="stripe">Stripe</option><option value="paypal">PayPal</option><option value="square">Square</option><option value="bank_transfer">Bank Transfer</option><option value="cash_on_delivery">Cash on Delivery</option></select>
+        <select class="fc" id="phSt" style="width:130px"><option value="">All Statuses</option><option value="succeeded">Succeeded</option><option value="failed">Failed</option><option value="refunded">Refunded</option></select>
+        <button class="btn bp2 bsm" onclick="loadPayHist()"><svg><use href="#ifl"/></svg>Filter</button>
+      </div>
+      <div class="sg" style="margin-bottom:18px;">
+        <div class="sc"><div class="sl">Total Collected</div><div class="sv" id="phTot">—</div></div>
+        <div class="sc"><div class="sl">Succeeded</div><div class="sv" id="phSuc">—</div></div>
+        <div class="sc"><div class="sl">Failed</div><div class="sv" id="phFail">—</div></div>
+        <div class="sc"><div class="sl">Refunded</div><div class="sv" id="phRef">—</div></div>
+      </div>
+      <div class="tw"><table><thead><tr><th>Payment ID</th><th>Order #</th><th>Customer</th><th>Amount</th><th>Provider</th><th>Status</th><th>Date</th></tr></thead><tbody id="phTb"><tr><td colspan="7"><div class="sp"></div></td></tr></tbody></table></div>
+    </section>
+
+    <!-- SHIPPING -->
+    <section id="s-shipping" class="sec">
+      <h3 style="font-family:var(--serif);font-size:1.25rem;font-weight:400;margin-bottom:4px;">Carrier Configuration</h3>
+      <p style="color:var(--mu);font-size:.85rem;margin-bottom:18px;">Enable carriers and enter credentials. Keys are encrypted at rest.</p>
+      <div class="cg">
+        <div class="cc" id="cc-dhl"><div class="chd"><div class="cn">&#127465;&#127466; DHL Express</div><label class="tgl"><input type="checkbox" id="tDHL" onchange="togCarr('dhl')"><div class="tt"></div><div class="th"></div></label></div><div class="cconf"><div class="fg"><label>API Key</label><input class="fc" type="password" id="dhl-k" placeholder="DHL API Key"></div><div class="fg"><label>Account Number</label><input class="fc" type="text" id="dhl-a" placeholder="Account Number"></div></div></div>
+        <div class="cc" id="cc-ups"><div class="chd"><div class="cn">&#127482;&#127480; UPS</div><label class="tgl"><input type="checkbox" id="tUPS" onchange="togCarr('ups')"><div class="tt"></div><div class="th"></div></label></div><div class="cconf"><div class="fg"><label>API Key</label><input class="fc" type="password" id="ups-k" placeholder="UPS API Key"></div><div class="fg"><label>API Secret</label><input class="fc" type="password" id="ups-s" placeholder="UPS API Secret"></div><div class="fg"><label>Account Number</label><input class="fc" type="text" id="ups-a" placeholder="Account Number"></div></div></div>
+        <div class="cc" id="cc-brt"><div class="chd"><div class="cn">&#127470;&#127481; BRT Bartolini</div><label class="tgl"><input type="checkbox" id="tBRT" onchange="togCarr('brt')"><div class="tt"></div><div class="th"></div></label></div><div class="cconf"><div class="fg"><label>API Key</label><input class="fc" type="password" id="brt-k" placeholder="BRT API Key"></div><div class="fg"><label>Account Number</label><input class="fc" type="text" id="brt-a" placeholder="Account Number"></div></div></div>
+        <div class="cc" id="cc-gls"><div class="chd"><div class="cn">&#127466;&#127482; GLS</div><label class="tgl"><input type="checkbox" id="tGLS" onchange="togCarr('gls')"><div class="tt"></div><div class="th"></div></label></div><div class="cconf"><div class="fg"><label>API Key</label><input class="fc" type="password" id="gls-k" placeholder="GLS API Key"></div><div class="fg"><label>Account Number</label><input class="fc" type="text" id="gls-a" placeholder="Account Number"></div></div></div>
+        <div class="cc" id="cc-sda"><div class="chd"><div class="cn">&#127470;&#127481; SDA / Poste Italiane</div><label class="tgl"><input type="checkbox" id="tSDA" onchange="togCarr('sda')"><div class="tt"></div><div class="th"></div></label></div><div class="cconf"><div class="fg"><label>API Key</label><input class="fc" type="password" id="sda-k" placeholder="SDA API Key"></div><div class="fg"><label>Account Number</label><input class="fc" type="text" id="sda-a" placeholder="Account Number"></div></div></div>
+        <div class="cc"><div class="chd"><div class="cn">&#128230; Flat Rate Shipping</div><label class="tgl"><input type="checkbox" id="tFL" checked onchange="this.closest('.cc').classList.toggle('on',this.checked)"><div class="tt"></div><div class="th"></div></label></div><div class="cconf" style="display:block;"><div class="fg"><label>Price (&#8364;)</label><input class="fc" type="number" id="fl-p" placeholder="6.00" step="0.01"></div><div class="fg"><label>Free Shipping Threshold (&#8364;)</label><input class="fc" type="number" id="fl-t" placeholder="50.00" step="0.01"></div></div></div>
+      </div>
+      <div style="margin-top:20px;display:flex;justify-content:flex-end;"><button class="btn bg2" onclick="saveShip()">Save Shipping Configuration</button></div>
+      <hr style="border:none;border-top:1px solid var(--ln);margin:28px 0;">
+      <h3 style="font-family:var(--serif);font-size:1.25rem;font-weight:400;margin-bottom:16px;">Shipment Tracking Lookup</h3>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:16px;">
+        <div class="fg" style="margin:0;flex:1;min-width:140px;"><label>Carrier</label><select class="fc" id="trCr"><option value="dhl">DHL</option><option value="ups">UPS</option><option value="brt">BRT Bartolini</option><option value="gls">GLS</option><option value="sda">SDA/Poste Italiane</option></select></div>
+        <div class="fg" style="margin:0;flex:2;min-width:180px;"><label>Tracking Number</label><input class="fc" type="text" id="trNum" placeholder="Enter tracking number"></div>
+        <button class="btn bp2" onclick="trackShip()"><svg><use href="#imp"/></svg>Track</button>
+      </div>
+      <div id="trRes" style="display:none;" class="card"><div class="ct">Tracking Results</div><div class="tml" id="trTml"></div></div>
+    </section>
+
+    <!-- AI CHAT -->
+    <section id="s-ai-chat" class="sec">
+      <!-- Sub-tabs -->
+      <div style="display:flex;gap:0;border-bottom:2px solid var(--ln);margin-bottom:24px;overflow-x:auto;">
+        <button class="ai-tab active" data-at="config"     style="padding:10px 20px;border:none;background:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--g);border-bottom:2px solid var(--g);margin-bottom:-2px;white-space:nowrap;">⚙️ Configuration</button>
+        <button class="ai-tab"        data-at="knowledge"  style="padding:10px 20px;border:none;background:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--t2);border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;">📚 Knowledge Base</button>
+        <button class="ai-tab"        data-at="convos"     style="padding:10px 20px;border:none;background:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--t2);border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;">💬 Conversations</button>
+        <button class="ai-tab"        data-at="analytics"  style="padding:10px 20px;border:none;background:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--t2);border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;">📊 Analytics</button>
+      </div>
+
+      <!-- ── TAB: Configuration ── -->
+      <div id="ai-tab-config" class="ai-tab-panel">
+        <div class="tc">
+          <div class="card">
+            <div class="ct">AI Chat Configuration</div>
+
+            <!-- Enable toggle -->
+            <div class="fg" style="display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <label style="font-weight:600;font-size:14px;">Enable Chat Widget</label>
+                <div style="font-size:12px;color:var(--t2);margin-top:2px;">Show the floating chat bubble on the storefront</div>
+              </div>
+              <label style="position:relative;display:inline-block;width:44px;height:24px;flex-shrink:0;">
+                <input type="checkbox" id="ai-enabled" style="opacity:0;width:0;height:0;">
+                <span onclick="document.getElementById('ai-enabled').click()" style="position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#ccc;border-radius:24px;transition:.3s;" id="ai-enabled-track"></span>
+              </label>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px;">
+              <div class="fg">
+                <label>LLM Provider</label>
+                <select class="fc" id="ai-provider" onchange="onAiProviderChange()">
+                  <option value="anthropic">Anthropic Claude</option>
+                  <option value="openai">OpenAI GPT</option>
+                  <option value="gemini">Google Gemini</option>
+                  <option value="mistral">Mistral AI</option>
+                  <option value="deepseek">DeepSeek</option>
+                  <option value="groq">Groq (Fast)</option>
+                  <option value="ollama">Ollama (Local)</option>
+                </select>
+              </div>
+              <div class="fg">
+                <label>Model</label>
+                <select class="fc" id="ai-model">
+                  <option value="claude-3-5-sonnet-20241022">Claude 3.5 Sonnet (recommended)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="fg">
+              <label>API Key</label>
+              <input class="fc" type="password" id="ai-api-key" placeholder="sk-ant-... (leave blank to use .env value)" autocomplete="new-password">
+              <div style="font-size:11px;color:var(--t2);margin-top:4px;">Stored encrypted. Leave blank to use the server environment variable.</div>
+            </div>
+
+            <div id="ai-ollama-url-wrap" class="fg" style="display:none;">
+              <label>Ollama Base URL</label>
+              <input class="fc" type="url" id="ai-ollama-url" placeholder="http://localhost:11434">
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+              <div class="fg">
+                <label>Personality / Sales Style</label>
+                <select class="fc" id="ai-personality" onchange="onAiPersonalityChange()">
+                  <option value="warm">🌿 Warm &amp; Empathetic (recommended)</option>
+                  <option value="luxury">✨ Luxury Concierge</option>
+                  <option value="playful">🎉 Playful &amp; Enthusiastic</option>
+                  <option value="formal">📋 Formal &amp; Professional</option>
+                  <option value="custom">✏️ Custom Prompt</option>
+                </select>
+              </div>
+              <div class="fg">
+                <label>Temperature <span id="ai-temp-label" style="color:var(--g);font-weight:600;">0.7</span></label>
+                <input type="range" id="ai-temperature" min="0.1" max="1.2" step="0.1" value="0.7" style="width:100%;accent-color:var(--g);" oninput="document.getElementById('ai-temp-label').textContent=this.value">
+                <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--t2);"><span>Precise</span><span>Creative</span></div>
+              </div>
+            </div>
+
+            <div id="ai-custom-prompt-wrap" class="fg" style="display:none;">
+              <label>Custom System Prompt</label>
+              <textarea class="fc" id="ai-custom-prompt" rows="5" placeholder="Enter the full system prompt for your AI assistant. You can reference products, tone, and capabilities."></textarea>
+            </div>
+
+            <div class="fg">
+              <label>Capabilities</label>
+              <div style="display:flex;flex-direction:column;gap:10px;padding:12px;background:var(--bg);border-radius:8px;border:1px solid var(--ln);">
+                <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;">
+                  <input type="checkbox" id="ai-can-orders" style="accent-color:var(--g);width:16px;height:16px;">
+                  <div><strong>Can place orders</strong><br><span style="font-size:11px;color:var(--t2);">AI can create bank transfer / COD orders on behalf of customers</span></div>
+                </label>
+                <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;">
+                  <input type="checkbox" id="ai-can-gdpr" style="accent-color:var(--g);width:16px;height:16px;">
+                  <div><strong>Can handle GDPR requests</strong><br><span style="font-size:11px;color:var(--t2);">AI can submit data access and erasure requests (requires human review)</span></div>
+                </label>
+                <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;">
+                  <input type="checkbox" id="ai-can-suggest" checked style="accent-color:var(--g);width:16px;height:16px;">
+                  <div><strong>Can suggest &amp; upsell products</strong><br><span style="font-size:11px;color:var(--t2);">AI actively recommends complementary products and gift options</span></div>
+                </label>
+              </div>
+            </div>
+
+            <div style="display:flex;justify-content:flex-end;gap:10px;">
+              <button class="btn" onclick="testChatConnection()" id="ai-test-btn">🔌 Test Connection</button>
+              <button class="btn bg2" onclick="saveChatConfig()">Save Configuration</button>
+            </div>
+            <div id="ai-config-msg" style="margin-top:10px;font-size:13px;display:none;"></div>
+          </div>
+
+          <!-- Embed code card -->
+          <div class="card">
+            <div class="ct">Widget Embed Code</div>
+            <p style="font-size:13px;color:var(--t2);margin-bottom:12px;">The chat widget is already embedded in all storefront pages. To add it to a custom page, paste this before <code>&lt;/body&gt;</code>:</p>
+            <div style="background:#1a1a2e;border-radius:8px;padding:14px 16px;font-family:monospace;font-size:12px;color:#a8d8a8;user-select:all;cursor:text;">&lt;script src="<span id="ai-embed-origin"></span>/assets/siculera-chat.js" defer&gt;&lt;/script&gt;</div>
+            <div style="font-size:11px;color:var(--t2);margin-top:8px;">Replace the domain with your production URL. The widget is self-contained — no additional CSS or JS required.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TAB: Knowledge Base ── -->
+      <div id="ai-tab-knowledge" class="ai-tab-panel" style="display:none;">
+        <div class="tc">
+          <div class="card">
+            <div class="ct">Upload Documents</div>
+            <p style="font-size:13px;color:var(--t2);margin-bottom:16px;">Upload PDF, DOCX, or TXT files. The AI will use these as a knowledge base when answering customer questions (allergens, certifications, policies, shipping terms, etc.).</p>
+            <div id="ai-drop-zone" style="border:2px dashed var(--ln);border-radius:12px;padding:32px;text-align:center;cursor:pointer;transition:border-color .2s;background:var(--bg);" ondragover="event.preventDefault();this.style.borderColor='var(--g)'" ondragleave="this.style.borderColor='var(--ln)'" ondrop="onDocDrop(event)">
+              <div style="font-size:32px;">📄</div>
+              <div style="font-weight:600;margin:8px 0 4px;">Drop files here or click to browse</div>
+              <div style="font-size:12px;color:var(--t2);">Accepted: PDF, DOCX, TXT — max 10 MB per file</div>
+              <input type="file" id="ai-doc-file" accept=".pdf,.docx,.doc,.txt" style="display:none;" onchange="onDocFileSelected(event)">
+            </div>
+            <div id="ai-doc-desc-wrap" style="display:none;margin-top:12px;">
+              <div class="fg"><label>Document Description (optional)</label><input class="fc" type="text" id="ai-doc-desc" placeholder="e.g. Allergen information, HACCP certificate…"></div>
+              <div style="display:flex;justify-content:flex-end;gap:10px;">
+                <button class="btn" onclick="cancelDocUpload()">Cancel</button>
+                <button class="btn bg2" onclick="uploadDoc()">Upload &amp; Process</button>
+              </div>
+            </div>
+            <div id="ai-doc-msg" style="margin-top:10px;font-size:13px;display:none;"></div>
+          </div>
+          <div class="card">
+            <div class="ct" style="display:flex;justify-content:space-between;align-items:center;">
+              <span>Knowledge Base Documents</span>
+              <button class="btn" style="font-size:12px;padding:5px 12px;" onclick="loadDocs()">↻ Refresh</button>
+            </div>
+            <div id="ai-docs-table" style="margin-top:8px;overflow-x:auto;">
+              <div style="color:var(--t2);font-size:13px;padding:20px;text-align:center;">Loading documents…</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TAB: Conversations ── -->
+      <div id="ai-tab-convos" class="ai-tab-panel" style="display:none;">
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap;">
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;">
+            <input type="checkbox" id="ai-show-escalated" onchange="loadSessions()" style="accent-color:var(--g);">
+            Show escalated only
+          </label>
+          <div style="flex:1;min-width:150px;"></div>
+          <button class="btn" style="font-size:12px;padding:5px 12px;" onclick="loadSessions()">↻ Refresh</button>
+        </div>
+        <div style="overflow-x:auto;">
+          <table style="width:100%;border-collapse:collapse;font-size:13px;" id="ai-sessions-table">
+            <thead><tr style="border-bottom:2px solid var(--ln);text-align:left;">
+              <th style="padding:8px 10px;color:var(--t2);">Session</th>
+              <th style="padding:8px 10px;color:var(--t2);">Customer</th>
+              <th style="padding:8px 10px;color:var(--t2);">Messages</th>
+              <th style="padding:8px 10px;color:var(--t2);">Status</th>
+              <th style="padding:8px 10px;color:var(--t2);">Date</th>
+              <th style="padding:8px 10px;color:var(--t2);">Actions</th>
+            </tr></thead>
+            <tbody id="ai-sessions-tbody">
+              <tr><td colspan="6" style="text-align:center;padding:24px;color:var(--t2);">Loading sessions…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="ai-sessions-pagination" style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px;"></div>
+      </div>
+
+      <!-- ── TAB: Analytics ── -->
+      <div id="ai-tab-analytics" class="ai-tab-panel" style="display:none;">
+        <!-- Stat cards -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:24px;">
+          <div class="card" style="padding:18px;text-align:center;">
+            <div style="font-size:28px;font-weight:700;color:var(--g);" id="ai-stat-sessions">—</div>
+            <div style="font-size:12px;color:var(--t2);margin-top:4px;">Total Sessions</div>
+          </div>
+          <div class="card" style="padding:18px;text-align:center;">
+            <div style="font-size:28px;font-weight:700;color:var(--g);" id="ai-stat-messages">—</div>
+            <div style="font-size:12px;color:var(--t2);margin-top:4px;">Messages Sent</div>
+          </div>
+          <div class="card" style="padding:18px;text-align:center;">
+            <div style="font-size:28px;font-weight:700;color:var(--g);" id="ai-stat-orders">—</div>
+            <div style="font-size:12px;color:var(--t2);margin-top:4px;">Orders via Chat</div>
+          </div>
+          <div class="card" style="padding:18px;text-align:center;">
+            <div style="font-size:28px;font-weight:700;color:var(--g);" id="ai-stat-escalations">—</div>
+            <div style="font-size:12px;color:var(--t2);margin-top:4px;">Escalations</div>
+          </div>
+        </div>
+
+        <div class="tc">
+          <div class="card">
+            <div class="ct">Monthly Conversations</div>
+            <div id="ai-chart-monthly" style="margin-top:12px;min-height:120px;">
+              <div style="color:var(--t2);font-size:13px;text-align:center;padding:20px;">Loading chart…</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="ct">Top Knowledge Base Searches</div>
+            <div id="ai-top-searches" style="margin-top:12px;">
+              <div style="color:var(--t2);font-size:13px;text-align:center;padding:20px;">Loading…</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Conversation thread modal -->
+    <div id="ai-thread-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center;">
+      <div style="background:#fff;border-radius:16px;width:520px;max-width:95vw;max-height:85vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3);">
+        <div style="padding:16px 20px;border-bottom:1px solid var(--ln);display:flex;justify-content:space-between;align-items:center;">
+          <div style="font-weight:700;font-size:15px;">Conversation Thread</div>
+          <button onclick="closeThreadModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--t2);">✕</button>
+        </div>
+        <div id="ai-thread-body" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;"></div>
+      </div>
+    </div>
+
+    <!-- SECURITY -->
+    <section id="s-security" class="sec">
+      <div class="tc" style="margin-bottom:22px;">
+        <div class="card">
+          <div class="ct">Data Protection Settings</div>
+          <div style="display:grid;gap:12px;">
+            <div class="tw2"><label class="tgl"><input type="checkbox" id="seEnc" checked><div class="tt"></div><div class="th"></div></label><span class="tl">Encryption at rest (AES-256)</span></div>
+            <div class="tw2"><label class="tgl"><input type="checkbox" id="seCk" checked><div class="tt"></div><div class="th"></div></label><span class="tl">GDPR cookie consent required</span></div>
+            <div class="tw2"><label class="tgl"><input type="checkbox" id="seMk"><div class="tt"></div><div class="th"></div></label><span class="tl">Marketing emails opt-in by default</span></div>
+            <div class="tw2"><label class="tgl"><input type="checkbox" id="seAn" checked><div class="tt"></div><div class="th"></div></label><span class="tl">Auto-anonymize deleted accounts</span></div>
+            <div class="tw2"><label class="tgl"><input type="checkbox" id="sePii" checked><div class="tt"></div><div class="th"></div></label><span class="tl">PII masking in logs</span></div>
+            <div class="fg" style="margin-top:6px;"><label>Data Retention Period (days)</label><input class="fc" type="number" id="seRet" value="730" min="30" max="3650"></div>
+          </div>
+          <div style="margin-top:16px;display:flex;justify-content:flex-end;"><button class="btn bg2" onclick="saveSec()">Save Security Settings</button></div>
+        </div>
+        <div class="card">
+          <div class="ct">GDPR Compliance Checklist</div>
+          <div class="cl">
+            <div class="ci"><div class="cic"><svg><use href="#ick"/></svg></div><div class="ctx"><strong>Right to Access</strong><span>Data export per customer (Art. 15)</span></div></div>
+            <div class="ci"><div class="cic"><svg><use href="#ick"/></svg></div><div class="ctx"><strong>Right to Erasure</strong><span>Anonymization implemented (Art. 17)</span></div></div>
+            <div class="ci"><div class="cic"><svg><use href="#ick"/></svg></div><div class="ctx"><strong>Data Portability</strong><span>JSON export on request (Art. 20)</span></div></div>
+            <div class="ci"><div class="cic"><svg><use href="#ick"/></svg></div><div class="ctx"><strong>Data Minimization</strong><span>Only necessary data collected (Art. 5)</span></div></div>
+            <div class="ci"><div class="cic"><svg><use href="#ick"/></svg></div><div class="ctx"><strong>Consent Management</strong><span>Opt-in forms on all collection points</span></div></div>
+            <div class="ci"><div class="cic"><svg><use href="#ick"/></svg></div><div class="ctx"><strong>Breach Notification</strong><span>72-hour procedure in place (Art. 33)</span></div></div>
+            <div class="ci"><div class="cic"><svg><use href="#ick"/></svg></div><div class="ctx"><strong>Privacy Policy</strong><span>Published and up to date</span></div></div>
+            <div class="ci"><div class="cic"><svg><use href="#ick"/></svg></div><div class="ctx"><strong>DPA with Processors</strong><span>Stripe, PayPal, couriers covered</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ct">Audit Log</div>
+        <div style="margin-bottom:12px;"><select class="fc" id="auFil" style="width:200px;" onchange="loadAudit()"><option value="">All Actions</option><option value="admin_login">Admin Login</option><option value="admin_logout">Admin Logout</option><option value="gdpr_erasure">GDPR Erasure</option><option value="gdpr_export">GDPR Export</option><option value="product_create">Product Created</option><option value="product_update">Product Updated</option><option value="product_delete">Product Deleted</option><option value="order_status_update">Order Status Update</option><option value="tracking_update">Tracking Update</option></select></div>
+        <div class="tw"><table><thead><tr><th>Admin</th><th>Action</th><th>Entity</th><th>IP Address</th><th>Timestamp</th></tr></thead><tbody id="auTb"><tr><td colspan="5"><div class="sp"></div></td></tr></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- STAFF & ROLES -->
+    <section id="s-staff" class="sec">
+      <div class="tlb">
+        <div class="sw"><svg><use href="#ise"/></svg><input class="si" id="sfSrch" placeholder="Search staff…" oninput="loadStaff()"></div>
+        <button class="btn bg2" onclick="openStaffMd()"><svg><use href="#ipl"/></svg>Add Admin User</button>
+      </div>
+      <div class="tw"><table>
+        <thead><tr><th>User</th><th>Email</th><th>Role</th><th>Last Login</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="sfTb"><tr><td colspan="6"><div class="sp"></div></td></tr></tbody>
+      </table></div>
+    </section>
+
+    <!-- ANALYTICS -->
+    <section id="s-analytics" class="sec">
+      <div class="sg" id="an-kpis">
+        <div class="sc"><div class="sl">Revenue (30d)</div><div class="sv" id="an-rev">—</div><div class="st" id="an-rev-t">Loading…</div></div>
+        <div class="sc"><div class="sl">Orders (30d)</div><div class="sv" id="an-ord">—</div><div class="st" id="an-ord-t">vs prev period</div></div>
+        <div class="sc"><div class="sl">Avg Order Value</div><div class="sv" id="an-aov">—</div><div class="st">30-day avg</div></div>
+        <div class="sc"><div class="sl">Conversion Rate</div><div class="sv" id="an-cvr">—</div><div class="st">Chat to order</div></div>
+      </div>
+      <div class="tc" style="margin-bottom:20px;">
+        <div class="card">
+          <div class="ct">Revenue — Last 30 Days</div>
+          <div id="an-rev-chart" style="height:160px;display:flex;align-items:flex-end;gap:3px;padding:4px 0;"></div>
+        </div>
+        <div class="card">
+          <div class="ct">Orders by Status</div>
+          <div id="an-status-chart" style="display:grid;gap:8px;margin-top:4px;"></div>
+        </div>
+      </div>
+      <div class="tc">
+        <div class="card">
+          <div class="ct">Top Products by Revenue</div>
+          <div class="tw"><table>
+            <thead><tr><th>#</th><th>Product</th><th>Units Sold</th><th>Revenue</th></tr></thead>
+            <tbody id="an-top-prod"><tr><td colspan="4"><div class="sp"></div></td></tr></tbody>
+          </table></div>
+        </div>
+        <div class="card">
+          <div class="ct">Recent Signups</div>
+          <div class="tw"><table>
+            <thead><tr><th>Customer</th><th>Joined</th><th>Orders</th></tr></thead>
+            <tbody id="an-signups"><tr><td colspan="3"><div class="sp"></div></td></tr></tbody>
+          </table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="s-settings" class="sec">
+      <div class="tc">
+        <div class="card">
+          <div class="ct">Store Settings</div>
+          <div class="fg"><label>Store Name</label><input class="fc" type="text" id="stNm" placeholder="Siculera"></div>
+          <div class="fg"><label>Store Email</label><input class="fc" type="email" id="stEm" placeholder="hello@siculera.it"></div>
+          <div class="fg"><label>WhatsApp Number</label><input class="fc" type="text" id="stWa" placeholder="+39 000 000 0000"></div>
+          <div class="fg"><label>Default Currency</label><select class="fc" id="stCu"><option value="EUR">EUR — Euro</option><option value="GBP">GBP — British Pound</option><option value="USD">USD — US Dollar</option></select></div>
+          <div class="fg"><label>Default Language</label><select class="fc" id="stLn"><option value="it">Italian</option><option value="en">English</option><option value="fr">French</option><option value="de">German</option></select></div>
+          <div class="fg"><label>Timezone</label><select class="fc" id="stTz"><option value="Europe/Rome">Europe/Rome (CET/CEST)</option><option value="Europe/London">Europe/London</option><option value="UTC">UTC</option></select></div>
+          <div style="display:flex;justify-content:flex-end;"><button class="btn bg2" onclick="saveSettings()">Save Settings</button></div>
+        </div>
+        <div class="card">
+          <div class="ct">Change Password</div>
+          <div class="fg"><label>Current Password</label><input class="fc" type="password" id="cpCur" placeholder="Current password"></div>
+          <div class="fg"><label>New Password</label><input class="fc" type="password" id="cpNew" placeholder="Min 8 characters"></div>
+          <div class="fg"><label>Confirm New Password</label><input class="fc" type="password" id="cpCon" placeholder="Repeat new password"></div>
+          <div id="cpErr" style="display:none;font-size:.79rem;color:var(--red);margin-bottom:10px;padding:8px 11px;background:rgba(192,57,43,.05);border-radius:8px;"></div>
+          <div style="display:flex;justify-content:flex-end;"><button class="btn bp2" onclick="changePw()">Change Password</button></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<div class="ov" id="ov" onclick="closeAll()"></div>
+<div class="tw3" id="toasts"></div>
+
+<!-- Product Modal -->
+<div class="md" id="mdProd">
+  <div class="mh"><div class="mt" id="mdProdTtl">Add Product</div><button class="cb" onclick="closeMd('mdProd')"><svg><use href="#ix"/></svg></button></div>
+  <div class="mb">
+    <input type="hidden" id="pId">
+    <div class="fg2">
+      <div class="fg"><label>Name</label><input class="fc" id="pNm" placeholder="Product name" oninput="autoSlug()"></div>
+      <div class="fg"><label>Slug</label><input class="fc" id="pSl" placeholder="product-slug"></div>
+      <div class="fg ff"><label>Description</label><textarea class="fc" id="pDs" placeholder="Product description"></textarea></div>
+      <div class="fg"><label>Flavour</label><select class="fc" id="pFl"><option value="traditional">Traditional</option><option value="lemon">Lemon</option><option value="orange">Orange</option><option value="pistachio">Pistachio</option><option value="apricot">Apricot</option><option value="cherry">Cherry</option></select></div>
+      <div class="fg"><label>Price (&#8364;)</label><input class="fc" type="number" id="pPr" placeholder="18.00" step="0.01" min="0"></div>
+      <div class="fg"><label>Weight (g)</label><input class="fc" type="number" id="pWt" placeholder="200" min="0"></div>
+      <div class="fg"><label>Stock</label><input class="fc" type="number" id="pSt" placeholder="100" min="0"></div>
+      <div class="fg"><label>Image URL (or upload below)</label><input class="fc" id="pIm" placeholder="https://…"></div>
+      <div class="fg" id="pImUploadRow" style="display:none">
+        <label>Upload Image</label>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <input type="file" id="pImFile" accept="image/jpeg,image/png,image/webp,image/gif" style="flex:1;min-width:0;font-size:.8rem;padding:6px 0">
+          <button class="btn bg2" type="button" style="flex-shrink:0;height:36px;padding:0 14px;font-size:.78rem" onclick="uploadProdImg()">Upload</button>
+        </div>
+        <div id="pImPreview" style="margin-top:8px;display:none"><img id="pImPreviewImg" src="" alt="Preview" style="max-height:100px;border-radius:8px;border:1px solid var(--br)"></div>
+      </div>
+      <div class="fg"><div class="tw2"><label class="tgl"><input type="checkbox" id="pAc" checked><div class="tt"></div><div class="th"></div></label><span class="tl">Active on website</span></div></div>
+      <div class="fg"><div class="tw2"><label class="tgl"><input type="checkbox" id="pGf" checked><div class="tt"></div><div class="th"></div></label><span class="tl">Available for gifting</span></div></div>
+    </div>
+  </div>
+  <div class="mf"><button class="btn bo2" onclick="closeMd('mdProd')">Cancel</button><button class="btn bg2" onclick="saveProd()">Save Product</button></div>
+</div>
+
+<!-- Customer Modal -->
+<div class="md wide" id="mdCust">
+  <div class="mh"><div class="mt" id="mdCustTtl">Customer Details</div><button class="cb" onclick="closeMd('mdCust')"><svg><use href="#ix"/></svg></button></div>
+  <div class="mb" id="mdCustBody"><div class="sp"></div></div>
+</div>
+
+<!-- Order Modal -->
+<div class="md wide" id="mdOrder">
+  <div class="mh"><div class="mt" id="mdOrderTtl">Order Details</div><button class="cb" onclick="closeMd('mdOrder')"><svg><use href="#ix"/></svg></button></div>
+  <div class="mb" id="mdOrderBody"><div class="sp"></div></div>
+</div>
+
+<!-- Staff Modal -->
+<div class="md" id="mdStaff">
+  <div class="mh"><div class="mt" id="mdStaffTtl">Add Admin User</div><button class="cb" onclick="closeMd('mdStaff')"><svg><use href="#ix"/></svg></button></div>
+  <div class="mb">
+    <input type="hidden" id="sfId">
+    <div class="fg2">
+      <div class="fg"><label>Username</label><input class="fc" id="sfUn" placeholder="username" autocomplete="off"></div>
+      <div class="fg"><label>Email</label><input class="fc" type="email" id="sfEm" placeholder="admin@siculera.it" autocomplete="off"></div>
+      <div class="fg ff"><label>Password <span id="sfPwNote" style="font-weight:400;color:var(--mu);font-size:.75rem;">(required for new users)</span></label><input class="fc" type="password" id="sfPw" placeholder="Min 8 characters" autocomplete="new-password"></div>
+      <div class="fg"><label>Role</label><select class="fc" id="sfRl"><option value="viewer">Viewer — read-only</option><option value="admin" selected>Admin — full access</option><option value="superadmin">Superadmin — all permissions</option></select></div>
+      <div class="fg"><div class="tw2"><label class="tgl"><input type="checkbox" id="sfAc" checked><div class="tt"></div><div class="th"></div></label><span class="tl">Account active</span></div></div>
+    </div>
+  </div>
+  <div class="mf"><button class="btn bo2" onclick="closeMd('mdStaff')">Cancel</button><button class="btn bg2" onclick="saveStaff()">Save</button></div>
+</div>
+
+<!-- Tracking Modal -->
+<div class="md" id="mdTrk">
+  <div class="mh"><div class="mt">Update Tracking</div><button class="cb" onclick="closeMd('mdTrk')"><svg><use href="#ix"/></svg></button></div>
+  <div class="mb">
+    <input type="hidden" id="trkOid">
+    <div class="fg"><label>Carrier</label><select class="fc" id="tCr"><option value="dhl">DHL</option><option value="ups">UPS</option><option value="brt">BRT Bartolini</option><option value="gls">GLS</option><option value="sda">SDA / Poste Italiane</option></select></div>
+    <div class="fg"><label>Tracking Number</label><input class="fc" type="text" id="tNum" placeholder="Tracking number"></div>
+    <div class="fg"><label>Tracking URL (optional)</label><input class="fc" type="text" id="tUrl" placeholder="https://track.dhl.com/…"></div>
+  </div>
+  <div class="mf"><button class="btn bo2" onclick="closeMd('mdTrk')">Cancel</button><button class="btn bg2" onclick="saveTrk()">Save Tracking</button></div>
+</div>
+
+<script>
+// AUTH
+function getToken(){return localStorage.getItem('siculera_admin_token')||sessionStorage.getItem('siculera_admin_token');}
+(function(){
+  if(!getToken()){window.location.href='/admin/login.html';return;}
+  try{
+    const p=JSON.parse(atob(getToken().split('.')[1]));
+    const nm=p.username||p.email||'Admin';
+    const ini=(nm[0]||'A').toUpperCase();
+    document.getElementById('aNm').textContent=nm;
+    document.getElementById('aRl').textContent=p.role||'admin';
+    document.getElementById('aAvt').textContent=ini;
+    document.getElementById('tbAvt').textContent=ini;
+  }catch(e){}
+})();
+document.getElementById('loBtn').onclick=()=>{
+  localStorage.removeItem('siculera_admin_token');
+  sessionStorage.removeItem('siculera_admin_token');
+  window.location.href='/admin/login.html';
+};
+
+// API
+async function api(method,ep,body){
+  try{
+    const r=await fetch('/api'+ep,{method,headers:{'Content-Type':'application/json','Authorization':'Bearer '+getToken()},body:body?JSON.stringify(body):undefined});
+    if(r.status===401){window.location.href='/admin/login.html';return null;}
+    return await r.json();
+  }catch(e){return null;}
+}
+
+// TOAST
+function toast(msg,type='success'){
+  const w=document.getElementById('toasts');
+  const el=document.createElement('div');
+  el.className='tst t'+type[0];
+  const ic={success:'#ick',error:'#ix',info:'#ibl'}[type]||'#ick';
+  el.innerHTML='<svg><use href="'+ic+'"/></svg>'+msg;
+  w.appendChild(el);
+  setTimeout(()=>{el.style.animation='sOut .3s ease forwards';setTimeout(()=>el.remove(),300);},3200);
+}
+
+// NAV
+const ptitles={overview:'Overview',products:'Products',customers:'Customers',orders:'Orders',payments:'Payment Providers','pay-history':'Payment History',shipping:'Shipping & Tracking','ai-chat':'AI Chat Assistant',staff:'Staff & Roles',analytics:'Analytics',security:'Security & GDPR',settings:'Settings'};
+const ploaders={overview:loadOverview,products:loadProds,customers:loadCusts,orders:loadOrders,payments:loadPayCfg,'pay-history':loadPayHist,shipping:loadShipCfg,'ai-chat':loadAiChat,staff:loadStaff,analytics:loadAnalyticsDash,security:()=>{loadSecCfg();loadAudit();},settings:loadSettings};
+document.querySelectorAll('.ni').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.ni').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+    btn.classList.add('active');
+    const s=btn.dataset.s;
+    document.getElementById('s-'+s).classList.add('active');
+    document.getElementById('pgTitle').textContent=ptitles[s]||s;
+    document.getElementById('sb').classList.remove('open');
+    ploaders[s]?.();
+  });
+});
+document.getElementById('hb').onclick=()=>document.getElementById('sb').classList.toggle('open');
+
+// MODALS
+function openMd(id){document.getElementById(id).classList.add('show');document.getElementById('ov').classList.add('show');}
+function closeMd(id){document.getElementById(id).classList.remove('show');if(!document.querySelector('.md.show'))document.getElementById('ov').classList.remove('show');}
+function closeAll(){document.querySelectorAll('.md').forEach(m=>m.classList.remove('show'));document.getElementById('ov').classList.remove('show');}
+
+// HELPERS
+const fmt=d=>d?new Date(d).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}):'—';
+const fmtDT=d=>d?new Date(d).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
+const eu=c=>'€'+(c/100).toFixed(2);
+function sb(s){const m={pending:'bo',paid:'bg',processing:'bb',shipped:'bp',delivered:'bg',cancelled:'br',refunded:'bor',succeeded:'bg',failed:'br'};return '<span class="bdg '+(m[s]||'bgy')+'">'+s+'</span>';}
+function pb(p){const m={stripe:'bp',paypal:'bb',square:'bgy',klarna:'br',bank_transfer:'bo',cash_on_delivery:'bg'};return '<span class="bdg '+(m[p]||'bgy')+'">'+(p||'—')+'</span>';}
+
+// OVERVIEW
+async function loadOverview(){
+  const st=await api('GET','/admin/stats');
+  if(st){
+    document.getElementById('stRev').textContent=eu(st.total_revenue_cents||0);
+    document.getElementById('stOrd').textContent=st.total_orders||0;
+    document.getElementById('stCus').textContent=st.total_customers||0;
+    document.getElementById('stPro').textContent=st.active_products||0;
+  }
+  const o=await api('GET','/admin/orders?limit=5');
+  const l1=(o&&o.data)?o.data:[];
+  document.getElementById('roTb').innerHTML=l1.length?l1.map(x=>'<tr><td><strong>'+x.order_number+'</strong></td><td class="dm">'+(x.customer_name||x.guest_email||'Guest')+'</td><td>'+eu(x.total_cents)+'</td><td>'+sb(x.status)+'</td></tr>').join(''):'<tr><td colspan="4" style="text-align:center;color:var(--mu);padding:20px;">No orders yet</td></tr>';
+  const p=await api('GET','/admin/payments/history?limit=5');
+  const l2=(p&&p.data)?p.data:[];
+  document.getElementById('rpTb').innerHTML=l2.length?l2.map(x=>'<tr><td><strong>'+eu(x.amount_cents)+'</strong></td><td>'+pb(x.payment_method||x.provider)+'</td><td>'+sb(x.status)+'</td><td class="dm">'+fmt(x.created_at)+'</td></tr>').join(''):'<tr><td colspan="4" style="text-align:center;color:var(--mu);padding:20px;">No payments yet</td></tr>';
+}
+
+// PRODUCTS
+let allP=[];
+async function loadProds(){
+  const r=await api('GET','/admin/products');
+  allP=(r&&r.data)?r.data:[];renderProds(allP);
+}
+function filterProds(){const q=document.getElementById('prSrch').value.toLowerCase();renderProds(allP.filter(p=>p.name.toLowerCase().includes(q)||(p.flavour||'').toLowerCase().includes(q)));}
+function renderProds(list){
+  document.getElementById('prTb').innerHTML=list.length?list.map(p=>'<tr><td><strong>'+p.name+'</strong></td><td class="dm">'+(p.flavour||'—')+'</td><td>'+eu(p.price_cents)+'</td><td>'+p.stock+'</td><td>'+(p.is_active?'<span class="bdg bg">Active</span>':'<span class="bdg bgy">Inactive</span>')+'</td><td><div style="display:flex;gap:5px;"><button class="btn bic bsm" onclick="editP(\''+p.id+'\')"><svg><use href="#ipen"/></svg></button><button class="btn bic bsm" style="color:var(--red)" onclick="delP(\''+p.id+'\',\''+p.name.replace(/'/g,"\\'")+'\')"><svg><use href="#idt"/></svg></button></div></td></tr>').join(''):'<tr><td colspan="6" style="text-align:center;color:var(--mu);padding:20px;">No products</td></tr>';
+}
+function openProdMd(p){
+  document.getElementById('pId').value='';
+  ['pNm','pSl','pDs','pPr','pWt','pSt','pIm'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('pAc').checked=true;document.getElementById('pGf').checked=true;
+  document.getElementById('mdProdTtl').textContent='Add Product';
+  if(p){
+    document.getElementById('mdProdTtl').textContent='Edit Product';
+    document.getElementById('pId').value=p.id;
+    document.getElementById('pNm').value=p.name||'';
+    document.getElementById('pSl').value=p.slug||'';
+    document.getElementById('pDs').value=p.description||'';
+    document.getElementById('pFl').value=p.flavour||'traditional';
+    document.getElementById('pPr').value=p.price_cents?(p.price_cents/100).toFixed(2):'';
+    document.getElementById('pWt').value=p.weight_grams||'';
+    document.getElementById('pSt').value=p.stock||0;
+    document.getElementById('pIm').value=p.image_url||'';
+    document.getElementById('pAc').checked=!!p.is_active;
+    document.getElementById('pGf').checked=!!p.is_giftable;
+    // Show upload row and current image preview when editing
+    document.getElementById('pImUploadRow').style.display='block';
+    if(p.image_url){
+      document.getElementById('pImPreviewImg').src=p.image_url;
+      document.getElementById('pImPreview').style.display='block';
+    } else {
+      document.getElementById('pImPreview').style.display='none';
+    }
+  } else {
+    document.getElementById('pImUploadRow').style.display='none';
+  }
+  openMd('mdProd');
+}
+function editP(id){const p=allP.find(x=>x.id===id);if(p)openProdMd(p);}
+function autoSlug(){document.getElementById('pSl').value=document.getElementById('pNm').value.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+async function saveProd(){
+  const id=document.getElementById('pId').value;
+  const body={name:document.getElementById('pNm').value,slug:document.getElementById('pSl').value,description:document.getElementById('pDs').value,flavour:document.getElementById('pFl').value,price_cents:Math.round(parseFloat(document.getElementById('pPr').value||0)*100),weight_grams:parseInt(document.getElementById('pWt').value||0),stock:parseInt(document.getElementById('pSt').value||0),image_url:document.getElementById('pIm').value,is_active:document.getElementById('pAc').checked,is_giftable:document.getElementById('pGf').checked};
+  const r=await api(id?'PUT':'POST',id?'/admin/products/'+id:'/admin/products',body);
+  if(r&&!r.error){toast(id?'Product updated':'Product created');closeMd('mdProd');loadProds();}
+  else toast(r?.error||'Error saving product','error');
+}
+async function uploadProdImg(){
+  const id=document.getElementById('pId').value;
+  if(!id){toast('Save the product first, then upload an image.','error');return;}
+  const file=document.getElementById('pImFile').files[0];
+  if(!file){toast('Select an image file first.','error');return;}
+  const fd=new FormData();fd.append('image',file);
+  try{
+    const res=await fetch(`/api/admin/products/${id}/image`,{method:'POST',headers:{Authorization:'Bearer '+getToken()},body:fd});
+    const data=await res.json();
+    if(!res.ok)throw new Error(data.error||'Upload failed');
+    document.getElementById('pIm').value=data.image_url;
+    document.getElementById('pImPreviewImg').src=data.image_url;
+    document.getElementById('pImPreview').style.display='block';
+    toast('Image uploaded successfully');
+    loadProds();
+  }catch(e){toast(e.message,'error');}
+}
+async function delP(id,name){
+  if(!confirm('Delete "'+name+'"? Cannot be undone.'))return;
+  const r=await api('DELETE','/admin/products/'+id);
+  if(r&&!r.error){toast('Product deleted');loadProds();}
+  else toast(r?.error||'Error','error');
+}
+
+// CUSTOMERS
+async function loadCusts(){
+  const q=document.getElementById('cuSrch').value;
+  const r=await api('GET','/admin/customers'+(q?'?search='+encodeURIComponent(q):''));
+  const list=(r&&r.data)?r.data:[];
+  document.getElementById('cuTb').innerHTML=list.length?list.map(c=>{
+    const ini=((c.first_name||'?')[0]+(c.last_name||'')[0]).toUpperCase();
+    return '<tr><td><div style="display:flex;align-items:center;gap:8px;"><div style="width:29px;height:29px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#a87d44);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:600;color:#fff;flex-shrink:0;">'+ini+'</div>'+(c.first_name||'')+' '+(c.last_name||'')+'</div></td><td class="dm">'+c.email+'</td><td class="dm">'+(c.phone||'—')+'</td><td>'+(c.order_count||0)+'</td><td>'+eu(c.total_spent_cents||0)+'</td><td class="dm">'+fmt(c.created_at)+'</td><td><div style="display:flex;gap:4px;"><button class="btn bic bsm" onclick="viewCust(\''+c.id+'\')" title="View"><svg><use href="#ie"/></svg></button><button class="btn bic bsm" onclick="expCust(\''+c.id+'\')" title="Export GDPR data"><svg><use href="#idl"/></svg></button><button class="btn bic bsm" style="color:var(--red)" onclick="eraseCust(\''+c.id+'\',\''+c.email.replace(/'/g,"\\'")+'\')"><svg><use href="#idt"/></svg></button></div></td></tr>';
+  }).join(''):'<tr><td colspan="7" style="text-align:center;color:var(--mu);padding:20px;">No customers</td></tr>';
+}
+async function viewCust(id){
+  openMd('mdCust');document.getElementById('mdCustBody').innerHTML='<div class="sp"></div>';
+  const r=await api('GET','/admin/customers/'+id);
+  if(!r||r.error){document.getElementById('mdCustBody').innerHTML='<p style="color:var(--red)">Error loading customer.</p>';return;}
+  const c=r.data||r;
+  document.getElementById('mdCustTtl').textContent=(c.first_name||'')+' '+(c.last_name||'');
+  document.getElementById('mdCustBody').innerHTML='<div class="tc" style="margin-bottom:16px;"><div><p><strong>Email:</strong> '+c.email+'</p><p><strong>Phone:</strong> '+(c.phone||'—')+'</p><p><strong>Joined:</strong> '+fmt(c.created_at)+'</p></div><div><p><strong>Orders:</strong> '+(c.order_count||0)+'</p><p><strong>Total Spent:</strong> '+eu(c.total_spent_cents||0)+'</p></div></div>'+(c.addresses&&c.addresses.length?'<p style="margin-bottom:8px;"><strong>Addresses:</strong></p>'+c.addresses.map(a=>'<p class="dm" style="margin-bottom:3px;">'+a.full_name+', '+a.line1+', '+a.city+', '+a.postal_code+', '+a.country+'</p>').join(''):'')+'<p style="margin:14px 0 8px;"><strong>Orders:</strong></p><div class="tw"><table><thead><tr><th>Order #</th><th>Date</th><th>Total</th><th>Status</th></tr></thead><tbody>'+(c.orders&&c.orders.length?c.orders.map(o=>'<tr><td>'+o.order_number+'</td><td class="dm">'+fmt(o.created_at)+'</td><td>'+eu(o.total_cents)+'</td><td>'+sb(o.status)+'</td></tr>').join(''):'<tr><td colspan="4" style="text-align:center;padding:13px;color:var(--mu);">No orders</td></tr>')+'</tbody></table></div>';
+}
+async function expCust(id){
+  const r=await api('GET','/admin/customers/'+id+'/export');
+  if(r){const bl=new Blob([JSON.stringify(r,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download='siculera-customer-'+id+'.json';a.click();toast('Data exported (GDPR Art. 20)');}
+  else toast('Export failed','error');
+}
+async function eraseCust(id,email){
+  if(!confirm('GDPR Erasure: Permanently anonymize\n'+email+'\n\nThis cannot be undone.'))return;
+  const r=await api('DELETE','/admin/customers/'+id+'/erase');
+  if(r&&!r.error){toast('Customer anonymized (GDPR Art. 17)');loadCusts();}
+  else toast(r?.error||'Error','error');
+}
+
+// ORDERS
+let curOrdSt='';
+document.getElementById('ordTabs').addEventListener('click',e=>{
+  const b=e.target.closest('.tab');if(!b)return;
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');curOrdSt=b.dataset.st;loadOrders();
+});
+async function loadOrders(){
+  const r=await api('GET','/admin/orders'+(curOrdSt?'?status='+curOrdSt:''));
+  const list=(r&&r.data)?r.data:[];
+  document.getElementById('orTb').innerHTML=list.length?list.map(o=>'<tr><td><strong>'+o.order_number+'</strong></td><td class="dm">'+(o.customer_name||o.guest_email||'Guest')+'</td><td>'+(o.items_count||0)+'</td><td>'+eu(o.total_cents)+'</td><td>'+sb(o.status)+'</td><td class="dm" style="font-size:.75rem;">'+(o.carrier?o.carrier.toUpperCase()+' '+o.tracking_number:'—')+'</td><td class="dm">'+fmt(o.created_at)+'</td><td><div style="display:flex;gap:4px;align-items:center;"><button class="btn bic bsm" onclick="viewOrd(\''+o.id+'\')" title="View"><svg><use href="#ie"/></svg></button><button class="btn bic bsm" onclick="openTrk(\''+o.id+'\')" title="Add tracking"><svg><use href="#itr"/></svg></button><select class="fc" style="padding:3px 6px;font-size:.72rem;height:28px;border-radius:7px;width:auto;" onchange="updOrdSt(\''+o.id+'\',this.value);this.value=\'\'"><option value="" disabled selected>Status</option><option value="paid">Paid</option><option value="processing">Processing</option><option value="shipped">Shipped</option><option value="delivered">Delivered</option><option value="cancelled">Cancelled</option></select></div></td></tr>').join(''):'<tr><td colspan="8" style="text-align:center;color:var(--mu);padding:20px;">No orders</td></tr>';
+}
+async function viewOrd(id){
+  openMd('mdOrder');document.getElementById('mdOrderBody').innerHTML='<div class="sp"></div>';
+  const r=await api('GET','/admin/orders/'+id);
+  if(!r||r.error){document.getElementById('mdOrderBody').innerHTML='<p style="color:var(--red)">Error.</p>';return;}
+  const o=r.data||r;
+  document.getElementById('mdOrderTtl').textContent='Order '+o.order_number;
+  document.getElementById('mdOrderBody').innerHTML='<div class="tc" style="margin-bottom:16px;"><div><p><strong>Status:</strong> '+sb(o.status)+'</p><p><strong>Customer:</strong> '+(o.customer_name||o.guest_email||'Guest')+'</p><p><strong>Date:</strong> '+fmt(o.created_at)+'</p>'+(o.carrier?'<p><strong>Carrier:</strong> '+o.carrier.toUpperCase()+' — '+o.tracking_number+'</p>':'')+'</div><div><p><strong>Subtotal:</strong> '+eu(o.subtotal_cents||0)+'</p><p><strong>Shipping:</strong> '+eu(o.shipping_cents||0)+'</p><p><strong>Total:</strong> <strong>'+eu(o.total_cents||0)+'</strong></p></div></div>'+(o.items&&o.items.length?'<div class="tw" style="margin-bottom:14px;"><table><thead><tr><th>Product</th><th>Qty</th><th>Price</th></tr></thead><tbody>'+o.items.map(i=>'<tr><td>'+i.product_name+'</td><td>'+i.quantity+'</td><td>'+eu(i.total_cents)+'</td></tr>').join('')+'</tbody></table></div>':'')+(o.address?'<p><strong>Deliver to:</strong> '+o.address.full_name+', '+o.address.line1+', '+o.address.city+', '+o.address.country+'</p>':'');
+}
+async function updOrdSt(id,status){
+  const r=await api('PUT','/admin/orders/'+id+'/status',{status});
+  if(r&&!r.error){toast('Status updated to '+status);loadOrders();}
+  else toast(r?.error||'Error','error');
+}
+function openTrk(id){document.getElementById('trkOid').value=id;document.getElementById('tNum').value='';document.getElementById('tUrl').value='';openMd('mdTrk');}
+async function saveTrk(){
+  const id=document.getElementById('trkOid').value;
+  const r=await api('PUT','/admin/orders/'+id+'/tracking',{carrier:document.getElementById('tCr').value,tracking_number:document.getElementById('tNum').value,tracking_url:document.getElementById('tUrl').value});
+  if(r&&!r.error){toast('Tracking saved');closeMd('mdTrk');loadOrders();}
+  else toast(r?.error||'Error','error');
+}
+
+// PAYMENTS CONFIG
+const provMap={stripe:{tog:'ts',id:'cp-stripe'},paypal:{tog:'tp',id:'cp-paypal'},square:{tog:'tsq',id:'cp-square'},klarna:{tog:'tk',id:'cp-klarna'},bank_transfer:{tog:'tbt',id:'cp-bank_transfer'},cash_on_delivery:{tog:'tco',id:'cp-cash_on_delivery'}};
+async function loadPayCfg(){
+  const r=await api('GET','/admin/payment-config');
+  if(!r)return;const cfg=r.data||r;
+  Object.entries(provMap).forEach(([k,v])=>{
+    const t=document.getElementById(v.tog);const c=document.getElementById(v.id);
+    if(t){t.checked=!!(cfg[k]&&cfg[k].enabled);if(c)c.classList.toggle('on',t.checked);}
+  });
+  if(cfg.stripe)document.getElementById('s-pk').value=cfg.stripe.publishable_key_hint||'';
+  if(cfg.paypal&&cfg.paypal.mode)document.getElementById('p-md').value=cfg.paypal.mode;
+  if(cfg.bank_transfer){document.getElementById('bt-bn').value=cfg.bank_transfer.bank_name||'';document.getElementById('bt-ib').value=cfg.bank_transfer.iban||'';document.getElementById('bt-bc').value=cfg.bank_transfer.bic||'';document.getElementById('bt-ah').value=cfg.bank_transfer.account_holder||'';}
+  if(cfg.cash_on_delivery)document.getElementById('co-su').value=(cfg.cash_on_delivery.surcharge_cents||0)/100;
+}
+function togProv(n){const m=provMap[n];if(!m)return;const t=document.getElementById(m.tog);const c=document.getElementById(m.id);if(c)c.classList.toggle('on',t.checked);}
+async function savePay(){
+  const cfg={
+    stripe:{enabled:document.getElementById('ts').checked,publishable_key:document.getElementById('s-pk').value,secret_key:document.getElementById('s-sk').value,webhook_secret:document.getElementById('s-wh').value},
+    paypal:{enabled:document.getElementById('tp').checked,client_id:document.getElementById('p-ci').value,client_secret:document.getElementById('p-cs').value,mode:document.getElementById('p-md').value},
+    square:{enabled:document.getElementById('tsq').checked,application_id:document.getElementById('sq-ai').value,access_token:document.getElementById('sq-at').value,location_id:document.getElementById('sq-li').value},
+    klarna:{enabled:document.getElementById('tk').checked,username:document.getElementById('k-mi').value,password:document.getElementById('k-pw').value},
+    bank_transfer:{enabled:document.getElementById('tbt').checked,bank_name:document.getElementById('bt-bn').value,iban:document.getElementById('bt-ib').value,bic:document.getElementById('bt-bc').value,account_holder:document.getElementById('bt-ah').value},
+    cash_on_delivery:{enabled:document.getElementById('tco').checked,surcharge_cents:Math.round(parseFloat(document.getElementById('co-su').value||0)*100)}
+  };
+  const r=await api('POST','/admin/payment-config',cfg);
+  if(r&&!r.error)toast('Payment configuration saved');else toast(r?.error||'Error','error');
+}
+async function testProv(p){
+  const r=await api('POST','/admin/payment-config/test/'+p);
+  if(r&&r.success)toast(p+' connection test passed');else toast(p+' test failed: '+(r?.message||'No response'),'error');
+}
+
+// PAYMENT HISTORY
+async function loadPayHist(){
+  const params=new URLSearchParams();
+  const f=document.getElementById('phF').value,t=document.getElementById('phT').value,pr=document.getElementById('phPr').value,st=document.getElementById('phSt').value;
+  if(f)params.set('from',f);if(t)params.set('to',t);if(pr)params.set('provider',pr);if(st)params.set('status',st);
+  const r=await api('GET','/admin/payments/history?'+params);
+  const s=(r&&r.summary)?r.summary:{};
+  document.getElementById('phTot').textContent=eu(s.total_cents||0);
+  document.getElementById('phSuc').textContent=s.succeeded_count||0;
+  document.getElementById('phFail').textContent=s.failed_count||0;
+  document.getElementById('phRef').textContent=s.refunded_count||0;
+  const list=(r&&r.data)?r.data:[];
+  document.getElementById('phTb').innerHTML=list.length?list.map(p=>'<tr><td class="dm" style="font-family:monospace;font-size:.72rem;">'+(p.stripe_payment_id||p.id||'').substring(0,16)+'…</td><td>'+(p.order_number||'—')+'</td><td class="dm">'+(p.customer_name||p.guest_email||'Guest')+'</td><td><strong>'+eu(p.amount_cents)+'</strong></td><td>'+pb(p.payment_method||p.provider)+'</td><td>'+sb(p.status)+'</td><td class="dm">'+fmt(p.created_at)+'</td></tr>').join(''):'<tr><td colspan="7" style="text-align:center;color:var(--mu);padding:20px;">No payments found</td></tr>';
+}
+
+// SHIPPING
+async function loadShipCfg(){
+  const r=await api('GET','/admin/shipping-config');
+  if(!r)return;const cfg=r.data||r;
+  ['dhl','ups','brt','gls','sda'].forEach(c=>{
+    const t=document.getElementById('t'+c.toUpperCase());const card=document.getElementById('cc-'+c);
+    if(t){t.checked=!!(cfg[c]&&cfg[c].enabled);if(card)card.classList.toggle('on',t.checked);}
+    if(cfg[c]){const k=document.getElementById(c+'-k'),a=document.getElementById(c+'-a');if(k)k.value=cfg[c].api_key_hint||'';if(a)a.value=cfg[c].account_number||'';}
+  });
+  if(cfg.flat_rate){document.getElementById('tFL').checked=cfg.flat_rate.enabled;document.getElementById('fl-p').value=(cfg.flat_rate.price_cents||0)/100;}
+  if(cfg.free_threshold_cents)document.getElementById('fl-t').value=cfg.free_threshold_cents/100;
+}
+function togCarr(n){const t=document.getElementById('t'+n.toUpperCase());const c=document.getElementById('cc-'+n);if(c)c.classList.toggle('on',t&&t.checked);}
+async function saveShip(){
+  const cfg={flat_rate:{enabled:document.getElementById('tFL').checked,price_cents:Math.round(parseFloat(document.getElementById('fl-p').value||0)*100)},free_threshold_cents:Math.round(parseFloat(document.getElementById('fl-t').value||0)*100)};
+  ['dhl','ups','brt','gls','sda'].forEach(c=>{cfg[c]={enabled:document.getElementById('t'+c.toUpperCase()).checked,api_key:document.getElementById(c+'-k')?.value||'',account_number:document.getElementById(c+'-a')?.value||''};if(c==='ups')cfg[c].api_secret=document.getElementById('ups-s')?.value||'';});
+  const r=await api('POST','/admin/shipping-config',cfg);
+  if(r&&!r.error)toast('Shipping configuration saved');else toast(r?.error||'Error','error');
+}
+async function trackShip(){
+  const carrier=document.getElementById('trCr').value,num=document.getElementById('trNum').value;
+  if(!num){toast('Enter a tracking number','error');return;}
+  const r=await api('GET','/admin/shipping/track?carrier='+carrier+'&number='+encodeURIComponent(num));
+  document.getElementById('trRes').style.display='block';
+  const tl=document.getElementById('trTml');
+  if(r&&r.events&&r.events.length)tl.innerHTML=r.events.map(e=>'<div class="tmi"><div class="tmd"></div><div><div class="tss">'+e.status+'</div><div class="tsl">'+(e.location||'')+'</div><div class="tst2">'+(e.description||'')+' — '+fmt(e.event_time||e.timestamp)+'</div></div></div>').join('');
+  else tl.innerHTML='<p style="color:var(--mu)">No tracking events found.</p>';
+}
+
+// SECURITY
+async function loadSecCfg(){
+  const r=await api('GET','/admin/security-config');
+  if(!r)return;const c=r.data||r;
+  if(c.encryption_at_rest!==undefined)document.getElementById('seEnc').checked=c.encryption_at_rest;
+  if(c.cookie_consent_required!==undefined)document.getElementById('seCk').checked=c.cookie_consent_required;
+  if(c.marketing_emails_opt_in!==undefined)document.getElementById('seMk').checked=c.marketing_emails_opt_in;
+  if(c.auto_anonymize_deleted!==undefined)document.getElementById('seAn').checked=c.auto_anonymize_deleted;
+  if(c.pii_masking_logs!==undefined)document.getElementById('sePii').checked=c.pii_masking_logs;
+  if(c.data_retention_days)document.getElementById('seRet').value=c.data_retention_days;
+}
+async function saveSec(){
+  const r=await api('POST','/admin/security-config',{encryption_at_rest:document.getElementById('seEnc').checked,cookie_consent_required:document.getElementById('seCk').checked,marketing_emails_opt_in:document.getElementById('seMk').checked,auto_anonymize_deleted:document.getElementById('seAn').checked,pii_masking_logs:document.getElementById('sePii').checked,data_retention_days:parseInt(document.getElementById('seRet').value||730)});
+  if(r&&!r.error)toast('Security settings saved');else toast(r?.error||'Error','error');
+}
+async function loadAudit(){
+  const action=document.getElementById('auFil').value;
+  const r=await api('GET','/admin/audit-log'+(action?'?action='+action:''));
+  const list=(r&&r.data)?r.data:[];
+  document.getElementById('auTb').innerHTML=list.length?list.map(e=>'<tr><td>'+(e.admin_username||'System')+'</td><td><span class="bdg bb">'+e.action+'</span></td><td class="dm">'+(e.entity||'—')+' '+(e.entity_id?'<span style="font-size:.69rem;opacity:.5">'+e.entity_id.substring(0,8)+'…</span>':'')+'</td><td class="dm" style="font-family:monospace;font-size:.74rem;">'+(e.ip_address||'—')+'</td><td class="dm">'+fmtDT(e.created_at)+'</td></tr>').join(''):'<tr><td colspan="5" style="text-align:center;color:var(--mu);padding:20px;">No audit entries</td></tr>';
+}
+
+// SETTINGS
+async function loadSettings(){
+  const r=await api('GET','/admin/settings');if(!r)return;const s=r.data||r;
+  if(s.store_name)document.getElementById('stNm').value=s.store_name;
+  if(s.store_email)document.getElementById('stEm').value=s.store_email;
+  if(s.whatsapp)document.getElementById('stWa').value=s.whatsapp;
+  if(s.currency)document.getElementById('stCu').value=s.currency;
+  if(s.language)document.getElementById('stLn').value=s.language;
+  if(s.timezone)document.getElementById('stTz').value=s.timezone;
+}
+async function saveSettings(){
+  const r=await api('POST','/admin/settings',{store_name:document.getElementById('stNm').value,store_email:document.getElementById('stEm').value,whatsapp:document.getElementById('stWa').value,currency:document.getElementById('stCu').value,language:document.getElementById('stLn').value,timezone:document.getElementById('stTz').value});
+  if(r&&!r.error)toast('Settings saved');else toast(r?.error||'Error','error');
+}
+async function changePw(){
+  const cur=document.getElementById('cpCur').value,nw=document.getElementById('cpNew').value,con=document.getElementById('cpCon').value;
+  const err=document.getElementById('cpErr');err.style.display='none';
+  if(nw!==con){err.textContent='Passwords do not match.';err.style.display='block';return;}
+  if(nw.length<8){err.textContent='Password must be at least 8 characters.';err.style.display='block';return;}
+  const r=await api('POST','/auth/admin/change-password',{current_password:cur,new_password:nw});
+  if(r&&!r.error){toast('Password changed successfully');['cpCur','cpNew','cpCon'].forEach(id=>document.getElementById(id).value='');}
+  else{err.textContent=r?.error||'Error';err.style.display='block';}
+}
+
+// ═══════════════════════════════════════════════════
+//  AI CHAT
+// ═══════════════════════════════════════════════════
+
+const AI_API = '/api/admin/chat';
+let _aiCfg = {};
+let _aiSessionPage = 1;
+
+// Sub-tab switching
+document.querySelectorAll('.ai-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.ai-tab').forEach(b => {
+      b.style.color = 'var(--t2)';
+      b.style.borderBottomColor = 'transparent';
+      b.classList.remove('active');
+    });
+    document.querySelectorAll('.ai-tab-panel').forEach(p => p.style.display = 'none');
+    btn.style.color = 'var(--g)';
+    btn.style.borderBottomColor = 'var(--g)';
+    btn.classList.add('active');
+    const panel = document.getElementById('ai-tab-' + btn.dataset.at);
+    if (panel) panel.style.display = 'block';
+    if (btn.dataset.at === 'knowledge')  loadDocs();
+    if (btn.dataset.at === 'convos')     loadSessions();
+    if (btn.dataset.at === 'analytics')  loadAnalytics();
+  });
+});
+
+// Drop zone click
+document.getElementById('ai-drop-zone')?.addEventListener('click', () => {
+  document.getElementById('ai-doc-file').click();
+});
+
+// Set embed origin placeholder
+document.getElementById('ai-embed-origin').textContent = window.location.origin;
+
+// ── Load all AI chat data ──────────────────────────────────────────────────
+async function loadAiChat() {
+  await loadChatConfig();
+  loadDocs();
+}
+
+// ── Config ────────────────────────────────────────────────────────────────
+async function loadChatConfig() {
+  try {
+    const r = await apiFetch(AI_API + '/config');
+    _aiCfg = r;
+    document.getElementById('ai-enabled').checked    = !!r.enabled;
+    updateToggleTrack(document.getElementById('ai-enabled'));
+    document.getElementById('ai-provider').value     = r.provider    || 'anthropic';
+    document.getElementById('ai-temperature').value  = r.temperature != null ? r.temperature : 0.7;
+    document.getElementById('ai-temp-label').textContent = r.temperature != null ? r.temperature : 0.7;
+    document.getElementById('ai-personality').value  = r.personality  || 'warm';
+    document.getElementById('ai-custom-prompt').value = r.custom_system_prompt || '';
+    document.getElementById('ai-ollama-url').value   = r.ollama_base_url || 'http://localhost:11434';
+    document.getElementById('ai-can-orders').checked = !!r.can_place_orders;
+    document.getElementById('ai-can-gdpr').checked   = !!r.can_handle_gdpr;
+    document.getElementById('ai-can-suggest').checked = r.can_suggest_products !== false;
+    onAiPersonalityChange();
+    onAiProviderChange();
+    await loadModelList(r.provider || 'anthropic', r.model);
+  } catch(e) { console.warn('[AI cfg]', e); }
+}
+
+// Toggle visual track
+document.getElementById('ai-enabled').addEventListener('change', function() {
+  updateToggleTrack(this);
+});
+function updateToggleTrack(chk) {
+  const track = document.getElementById('ai-enabled-track');
+  if (track) track.style.background = chk.checked ? 'var(--g)' : '#ccc';
+}
+
+function onAiPersonalityChange() {
+  const v = document.getElementById('ai-personality').value;
+  const wrap = document.getElementById('ai-custom-prompt-wrap');
+  if (wrap) wrap.style.display = v === 'custom' ? 'block' : 'none';
+}
+
+async function onAiProviderChange() {
+  const provider = document.getElementById('ai-provider').value;
+  const ollamaWrap = document.getElementById('ai-ollama-url-wrap');
+  if (ollamaWrap) ollamaWrap.style.display = provider === 'ollama' ? 'block' : 'none';
+  await loadModelList(provider, null);
+}
+
+async function loadModelList(provider, currentModel) {
+  try {
+    const r = await apiFetch(AI_API + '/models?provider=' + provider);
+    const sel = document.getElementById('ai-model');
+    sel.innerHTML = '';
+    (r.models || []).forEach(m => {
+      const opt = document.createElement('option');
+      opt.value = m;
+      opt.textContent = m;
+      if (m === currentModel || m === _aiCfg.model) opt.selected = true;
+      sel.appendChild(opt);
+    });
+  } catch(e) { /* keep existing */ }
+}
+
+async function saveChatConfig() {
+  const msg = document.getElementById('ai-config-msg');
+  msg.style.display = 'none';
+  const payload = {
+    enabled:            document.getElementById('ai-enabled').checked,
+    provider:           document.getElementById('ai-provider').value,
+    model:              document.getElementById('ai-model').value,
+    temperature:        parseFloat(document.getElementById('ai-temperature').value),
+    personality:        document.getElementById('ai-personality').value,
+    custom_system_prompt: document.getElementById('ai-custom-prompt').value.trim(),
+    can_place_orders:   document.getElementById('ai-can-orders').checked,
+    can_handle_gdpr:    document.getElementById('ai-can-gdpr').checked,
+    can_suggest_products: document.getElementById('ai-can-suggest').checked,
+    ollama_base_url:    document.getElementById('ai-ollama-url').value.trim() || 'http://localhost:11434'
+  };
+  const apiKey = document.getElementById('ai-api-key').value.trim();
+  if (apiKey && !apiKey.startsWith('*')) payload.api_key = apiKey;
+
+  try {
+    const r = await apiFetch(AI_API + '/config', {method:'POST', body:JSON.stringify(payload)});
+    _aiCfg = r.config || payload;
+    msg.style.cssText = 'display:block;color:#27ae60;font-weight:600;';
+    msg.textContent = '✓ Configuration saved successfully.';
+    document.getElementById('ai-api-key').value = '';
+  } catch(e) {
+    msg.style.cssText = 'display:block;color:#e74c3c;font-weight:600;';
+    msg.textContent = '✗ ' + (e.message || 'Save failed');
+  }
+  setTimeout(() => msg.style.display = 'none', 4000);
+}
+
+async function testChatConnection() {
+  const btn = document.getElementById('ai-test-btn');
+  const msg = document.getElementById('ai-config-msg');
+  btn.textContent = '⏳ Testing…';
+  btn.disabled = true;
+  msg.style.display = 'none';
+  try {
+    const r = await apiFetch('/api/chat/session', {method:'POST', body:JSON.stringify({})});
+    if (r.session_token) {
+      msg.style.cssText = 'display:block;color:#27ae60;font-weight:600;';
+      msg.textContent = '✓ Connection successful! Session token received.';
+    } else {
+      throw new Error('No session token returned');
+    }
+  } catch(e) {
+    msg.style.cssText = 'display:block;color:#e74c3c;font-weight:600;';
+    msg.textContent = '✗ Connection failed: ' + (e.message || 'Unknown error');
+  }
+  btn.textContent = '🔌 Test Connection';
+  btn.disabled = false;
+  setTimeout(() => msg.style.display = 'none', 5000);
+}
+
+// ── Documents ─────────────────────────────────────────────────────────────
+let _pendingDocFile = null;
+
+function onDocFileSelected(e) {
+  _pendingDocFile = e.target.files[0];
+  if (!_pendingDocFile) return;
+  document.getElementById('ai-doc-desc-wrap').style.display = 'block';
+  document.getElementById('ai-drop-zone').querySelector('div:nth-child(2)').textContent = '📎 ' + _pendingDocFile.name;
+}
+
+function onDocDrop(e) {
+  e.preventDefault();
+  document.getElementById('ai-drop-zone').style.borderColor = 'var(--ln)';
+  const file = e.dataTransfer?.files?.[0];
+  if (!file) return;
+  _pendingDocFile = file;
+  document.getElementById('ai-doc-desc-wrap').style.display = 'block';
+  document.getElementById('ai-drop-zone').querySelector('div:nth-child(2)').textContent = '📎 ' + file.name;
+}
+
+function cancelDocUpload() {
+  _pendingDocFile = null;
+  document.getElementById('ai-doc-file').value = '';
+  document.getElementById('ai-doc-desc-wrap').style.display = 'none';
+  document.getElementById('ai-doc-msg').style.display = 'none';
+}
+
+async function uploadDoc() {
+  const msg = document.getElementById('ai-doc-msg');
+  if (!_pendingDocFile) { msg.style.cssText='display:block;color:#e74c3c;'; msg.textContent='No file selected.'; return; }
+  const fd = new FormData();
+  fd.append('file', _pendingDocFile);
+  fd.append('description', document.getElementById('ai-doc-desc').value.trim());
+  msg.style.cssText = 'display:block;color:var(--t2);';
+  msg.textContent = '⏳ Uploading and processing…';
+  try {
+    const r = await fetch(AI_API + '/documents', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + getToken() },
+      body: fd
+    });
+    const data = await r.json();
+    if (!r.ok) throw new Error(data.error || 'Upload failed');
+    msg.style.cssText = 'display:block;color:#27ae60;font-weight:600;';
+    msg.textContent = '✓ ' + data.message;
+    cancelDocUpload();
+    setTimeout(() => { loadDocs(); msg.style.display = 'none'; }, 2000);
+  } catch(e) {
+    msg.style.cssText = 'display:block;color:#e74c3c;';
+    msg.textContent = '✗ ' + (e.message || 'Upload error');
+  }
+}
+
+async function loadDocs() {
+  const cont = document.getElementById('ai-docs-table');
+  if (!cont) return;
+  try {
+    const docs = await apiFetch(AI_API + '/documents');
+    if (!docs.length) {
+      cont.innerHTML = '<div style="color:var(--t2);font-size:13px;padding:20px;text-align:center;">No documents uploaded yet. Upload your first document above.</div>';
+      return;
+    }
+    cont.innerHTML = `
+      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+        <thead><tr style="border-bottom:2px solid var(--ln);">
+          <th style="padding:8px 10px;color:var(--t2);text-align:left;">File</th>
+          <th style="padding:8px 10px;color:var(--t2);text-align:left;">Chunks</th>
+          <th style="padding:8px 10px;color:var(--t2);text-align:left;">Date</th>
+          <th style="padding:8px 10px;color:var(--t2);text-align:left;">Active</th>
+          <th style="padding:8px 10px;color:var(--t2);text-align:left;">Actions</th>
+        </tr></thead>
+        <tbody>
+          ${docs.map(d => `
+            <tr style="border-bottom:1px solid var(--ln);">
+              <td style="padding:9px 10px;">
+                <div style="font-weight:600;">${esc(d.original_name)}</div>
+                ${d.description ? `<div style="font-size:11px;color:var(--t2);">${esc(d.description)}</div>` : ''}
+              </td>
+              <td style="padding:9px 10px;color:var(--t2);">${d.chunk_count}</td>
+              <td style="padding:9px 10px;color:var(--t2);">${fmt(d.created_at)}</td>
+              <td style="padding:9px 10px;">
+                <label style="cursor:pointer;">
+                  <input type="checkbox" ${d.is_active ? 'checked' : ''} onchange="toggleDoc('${d.id}', this.checked)" style="accent-color:var(--g);">
+                </label>
+              </td>
+              <td style="padding:9px 10px;">
+                <button onclick="deleteDoc('${d.id}', '${esc(d.original_name)}')" style="background:none;border:none;color:#e74c3c;cursor:pointer;font-size:13px;" title="Delete">🗑️</button>
+              </td>
+            </tr>`).join('')}
+        </tbody>
+      </table>`;
+  } catch(e) {
+    cont.innerHTML = '<div style="color:#e74c3c;font-size:13px;padding:20px;">Failed to load documents: ' + (e.message||'') + '</div>';
+  }
+}
+
+async function toggleDoc(id, active) {
+  try {
+    await apiFetch(AI_API + '/documents/' + id, {method:'PATCH', body:JSON.stringify({is_active: active})});
+  } catch(e) { showNotif('Failed to update document'); }
+}
+
+async function deleteDoc(id, name) {
+  if (!confirm('Delete "' + name + '" from the knowledge base? This cannot be undone.')) return;
+  try {
+    await apiFetch(AI_API + '/documents/' + id, {method:'DELETE'});
+    loadDocs();
+  } catch(e) { showNotif('Delete failed: ' + (e.message||'')); }
+}
+
+// ── Sessions ─────────────────────────────────────────────────────────────
+async function loadSessions() {
+  const tbody = document.getElementById('ai-sessions-tbody');
+  const escalated = document.getElementById('ai-show-escalated')?.checked;
+  if (!tbody) return;
+  tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;color:var(--t2);">Loading…</td></tr>';
+  try {
+    const qs = `?page=${_aiSessionPage}&limit=20${escalated ? '&escalated=true' : ''}`;
+    const r  = await apiFetch(AI_API + '/sessions' + qs);
+    if (!r.sessions?.length) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--t2);">No conversations yet.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = r.sessions.map(s => `
+      <tr style="border-bottom:1px solid var(--ln);cursor:pointer;" onclick="openThread('${s.id}')">
+        <td style="padding:9px 10px;font-family:monospace;font-size:11px;">${s.session_token.slice(0,12)}…</td>
+        <td style="padding:9px 10px;">${s.user_email ? esc(s.user_email) : '<span style="color:var(--t2);">Guest</span>'}</td>
+        <td style="padding:9px 10px;">${s.message_count}</td>
+        <td style="padding:9px 10px;">${s.human_escalated ? '<span style="color:#e74c3c;font-weight:600;">🔴 Escalated</span>' : (s.ended_at ? '<span style="color:var(--t2);">Ended</span>' : '<span style="color:#27ae60;">Active</span>')}</td>
+        <td style="padding:9px 10px;color:var(--t2);">${fmtDT(s.created_at)}</td>
+        <td style="padding:9px 10px;"><button style="background:none;border:1px solid var(--ln);border-radius:6px;padding:3px 9px;cursor:pointer;font-size:12px;" onclick="event.stopPropagation();openThread('${s.id}')">View</button></td>
+      </tr>`).join('');
+
+    // Pagination
+    const pages = Math.ceil(r.total / r.limit);
+    const pgDiv = document.getElementById('ai-sessions-pagination');
+    if (pgDiv && pages > 1) {
+      pgDiv.innerHTML = `<span style="font-size:12px;color:var(--t2);">Page ${r.page} of ${pages}</span>
+        <button class="btn" style="font-size:12px;padding:4px 12px;" ${r.page <= 1 ? 'disabled' : ''} onclick="_aiSessionPage--;loadSessions()">‹ Prev</button>
+        <button class="btn" style="font-size:12px;padding:4px 12px;" ${r.page >= pages ? 'disabled' : ''} onclick="_aiSessionPage++;loadSessions()">Next ›</button>`;
+    } else if (pgDiv) pgDiv.innerHTML = '';
+  } catch(e) {
+    tbody.innerHTML = '<tr><td colspan="6" style="color:#e74c3c;padding:20px;">' + (e.message||'Load failed') + '</td></tr>';
+  }
+}
+
+async function openThread(sessionId) {
+  const modal = document.getElementById('ai-thread-modal');
+  const body  = document.getElementById('ai-thread-body');
+  modal.style.display = 'flex';
+  body.innerHTML = '<div style="color:var(--t2);text-align:center;padding:30px;">Loading…</div>';
+  try {
+    const r = await apiFetch(AI_API + '/sessions/' + sessionId + '/messages');
+    const msgs = r.messages || [];
+    if (!msgs.length) {
+      body.innerHTML = '<div style="color:var(--t2);text-align:center;padding:30px;">No messages in this session.</div>';
+      return;
+    }
+    body.innerHTML = msgs.filter(m => m.role === 'user' || m.role === 'assistant').map(m => {
+      const isUser = m.role === 'user';
+      return `<div style="display:flex;justify-content:${isUser?'flex-end':'flex-start'};">
+        <div style="max-width:78%;padding:10px 14px;border-radius:14px;${isUser?'background:#b8975a;color:#fff;border-bottom-right-radius:4px;':'background:#f5f0ea;color:#27312a;border-bottom-left-radius:4px;'}font-size:13px;line-height:1.5;">
+          ${esc(m.content || '')}
+          <div style="font-size:10px;margin-top:5px;opacity:.6;">${fmtDT(m.created_at)}</div>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    body.innerHTML = '<div style="color:#e74c3c;padding:20px;">Failed to load thread: ' + esc(e.message||'') + '</div>';
+  }
+}
+
+function closeThreadModal() {
+  document.getElementById('ai-thread-modal').style.display = 'none';
+}
+
+// ── Analytics ─────────────────────────────────────────────────────────────
+async function loadAnalytics() {
+  try {
+    const r = await apiFetch(AI_API + '/analytics');
+    document.getElementById('ai-stat-sessions').textContent    = r.stats?.total_sessions    ?? '—';
+    document.getElementById('ai-stat-messages').textContent    = r.stats?.total_messages    ?? '—';
+    document.getElementById('ai-stat-orders').textContent      = r.stats?.total_orders      ?? '—';
+    document.getElementById('ai-stat-escalations').textContent = r.stats?.total_escalations ?? '—';
+    renderMonthlyChart(r.monthly_sessions || []);
+    renderTopSearches(r.top_searches || []);
+  } catch(e) { console.warn('[AI analytics]', e); }
+}
+
+function renderMonthlyChart(data) {
+  const cont = document.getElementById('ai-chart-monthly');
+  if (!data.length) { cont.innerHTML = '<div style="color:var(--t2);font-size:13px;text-align:center;padding:20px;">No data yet.</div>'; return; }
+  const max = Math.max(...data.map(d => d.sessions), 1);
+  cont.innerHTML = `<div style="display:flex;align-items:flex-end;gap:8px;height:120px;padding:0 4px;">
+    ${data.map(d => `
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div style="font-size:10px;color:var(--t2);">${d.sessions}</div>
+        <div style="width:100%;background:var(--g);border-radius:4px 4px 0 0;height:${Math.round((d.sessions/max)*100)}px;min-height:4px;opacity:.85;"></div>
+        <div style="font-size:9px;color:var(--t2);white-space:nowrap;">${d.month}</div>
+      </div>`).join('')}
+  </div>`;
+}
+
+function renderTopSearches(data) {
+  const cont = document.getElementById('ai-top-searches');
+  if (!data.length) { cont.innerHTML = '<div style="color:var(--t2);font-size:13px;text-align:center;padding:20px;">No searches recorded yet.</div>'; return; }
+  cont.innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:13px;">
+    <thead><tr style="border-bottom:1px solid var(--ln);">
+      <th style="padding:7px 10px;text-align:left;color:var(--t2);">Query</th>
+      <th style="padding:7px 10px;text-align:right;color:var(--t2);">Count</th>
+    </tr></thead>
+    <tbody>
+      ${data.map(d => `<tr style="border-bottom:1px solid var(--ln);">
+        <td style="padding:7px 10px;">${esc(d.search_query)}</td>
+        <td style="padding:7px 10px;text-align:right;font-weight:600;color:var(--g);">${d.count}</td>
+      </tr>`).join('')}
+    </tbody>
+  </table>`;
+}
+
+// ── Helper: escape HTML ───────────────────────────────────────────────────
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Helper: apiFetch with admin auth ─────────────────────────────────────
+async function apiFetch(url, opts = {}) {
+  const token = getToken();
+  const headers = { 'Content-Type': 'application/json', ...(opts.headers || {}) };
+  if (token) headers['Authorization'] = 'Bearer ' + token;
+  const res = await fetch(url, { ...opts, headers });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || 'HTTP ' + res.status);
+  return data;
+}
+
+// ── STAFF & ROLES ─────────────────────────────────────────────────────────
+let allStaff = [];
+async function loadStaff() {
+  const q = document.getElementById('sfSrch')?.value || '';
+  const r = await api('GET', '/admin/staff' + (q ? '?search=' + encodeURIComponent(q) : ''));
+  allStaff = (r && r.data) ? r.data : [];
+  renderStaff(allStaff);
+}
+const roleColors = { superadmin: 'bo', admin: 'bb', viewer: 'bgy' };
+function renderStaff(list) {
+  const tb = document.getElementById('sfTb');
+  if (!tb) return;
+  tb.innerHTML = list.length ? list.map(u => `<tr>
+    <td><strong>${esc(u.username)}</strong></td>
+    <td class="dm">${esc(u.email || '—')}</td>
+    <td><span class="bdg ${roleColors[u.role] || 'bgy'}">${u.role}</span></td>
+    <td class="dm">${u.last_login ? fmtDT(u.last_login) : 'Never'}</td>
+    <td>${u.is_active ? '<span class="bdg bg">Active</span>' : '<span class="bdg br">Inactive</span>'}</td>
+    <td><div style="display:flex;gap:5px;">
+      <button class="btn bic bsm" onclick="editStaff('${u.id}')"><svg><use href="#ipen"/></svg></button>
+      <button class="btn bic bsm" style="color:var(--red)" onclick="deactivateStaff('${u.id}','${esc(u.username)}',${u.is_active})"><svg><use href="#idt"/></svg></button>
+    </div></td>
+  </tr>`).join('') : '<tr><td colspan="6" style="text-align:center;color:var(--mu);padding:20px;">No admin users found</td></tr>';
+}
+function openStaffMd(u) {
+  ['sfUn','sfEm','sfPw'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('sfId').value = '';
+  document.getElementById('sfRl').value = 'admin';
+  document.getElementById('sfAc').checked = true;
+  document.getElementById('mdStaffTtl').textContent = 'Add Admin User';
+  document.getElementById('sfPwNote').textContent = '(required for new users)';
+  if (u) {
+    document.getElementById('mdStaffTtl').textContent = 'Edit Admin User';
+    document.getElementById('sfId').value = u.id;
+    document.getElementById('sfUn').value = u.username || '';
+    document.getElementById('sfEm').value = u.email || '';
+    document.getElementById('sfRl').value = u.role || 'admin';
+    document.getElementById('sfAc').checked = !!u.is_active;
+    document.getElementById('sfPwNote').textContent = '(leave blank to keep current)';
+  }
+  openMd('mdStaff');
+}
+function editStaff(id) { const u = allStaff.find(x => x.id === id); if (u) openStaffMd(u); }
+async function saveStaff() {
+  const id = document.getElementById('sfId').value;
+  const pw = document.getElementById('sfPw').value;
+  const body = {
+    username: document.getElementById('sfUn').value.trim(),
+    email: document.getElementById('sfEm').value.trim(),
+    role: document.getElementById('sfRl').value,
+    is_active: document.getElementById('sfAc').checked
+  };
+  if (pw) body.password = pw;
+  if (!body.username) { toast('Username is required', 'error'); return; }
+  if (!id && !pw) { toast('Password is required for new users', 'error'); return; }
+  const r = await api(id ? 'PUT' : 'POST', id ? '/admin/staff/' + id : '/admin/staff', body);
+  if (r && !r.error) { toast(id ? 'User updated' : 'User created'); closeMd('mdStaff'); loadStaff(); }
+  else toast(r?.error || 'Error saving user', 'error');
+}
+async function deactivateStaff(id, name, isActive) {
+  const action = isActive ? 'deactivate' : 'reactivate';
+  if (!confirm(`${action.charAt(0).toUpperCase() + action.slice(1)} "${name}"?`)) return;
+  const r = await api('PUT', '/admin/staff/' + id, { is_active: !isActive });
+  if (r && !r.error) { toast(`User ${action}d`); loadStaff(); }
+  else toast(r?.error || 'Error', 'error');
+}
+
+// ── ANALYTICS DASHBOARD ───────────────────────────────────────────────────
+async function loadAnalyticsDash() {
+  const st = await api('GET', '/admin/stats');
+  if (st) {
+    document.getElementById('an-rev').textContent = eu(st.revenue_30d_cents || 0);
+    document.getElementById('an-ord').textContent = st.orders_30d || 0;
+    const aov = st.orders_30d ? Math.round((st.revenue_30d_cents || 0) / st.orders_30d) : 0;
+    document.getElementById('an-aov').textContent = eu(aov);
+    const cvr = st.chat_conversion_rate != null ? (st.chat_conversion_rate * 100).toFixed(1) + '%' : '—';
+    document.getElementById('an-cvr').textContent = cvr;
+    document.getElementById('an-rev-t').textContent = (st.revenue_30d_change >= 0 ? '▲ +' : '▼ ') + (Math.abs(st.revenue_30d_change || 0)).toFixed(1) + '% vs prev 30d';
+  }
+  // Revenue chart
+  const rc = document.getElementById('an-rev-chart');
+  if (rc && st?.daily_revenue) {
+    const days = st.daily_revenue;
+    const max = Math.max(...days.map(d => d.revenue_cents), 1);
+    rc.innerHTML = days.map(d => `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;height:100%;">
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;width:100%;">
+        <div style="width:100%;background:var(--gold);opacity:.8;border-radius:3px 3px 0 0;height:${Math.max(4,Math.round((d.revenue_cents/max)*130))}px;" title="${eu(d.revenue_cents)}"></div>
+      </div>
+      <div style="font-size:8px;color:var(--mu);white-space:nowrap;">${d.day ? new Date(d.day).getDate() : ''}</div>
+    </div>`).join('');
+  }
+  // Orders by status
+  const sc = document.getElementById('an-status-chart');
+  if (sc && st?.orders_by_status) {
+    const total = Object.values(st.orders_by_status).reduce((a,b) => a+b, 0) || 1;
+    sc.innerHTML = Object.entries(st.orders_by_status).map(([s,c]) => `
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="flex:1;">${sb(s)}</div>
+        <div style="flex:3;background:var(--ln);border-radius:4px;height:8px;overflow:hidden;">
+          <div style="height:100%;background:var(--gold);width:${Math.round((c/total)*100)}%;border-radius:4px;"></div>
+        </div>
+        <div style="font-size:.8rem;font-weight:600;min-width:24px;text-align:right;">${c}</div>
+      </div>`).join('');
+  }
+  // Top products
+  const tpb = document.getElementById('an-top-prod');
+  if (tpb && st?.top_products) {
+    tpb.innerHTML = st.top_products.length ? st.top_products.map((p,i) => `<tr>
+      <td><strong>${i+1}</strong></td>
+      <td>${esc(p.name)}</td>
+      <td>${p.units_sold || 0}</td>
+      <td><strong>${eu(p.revenue_cents || 0)}</strong></td>
+    </tr>`).join('') : '<tr><td colspan="4" style="text-align:center;color:var(--mu);padding:16px;">No data yet</td></tr>';
+  }
+  // Recent signups
+  const rsb = document.getElementById('an-signups');
+  if (rsb) {
+    const cu = await api('GET', '/admin/customers?limit=5&sort=created_at');
+    const list = (cu && cu.data) ? cu.data : [];
+    rsb.innerHTML = list.length ? list.map(c => `<tr>
+      <td><strong>${esc(c.first_name || '')} ${esc(c.last_name || '')}</strong><div class="dm">${esc(c.email)}</div></td>
+      <td class="dm">${fmt(c.created_at)}</td>
+      <td>${c.order_count || 0}</td>
+    </tr>`).join('') : '<tr><td colspan="3" style="text-align:center;color:var(--mu);padding:16px;">No customers yet</td></tr>';
+  }
+}
+
+// INIT
+loadOverview();
+</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+{
+  "name": "siculera-ecommerce",
+  "version": "1.0.0",
+  "description": "Siculera — Luxury Sicilian Pastry E-Commerce Backend",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
+    "db:migrate": "node database/migrate.js",
+    "db:migrate:chat": "node database/migrate_chat.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.24.0",
+    "@embedded-postgres/windows-x64": "^18.3.0-beta.16",
+    "@google/generative-ai": "^0.15.0",
+    "@mistralai/mistralai": "^1.0.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "embedded-postgres": "^18.3.0-beta.16",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.3.1",
+    "express-validator": "^7.1.0",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mammoth": "^1.8.0",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.14",
+    "openai": "^4.52.0",
+    "pdf-parse": "^1.1.1",
+    "pg": "^8.12.0",
+    "stripe": "^16.0.0",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
