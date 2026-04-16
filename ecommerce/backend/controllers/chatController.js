@@ -355,6 +355,14 @@ const chatController = {
         return res.status(503).json({ error: 'The AI chat assistant is currently unavailable.' });
       }
 
+      const providerName = (config.provider || 'anthropic').toLowerCase();
+      if (providerName !== 'ollama' && !normalizeApiKeyForProvider(providerName, config.api_key)) {
+        return res.status(503).json({
+          error: 'The AI chat assistant is temporarily unavailable.',
+          reply: 'Our assistant is temporarily unavailable due to a configuration issue. Please try again shortly, or click "Talk to a human" for immediate help.'
+        });
+      }
+
       // ── Resolve user identity ──────────────────────────────────────────
       let userId     = session.user_id || null;
       let guestEmail = null;
@@ -398,7 +406,7 @@ const chatController = {
 
       // ── Get LLM provider ───────────────────────────────────────────────
       const provider = getLLMProvider(
-        config.provider || 'anthropic',
+        providerName,
         config.api_key  || process.env.ANTHROPIC_API_KEY,
         { ollamaBaseUrl: config.ollama_base_url }
       );
