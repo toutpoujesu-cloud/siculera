@@ -11,13 +11,11 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
-    "@embedded-postgres/windows-x64": "^18.3.0-beta.16",
     "@google/generative-ai": "^0.15.0",
     "@mistralai/mistralai": "^1.0.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "embedded-postgres": "^18.3.0-beta.16",
     "express": "^4.19.2",
     "express-rate-limit": "^7.3.1",
     "express-validator": "^7.1.0",
@@ -32,6 +30,10 @@
     "pg": "^8.12.0",
     "stripe": "^16.0.0",
     "uuid": "^10.0.0"
+  },
+  "optionalDependencies": {
+    "embedded-postgres": "^18.3.0-beta.16",
+    "@embedded-postgres/windows-x64": "^18.3.0-beta.16"
   },
   "devDependencies": {
     "nodemon": "^3.1.4"

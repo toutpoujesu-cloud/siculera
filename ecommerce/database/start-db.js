@@ -8,11 +8,14 @@
 
 'use strict';
 
-const _ep = require('embedded-postgres');
-const EmbeddedPostgres = _ep.default || _ep;
 const path  = require('path');
 const fs    = require('fs');
 require('dotenv').config({ path: path.join(__dirname, '../.env'), override: true });
+
+function getEmbeddedPostgresClass() {
+  const _ep = require('embedded-postgres');
+  return _ep.default || _ep;
+}
 
 // Where to store the PostgreSQL data files
 const DATA_DIR = path.join(__dirname, '../.pgdata');
@@ -60,6 +63,7 @@ function wipeDataDir() {
 }
 
 async function startEmbeddedPostgres() {
+  const EmbeddedPostgres = getEmbeddedPostgresClass();
   const dbUrl    = process.env.DATABASE_URL || 'postgresql://postgres:Admin1234!@localhost:5432/siculera';
   const port     = parsePort(dbUrl);
 
