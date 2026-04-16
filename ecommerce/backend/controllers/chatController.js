@@ -541,6 +541,7 @@ const chatController = {
       return res.status(200).json({
         degraded: true,
         error: 'Temporary assistant issue',
+        debug_error: process.env.NODE_ENV !== 'production' ? msg : undefined,
         reply: 'I apologise — I encountered a technical issue. Please try again in a moment, or click "Talk to a human" for immediate assistance.',
         quick_replies: ['Talk to a human']
       });

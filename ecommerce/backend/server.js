@@ -133,6 +133,31 @@ app.get('/health', (req, res) => {
   });
 });
 
+/* ── Chat config diagnostic (no secrets exposed) ──────────────────────────── */
+app.get('/api/chat/diag', async (req, res) => {
+  try {
+    const db = require('./models/db');
+    const { decryptAllFields } = require('./utils/encryption');
+    const { rows } = await db.query("SELECT value FROM settings WHERE key = 'ai_chat_config'").catch(() => ({ rows: [] }));
+    const cfg = rows.length ? decryptAllFields(JSON.parse(rows[0].value)) : null;
+    const hasDeepseekEnv = !!(process.env.DEEPSEEK_API_KEY);
+    const hasAnthropicEnv = !!(process.env.ANTHROPIC_API_KEY);
+    const dbProvider = cfg?.provider || null;
+    const dbEnabled  = cfg?.enabled  || false;
+    const dbKeyFirst8 = cfg?.api_key ? cfg.api_key.substring(0,8) + '...' : 'none';
+    res.json({
+      db_row_exists:    rows.length > 0,
+      db_provider:      dbProvider,
+      db_enabled:       dbEnabled,
+      db_key_prefix:    dbKeyFirst8,
+      env_deepseek_set: hasDeepseekEnv,
+      env_anthropic_set:hasAnthropicEnv
+    });
+  } catch (e) {
+    res.json({ error: e.message });
+  }
+});
+
 /* ── API Routes ────────────────────────────────────────────────────────────── */
 
 // Auth (admin login/logout/me/change-password)
