@@ -47,7 +47,7 @@ class OpenAIProvider {
     const SDK = getSDK();
     const opts = { apiKey: apiKey || 'no-key' };
     if (baseURL) opts.baseURL = baseURL;
-    this.client      = new SDK.default ? new SDK.default(opts) : new SDK(opts);
+    this.client      = SDK.default ? new SDK.default(opts) : new SDK(opts);
     this.subProvider = subProvider; // 'openai' | 'groq' | 'ollama'
     this.name        = subProvider;
   }
