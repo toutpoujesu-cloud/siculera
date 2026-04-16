@@ -1728,7 +1728,7 @@
       hideTyping();
       isSending = false;
       $send.disabled = false;
-      appendMessage('assistant', chatTranslate('errorConnection'));
+      appendMessage('assistant', err && err.userReply ? err.userReply : chatTranslate('errorConnection'));
     }
   }
 
@@ -3225,7 +3225,9 @@
     const json = await res.json();
 
     if (!res.ok) {
-      throw new Error(json.error || `HTTP ${res.status}`);
+      const err = new Error(json.error || `HTTP ${res.status}`);
+      err.userReply = json.reply || null;
+      throw err;
     }
     return json;
   }

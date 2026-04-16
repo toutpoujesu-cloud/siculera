@@ -15,13 +15,47 @@
 const path    = require('path');
 const fs      = require('fs');
 const db      = require('../models/db');
-const { encryptSensitiveFields, decryptAndMaskFields } = require('../utils/encryption');
+const {
+  encryptSensitiveFields,
+  decryptAndMaskFields,
+  decryptAllFields,
+  SENSITIVE_SUFFIXES
+} = require('../utils/encryption');
 const { getModelList }  = require('../utils/llm/llmProvider');
 const docProcessor      = require('../utils/docProcessor');
 
 // ── Config ────────────────────────────────────────────────────────────────────
 
 const chatAdminController = {
+
+  // Keep stored secret values when admin submits masked placeholders like "****abcd".
+  _mergeConfigPreservingSecrets(current, incoming) {
+    const out = { ...(current || {}) };
+    for (const [key, val] of Object.entries(incoming || {})) {
+      if (key.endsWith('__encrypted')) continue;
+
+      const currentVal = out[key];
+
+      if (val && typeof val === 'object' && !Array.isArray(val)) {
+        out[key] = this._mergeConfigPreservingSecrets(
+          (currentVal && typeof currentVal === 'object' && !Array.isArray(currentVal)) ? currentVal : {},
+          val
+        );
+        continue;
+      }
+
+      const isSensitive = SENSITIVE_SUFFIXES.some(s => key.toLowerCase().endsWith(s));
+      const isMaskedPlaceholder = typeof val === 'string' && val.includes('*');
+      const isBlankSensitive = typeof val === 'string' && val.trim() === '';
+
+      if (isSensitive && (isMaskedPlaceholder || isBlankSensitive) && currentVal) {
+        out[key] = currentVal;
+      } else {
+        out[key] = val;
+      }
+    }
+    return out;
+  },
 
   /**
    * GET /api/admin/chat/config
@@ -47,15 +81,18 @@ const chatAdminController = {
     try {
       const incoming = req.body || {};
 
-      // Load current to merge (prevents wiping unrelated fields)
-      let current = {};
+      // Load current config and decrypt to avoid re-encrypting ciphertext on each save.
+      let currentEncrypted = {};
       try {
         const { rows } = await db.query("SELECT value FROM settings WHERE key = 'ai_chat_config'");
-        if (rows.length) current = JSON.parse(rows[0].value);
+        if (rows.length) currentEncrypted = JSON.parse(rows[0].value);
       } catch { /* first save */ }
 
-      const merged   = { ...current, ...incoming };
-      const encrypted = encryptSensitiveFields(merged);
+      const currentPlain = decryptAllFields(currentEncrypted || {});
+
+      const mergedPlain = this._mergeConfigPreservingSecrets(currentPlain, incoming);
+
+      const encrypted = encryptSensitiveFields(mergedPlain);
       const json      = JSON.stringify(encrypted);
 
       await db.query(

@@ -62,6 +62,23 @@ function getEnvFallbackConfig() {
   return null;
 }
 
+function isEncryptedBlob(value) {
+  return typeof value === 'string' && /^[0-9a-f]{32}:[0-9a-f]+$/i.test(value);
+}
+
+function normalizeApiKeyForProvider(provider, key) {
+  if (typeof key !== 'string') return '';
+  const trimmed = key.trim();
+  if (!trimmed || trimmed.includes('*') || isEncryptedBlob(trimmed)) return '';
+
+  const p = (provider || '').toLowerCase();
+  if (p === 'deepseek' && !trimmed.startsWith('sk-')) return '';
+  if (p === 'anthropic' && !trimmed.startsWith('sk-')) return '';
+  if (p === 'openai' && !trimmed.startsWith('sk-')) return '';
+
+  return trimmed;
+}
+
 async function loadChatConfig() {
   try {
     const { rows } = await db.query("SELECT value FROM settings WHERE key = 'ai_chat_config'");
@@ -95,6 +112,17 @@ async function loadChatConfig() {
       if (process.env.DEEPSEEK_API_KEY)  cfg.api_key = process.env.DEEPSEEK_API_KEY;
       else if (process.env.ANTHROPIC_API_KEY) cfg.api_key = process.env.ANTHROPIC_API_KEY;
     }
+
+    // Guard against masked/corrupted keys persisted from admin config saves.
+    cfg.api_key = normalizeApiKeyForProvider(cfg.provider, cfg.api_key);
+    if (!cfg.api_key) {
+      if ((cfg.provider || '').toLowerCase() === 'deepseek' && process.env.DEEPSEEK_API_KEY) {
+        cfg.api_key = process.env.DEEPSEEK_API_KEY;
+      } else if ((cfg.provider || '').toLowerCase() === 'anthropic' && process.env.ANTHROPIC_API_KEY) {
+        cfg.api_key = process.env.ANTHROPIC_API_KEY;
+      }
+    }
+
     return cfg;
   } catch (err) {
     console.warn('[chat] loadChatConfig DB unavailable, using env fallback:', err.message);
