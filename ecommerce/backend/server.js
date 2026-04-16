@@ -145,13 +145,29 @@ app.get('/api/chat/diag', async (req, res) => {
     const dbProvider = cfg?.provider || null;
     const dbEnabled  = cfg?.enabled  || false;
     const dbKeyFirst8 = cfg?.api_key ? cfg.api_key.substring(0,8) + '...' : 'none';
+
+    // Also resolve what loadChatConfig() actually returns
+    const deepseekKey  = process.env.DEEPSEEK_API_KEY;
+    const anthropicKey = process.env.ANTHROPIC_API_KEY;
+    let resolvedProvider = null;
+    let resolvedKeyPrefix = 'none';
+    if (!dbEnabled) {
+      if (deepseekKey) { resolvedProvider = 'deepseek'; resolvedKeyPrefix = deepseekKey.substring(0,8) + '...'; }
+      else if (anthropicKey) { resolvedProvider = 'anthropic'; resolvedKeyPrefix = anthropicKey.substring(0,8) + '...'; }
+    } else {
+      resolvedProvider = dbProvider;
+      resolvedKeyPrefix = dbKeyFirst8;
+    }
+
     res.json({
-      db_row_exists:    rows.length > 0,
-      db_provider:      dbProvider,
-      db_enabled:       dbEnabled,
-      db_key_prefix:    dbKeyFirst8,
-      env_deepseek_set: hasDeepseekEnv,
-      env_anthropic_set:hasAnthropicEnv
+      db_row_exists:      rows.length > 0,
+      db_provider:        dbProvider,
+      db_enabled:         dbEnabled,
+      db_key_prefix:      dbKeyFirst8,
+      env_deepseek_set:   hasDeepseekEnv,
+      env_anthropic_set:  hasAnthropicEnv,
+      resolved_provider:  resolvedProvider,
+      resolved_key_prefix: resolvedKeyPrefix
     });
   } catch (e) {
     res.json({ error: e.message });
