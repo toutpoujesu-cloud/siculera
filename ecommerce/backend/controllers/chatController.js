@@ -90,19 +90,16 @@ async function loadChatConfig() {
     if (!cfg.enabled) {
       const envFallback = getEnvFallbackConfig();
       if (envFallback) {
-        // Use env fallback when DB chat config is disabled or not fully configured.
-        // Preserve DB overrides only when they are compatible with the fallback provider.
+        // Always use env fallback provider + key when DB has chat disabled.
+        // Only preserve DB model if it matches the env provider.
         const model = cfg.model && cfg.provider === envFallback.provider
           ? cfg.model
           : envFallback.model;
 
         return {
           ...envFallback,
-          ...cfg,
-          provider: envFallback.provider,
-          enabled:  true,
-          api_key:  cfg.api_key || envFallback.api_key,
-          model
+          model,
+          enabled: true
         };
       }
     }
