@@ -669,6 +669,47 @@ img { max-width: 100%; display: block; }
 }
 .faq-item p { color: var(--muted); font-size: .92rem; margin: 0; font-weight: 300; line-height: 1.7; }
 
+/* ── FAQ accordion (mobile only) ── */
+.faq-item .faq-btn { display: none; }
+@media (max-width: 720px) {
+  .grid6.faq-grid { display: flex; flex-direction: column; gap: 0; }
+  .faq-item {
+    border-radius: 0; border-bottom: none; padding: 0;
+    box-shadow: none; background: transparent;
+    border: none; border-bottom: 1px solid rgba(39,49,42,.1);
+    transform: none !important;
+  }
+  .faq-item:first-child { border-top: 1px solid rgba(39,49,42,.1); }
+  .faq-item:hover { transform: none; box-shadow: none; }
+  .faq-item h4 { display: none; }
+  .faq-item .faq-btn {
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%; background: none; border: none; cursor: pointer;
+    padding: 18px 4px; text-align: left; gap: 12px;
+    font-family: var(--serif); font-size: 1rem; font-weight: 500;
+    color: var(--text); line-height: 1.4;
+  }
+  .faq-item .faq-btn .faq-icon {
+    flex-shrink: 0; width: 22px; height: 22px;
+    border-radius: 50%; border: 1.5px solid var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent); font-size: 1rem; transition: transform .3s ease;
+  }
+  .faq-item.open .faq-btn .faq-icon { transform: rotate(45deg); }
+  .faq-item .faq-body {
+    display: grid; grid-template-rows: 0fr;
+    transition: grid-template-rows .3s ease;
+  }
+  .faq-item.open .faq-body { grid-template-rows: 1fr; }
+  .faq-item .faq-body-inner {
+    overflow: hidden;
+    padding-bottom: 0;
+    transition: padding-bottom .3s ease;
+  }
+  .faq-item.open .faq-body-inner { padding-bottom: 16px; }
+  .faq-item .faq-body-inner p { margin: 0; }
+}
+
 /* ── Footer ── */
 .footer {
   padding: 72px 0 32px;
@@ -1257,13 +1298,37 @@ img { max-width: 100%; display: block; }
         <p data-i18n="faqIntro">Everything should feel clear, calm, and easy from the beginning.</p>
       </div>
       <div class="ornament reveal"><div class="ornament-diamond"></div></div>
-      <div class="grid6">
-        <div class="faq-item reveal"><h4 data-i18n="faqQ1">Can I order Siculera online for personal delivery?</h4><p data-i18n="faqA1">Yes. You can explore the collection online and choose the flavours or selection that best fits the occasion.</p></div>
-        <div class="faq-item reveal reveal-d1"><h4 data-i18n="faqQ2">Is Siculera suitable for gifting?</h4><p data-i18n="faqA2">Absolutely. The collection is designed to feel thoughtful, elegant, and easy to share — ideal for gifts and special moments.</p></div>
-        <div class="faq-item reveal reveal-d2"><h4 data-i18n="faqQ3">Can businesses order for hotels, retail, or client gifting?</h4><p data-i18n="faqA3">Yes. We welcome enquiries from boutique hotels, cafés, gourmet shops, and businesses looking for memorable gifting options.</p></div>
-        <div class="faq-item reveal reveal-d3"><h4 data-i18n="faqQ4">Do I need to know exactly what I want before contacting you?</h4><p data-i18n="faqA4">Not at all. Whether you already have something specific in mind or simply want guidance, we can help you find the right option.</p></div>
-        <div class="faq-item reveal reveal-d4"><h4 data-i18n="faqQ5">Can I choose flavours based on the occasion?</h4><p data-i18n="faqA5">Yes. Some prefer a classic selection, while others choose citrus, pistachio, or fruit-filled varieties depending on the mood or season.</p></div>
-        <div class="faq-item reveal reveal-d5"><h4 data-i18n="faqQ6">Is there a wholesale or partnership option?</h4><p data-i18n="faqA6">Yes. If you are interested in retail, hospitality, or larger gifting orders, you can contact us through the business enquiry path.</p></div>
+      <div class="grid6 faq-grid">
+        <div class="faq-item reveal">
+          <h4 data-i18n="faqQ1">Can I order Siculera online for personal delivery?</h4>
+          <button class="faq-btn" aria-expanded="false"><span data-i18n="faqQ1">Can I order Siculera online for personal delivery?</span><span class="faq-icon" aria-hidden="true">+</span></button>
+          <div class="faq-body"><div class="faq-body-inner"><p data-i18n="faqA1">Yes. You can explore the collection online and choose the flavours or selection that best fits the occasion.</p></div></div>
+        </div>
+        <div class="faq-item reveal reveal-d1">
+          <h4 data-i18n="faqQ2">Is Siculera suitable for gifting?</h4>
+          <button class="faq-btn" aria-expanded="false"><span data-i18n="faqQ2">Is Siculera suitable for gifting?</span><span class="faq-icon" aria-hidden="true">+</span></button>
+          <div class="faq-body"><div class="faq-body-inner"><p data-i18n="faqA2">Absolutely. The collection is designed to feel thoughtful, elegant, and easy to share — ideal for gifts and special moments.</p></div></div>
+        </div>
+        <div class="faq-item reveal reveal-d2">
+          <h4 data-i18n="faqQ3">Can businesses order for hotels, retail, or client gifting?</h4>
+          <button class="faq-btn" aria-expanded="false"><span data-i18n="faqQ3">Can businesses order for hotels, retail, or client gifting?</span><span class="faq-icon" aria-hidden="true">+</span></button>
+          <div class="faq-body"><div class="faq-body-inner"><p data-i18n="faqA3">Yes. We welcome enquiries from boutique hotels, cafés, gourmet shops, and businesses looking for memorable gifting options.</p></div></div>
+        </div>
+        <div class="faq-item reveal reveal-d3">
+          <h4 data-i18n="faqQ4">Do I need to know exactly what I want before contacting you?</h4>
+          <button class="faq-btn" aria-expanded="false"><span data-i18n="faqQ4">Do I need to know exactly what I want before contacting you?</span><span class="faq-icon" aria-hidden="true">+</span></button>
+          <div class="faq-body"><div class="faq-body-inner"><p data-i18n="faqA4">Not at all. Whether you already have something specific in mind or simply want guidance, we can help you find the right option.</p></div></div>
+        </div>
+        <div class="faq-item reveal reveal-d4">
+          <h4 data-i18n="faqQ5">Can I choose flavours based on the occasion?</h4>
+          <button class="faq-btn" aria-expanded="false"><span data-i18n="faqQ5">Can I choose flavours based on the occasion?</span><span class="faq-icon" aria-hidden="true">+</span></button>
+          <div class="faq-body"><div class="faq-body-inner"><p data-i18n="faqA5">Yes. Some prefer a classic selection, while others choose citrus, pistachio, or fruit-filled varieties depending on the mood or season.</p></div></div>
+        </div>
+        <div class="faq-item reveal reveal-d5">
+          <h4 data-i18n="faqQ6">Is there a wholesale or partnership option?</h4>
+          <button class="faq-btn" aria-expanded="false"><span data-i18n="faqQ6">Is there a wholesale or partnership option?</span><span class="faq-icon" aria-hidden="true">+</span></button>
+          <div class="faq-body"><div class="faq-body-inner"><p data-i18n="faqA6">Yes. If you are interested in retail, hospitality, or larger gifting orders, you can contact us through the business enquiry path.</p></div></div>
+        </div>
       </div>
       <div class="cta-row" style="justify-content:center;margin-top:32px">
         <button class="btn btn-primary" id="openCartBtn2" type="button" data-i18n="orderOrEnquire">Order or Enquire</button>
@@ -2289,6 +2354,24 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── FAQ accordion (mobile only) ──
+document.querySelectorAll('.faq-item .faq-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.faq-item.open').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.faq-btn').setAttribute('aria-expanded', 'false');
+    });
+    // Open clicked (if it was closed)
+    if (!isOpen) {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
 
 // ── Mobile CTA ──
 const mobileCTABtn = document.getElementById('mobileCTABtn');
