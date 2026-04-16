@@ -538,9 +538,11 @@ const chatController = {
         });
       }
 
-      return res.status(500).json({
-        error: 'Something went wrong. Please try again or speak to a human agent.',
-        reply: 'I apologise — I encountered a technical issue. Please try again in a moment, or click "Talk to a human" for immediate assistance.'
+      return res.status(200).json({
+        degraded: true,
+        error: 'Temporary assistant issue',
+        reply: 'I apologise — I encountered a technical issue. Please try again in a moment, or click "Talk to a human" for immediate assistance.',
+        quick_replies: ['Talk to a human']
       });
     }
   },
