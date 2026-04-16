@@ -524,6 +524,20 @@ const chatController = {
 
     } catch (err) {
       console.error('[chat] sendMessage error:', err);
+
+      const msg = String(err?.message || '');
+      const upstreamStatus = Number(err?.status || err?.statusCode || 0);
+      const isAuthError = upstreamStatus === 401
+        || /unauthorized|invalid api key|authentication/i.test(msg);
+      const isRateLimited = upstreamStatus === 429 || /rate limit|too many requests/i.test(msg);
+
+      if (isAuthError || isRateLimited) {
+        return res.status(503).json({
+          error: 'The AI chat assistant is temporarily unavailable.',
+          reply: 'Our assistant is temporarily unavailable at the moment. Please try again shortly, or click "Talk to a human" for immediate help.'
+        });
+      }
+
       return res.status(500).json({
         error: 'Something went wrong. Please try again or speak to a human agent.',
         reply: 'I apologise — I encountered a technical issue. Please try again in a moment, or click "Talk to a human" for immediate assistance.'
