@@ -3289,6 +3289,19 @@
     $quickReplies.innerHTML = '';
   }
 
+  /* ── Warm-up ping ────────────────────────────────────────────────────────── */
+  // Fire a silent HEAD request to the API as soon as the script loads.
+  // This wakes the Render instance from cold start BEFORE the user opens the
+  // chat, so by the time they type a message the server is already warm.
+  // Only runs on production (non-localhost) to avoid noise in dev.
+  (function warmUp() {
+    if (_host === 'localhost' || _host === '127.0.0.1') return;
+    try {
+      fetch(_apiOrigin + '/health', { method: 'HEAD', cache: 'no-store' })
+        .catch(function () { /* silent — warm-up best-effort only */ });
+    } catch (_) {}
+  })();
+
   /* ── Boot ────────────────────────────────────────────────────────────────── */
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
