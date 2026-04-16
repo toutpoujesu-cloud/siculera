@@ -34,39 +34,18 @@ async function migrate() {
   const schemaPath = path.join(__dirname, 'schema_chat.sql');
   const sql = fs.readFileSync(schemaPath, 'utf8');
 
-  // Split on semicolons but keep statement content
-  const statements = sql
-    .split(/;\s*\n/)
-    .map(s => s.trim())
-    .filter(s => s.length > 0 && !s.startsWith('--'));
-
-  console.log(`\n  Running ${statements.length} statements...\n`);
-
-  let ok = 0, skipped = 0;
-  for (const stmt of statements) {
-    if (!stmt.trim()) continue;
-    try {
-      await pool.query(stmt);
-      // Print only the first line of each statement
-      const preview = stmt.split('\n')[0].slice(0, 70);
-      console.log(`  ✓ ${preview}${stmt.split('\n')[0].length > 70 ? '…' : ''}`);
-      ok++;
-    } catch (err) {
-      if (err.message.includes('already exists')) {
-        skipped++;
-        // silently skip "already exists" errors — idempotent
-      } else {
-        console.error(`\n  ✗ Statement failed: ${err.message}`);
-        console.error('  SQL:', stmt.slice(0, 200));
-        await pool.end();
-        process.exit(1);
-      }
-    }
+  console.log('\n  Running schema_chat.sql...\n');
+  try {
+    await pool.query(sql);
+  } catch (err) {
+    console.error(`\n  ✗ Migration failed: ${err.message}`);
+    await pool.end();
+    process.exit(1);
   }
 
-  console.log(`\n╔══════════════════════════════════════════════╗`);
-  console.log(`║  Migration complete! ${ok} applied, ${skipped} skipped.`);
-  console.log(`╚══════════════════════════════════════════════╝\n`);
+  console.log('\n╔══════════════════════════════════════════════╗');
+  console.log('║  Migration complete!                         ║');
+  console.log('╚══════════════════════════════════════════════╝\n');
   await pool.end();
 }
 
