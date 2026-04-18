@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "Siculera Static (Frontend only)",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", ".", "--listen", "tcp:8080"],
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["preview-server.cjs"],
       "port": 8080
     },
     {

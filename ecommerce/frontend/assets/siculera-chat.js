@@ -1688,47 +1688,109 @@
     isSending = true;
     $send.disabled = true;
 
+    const user = getUserContext();
+    const body = {
+      session_token:  sessionToken,
+      message:        text,
+      cart_context:   getCartContext(),
+      user_context:   user && user.id ? user : null,
+      user_token:     localStorage.getItem('siculera_user_token') || null,
+      client_history: clientHistory.slice(-20)
+    };
+    clientHistory.push({ role: 'user', content: text });
+
+    // ── Try streaming first ────────────────────────────────────────────────
+    let streamOk = false;
     try {
-      const user = getUserContext();
-      const body = {
-        session_token:  sessionToken,
-        message:        text,
-        cart_context:   getCartContext(),
-        user_context:   user && user.id ? user : null,
-        user_token:     localStorage.getItem('siculera_user_token') || null,
-        client_history: clientHistory.slice(-20)   // last 20 turns as fallback
-      };
+      const resp = await fetch(API_BASE + '/stream', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(body)
+      });
 
-      // Optimistically add user message to in-memory history before sending
-      clientHistory.push({ role: 'user', content: text });
+      if (resp.ok && resp.body) {
+        streamOk = true;
+        const reader  = resp.body.getReader();
+        const decoder = new TextDecoder();
+        let buf    = '';
+        let msgDiv = null;  // assistant bubble — created on first token
+        let reply  = '';
 
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buf += decoder.decode(value, { stream: true });
+
+          // Split on double-newline (SSE event boundary)
+          const parts = buf.split('\n\n');
+          buf = parts.pop(); // keep incomplete tail
+
+          for (const part of parts) {
+            const line = part.trim();
+            if (!line.startsWith('data:')) continue;
+            const raw = line.slice(5).trim();
+            if (raw === '[DONE]') continue;
+
+            let evt;
+            try { evt = JSON.parse(raw); } catch { continue; }
+
+            if (evt.type === 'token') {
+              if (!msgDiv) { hideTyping(); msgDiv = appendMessage('assistant', ''); }
+              appendTokenToMessage(msgDiv, evt.text);
+              reply += evt.text;
+            }
+
+            if (evt.type === 'thinking') {
+              // Keep typing indicator visible — tool is running
+            }
+
+            if (evt.type === 'done') {
+              hideTyping();
+              if (!msgDiv && evt.reply) {
+                msgDiv = appendMessage('assistant', evt.reply);
+                reply  = evt.reply;
+              }
+              isSending = false;
+              $send.disabled = false;
+
+              if (reply) {
+                clientHistory.push({ role: 'assistant', content: reply });
+                if (clientHistory.length > 40) clientHistory = clientHistory.slice(-40);
+              }
+              if (evt.actions?.length)       processActions(evt.actions);
+              if (evt.quick_replies?.length) renderQuickReplies(evt.quick_replies);
+            }
+          }
+        }
+        // Ensure we always re-enable input after stream ends
+        hideTyping();
+        isSending = false;
+        $send.disabled = false;
+      }
+    } catch (_) { /* stream failed — fall through to regular fetch */ }
+
+    if (streamOk) return;
+
+    // ── Fallback: non-streaming ────────────────────────────────────────────
+    try {
       const data = await api('POST', '/message', body);
-
       hideTyping();
       isSending = false;
       $send.disabled = false;
 
       if (data.reply) {
         appendMessage('assistant', data.reply);
-        // Track assistant reply in history for next turn
         clientHistory.push({ role: 'assistant', content: data.reply });
-        // Keep history bounded
         if (clientHistory.length > 40) clientHistory = clientHistory.slice(-40);
       }
-
-      if (data.actions && data.actions.length) {
-        processActions(data.actions);
-      }
-
-      if (data.quick_replies && data.quick_replies.length) {
-        renderQuickReplies(data.quick_replies);
-      }
+      if (data.actions?.length)       processActions(data.actions);
+      if (data.quick_replies?.length) renderQuickReplies(data.quick_replies);
 
     } catch (err) {
       hideTyping();
       isSending = false;
       $send.disabled = false;
-      appendMessage('assistant', err && err.userReply ? err.userReply : chatTranslate('errorConnection'));
+      appendMessage('assistant', err?.userReply || chatTranslate('errorConnection'));
     }
   }
 
@@ -3242,6 +3304,16 @@
       .replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
     div.innerHTML = safe;
     $messages.insertBefore(div, $typing);
+    scrollToBottom();
+    return div; // returned so streaming can append tokens to it
+  }
+
+  // Append a streamed token to an existing message bubble
+  function appendTokenToMessage(div, token) {
+    const safe = token
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
+    div.innerHTML += safe;
     scrollToBottom();
   }
 

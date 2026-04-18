@@ -126,6 +126,93 @@ class OpenAIProvider {
     };
   }
 
+  /**
+   * Streaming variant — async generator.
+   * Yields { type:'token', text } for each text delta,
+   * then a final { type:'response', content, tool_calls } when the stream ends.
+   */
+  async *chatStream(messages, tools, config = {}) {
+    const oaiMessages = messages.map(msg => {
+      if (msg.role === 'tool') {
+        return {
+          role:         'tool',
+          tool_call_id: msg.tool_call_id || '',
+          content:      typeof msg.tool_result === 'string'
+                          ? msg.tool_result
+                          : JSON.stringify(msg.tool_result || {})
+        };
+      }
+      if (msg.role === 'assistant' && msg.tool_calls && msg.tool_calls.length) {
+        return {
+          role:       'assistant',
+          content:    msg.content || null,
+          tool_calls: msg.tool_calls.map(tc => ({
+            id:       tc.id,
+            type:     'function',
+            function: { name: tc.name, arguments: JSON.stringify(tc.args || {}) }
+          }))
+        };
+      }
+      return { role: msg.role, content: msg.content || '' };
+    });
+
+    const params = {
+      model:       config.model       || 'gpt-4o-mini',
+      max_tokens:  config.max_tokens  || 1024,
+      temperature: typeof config.temperature === 'number' ? config.temperature : 0.7,
+      messages:    oaiMessages,
+      stream:      true
+    };
+
+    if (tools && tools.length) {
+      params.tools = tools.map(t => ({
+        type:     'function',
+        function: {
+          name:        t.name,
+          description: t.description,
+          parameters:  t.parameters || t.input_schema || { type: 'object', properties: {} }
+        }
+      }));
+    }
+
+    const stream = await this.client.chat.completions.create(params);
+
+    let content = '';
+    const tcAccum = {}; // index → { id, name, args }
+
+    for await (const chunk of stream) {
+      const delta = chunk.choices?.[0]?.delta;
+      if (!delta) continue;
+
+      if (delta.content) {
+        content += delta.content;
+        yield { type: 'token', text: delta.content };
+      }
+
+      if (delta.tool_calls) {
+        for (const tc of delta.tool_calls) {
+          const idx = tc.index ?? 0;
+          if (!tcAccum[idx]) tcAccum[idx] = { id: '', name: '', args: '' };
+          if (tc.id)                 tcAccum[idx].id   = tc.id;
+          if (tc.function?.name)     tcAccum[idx].name += tc.function.name;
+          if (tc.function?.arguments) tcAccum[idx].args += tc.function.arguments;
+        }
+      }
+    }
+
+    const toolCalls = Object.values(tcAccum).map(tc => ({
+      id:   tc.id,
+      name: tc.name,
+      args: (() => { try { return JSON.parse(tc.args); } catch { return {}; } })()
+    }));
+
+    yield {
+      type:       'response',
+      content:    content || null,
+      tool_calls: toolCalls.length ? toolCalls : null
+    };
+  }
+
   listModels() {
     return MODELS[this.subProvider] || MODELS.openai;
   }

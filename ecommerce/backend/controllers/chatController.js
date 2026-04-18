@@ -20,12 +20,34 @@ const { decryptAllFields } = require('../utils/encryption');
 const MAX_TOOL_ITERATIONS = 5;
 const RATE_LIMIT_PER_MIN  = parseInt(process.env.CHAT_RATE_LIMIT_PER_MIN) || 20;
 
+// ── Config cache — avoid DB round-trip on every message ─────────────────────
+let _cfgCache = null;
+let _cfgCacheAt = 0;
+const CFG_TTL = 30_000; // 30 seconds
+
 // ── Load + decrypt AI chat config from settings ──────────────────────────────
 
 function getEnvFallbackConfig() {
-  // Prefer DeepSeek if its key is set, fall back to Anthropic
+  // Prefer OpenAI if its key is set, then DeepSeek, then Anthropic
+  const openaiKey    = process.env.OPENAI_API_KEY;
   const deepseekKey  = process.env.DEEPSEEK_API_KEY;
   const anthropicKey = process.env.ANTHROPIC_API_KEY;
+
+  if (openaiKey) {
+    return {
+      enabled:              true,
+      provider:             'openai',
+      api_key:              openaiKey,
+      model:                'gpt-4o-mini',
+      temperature:          0.7,
+      personality:          'warm',
+      can_place_orders:     true,
+      can_handle_gdpr:      false,
+      can_suggest_products: true,
+      max_rag_chunks:       5,
+      max_context_messages: 20
+    };
+  }
 
   if (deepseekKey) {
     return {
@@ -80,6 +102,8 @@ function normalizeApiKeyForProvider(provider, key) {
 }
 
 async function loadChatConfig() {
+  const now = Date.now();
+  if (_cfgCache && (now - _cfgCacheAt) < CFG_TTL) return _cfgCache;
   try {
     const { rows } = await db.query("SELECT value FROM settings WHERE key = 'ai_chat_config'");
     if (!rows.length) return getEnvFallbackConfig();
@@ -106,24 +130,33 @@ async function loadChatConfig() {
 
     // Merge API key from env if not stored in DB
     if (!cfg.api_key) {
-      if (process.env.DEEPSEEK_API_KEY)  cfg.api_key = process.env.DEEPSEEK_API_KEY;
+      if (process.env.OPENAI_API_KEY)         cfg.api_key = process.env.OPENAI_API_KEY;
+      else if (process.env.DEEPSEEK_API_KEY)  cfg.api_key = process.env.DEEPSEEK_API_KEY;
       else if (process.env.ANTHROPIC_API_KEY) cfg.api_key = process.env.ANTHROPIC_API_KEY;
     }
 
     // Guard against masked/corrupted keys persisted from admin config saves.
     cfg.api_key = normalizeApiKeyForProvider(cfg.provider, cfg.api_key);
     if (!cfg.api_key) {
-      if ((cfg.provider || '').toLowerCase() === 'deepseek' && process.env.DEEPSEEK_API_KEY) {
+      const p = (cfg.provider || '').toLowerCase();
+      if (p === 'openai' && process.env.OPENAI_API_KEY) {
+        cfg.api_key = process.env.OPENAI_API_KEY;
+      } else if (p === 'deepseek' && process.env.DEEPSEEK_API_KEY) {
         cfg.api_key = process.env.DEEPSEEK_API_KEY;
-      } else if ((cfg.provider || '').toLowerCase() === 'anthropic' && process.env.ANTHROPIC_API_KEY) {
+      } else if (p === 'anthropic' && process.env.ANTHROPIC_API_KEY) {
         cfg.api_key = process.env.ANTHROPIC_API_KEY;
       }
     }
 
+    _cfgCache = cfg;
+    _cfgCacheAt = Date.now();
     return cfg;
   } catch (err) {
     console.warn('[chat] loadChatConfig DB unavailable, using env fallback:', err.message);
-    return getEnvFallbackConfig();
+    const fb = getEnvFallbackConfig();
+    _cfgCache = fb;
+    _cfgCacheAt = Date.now();
+    return fb;
   }
 }
 
@@ -821,6 +854,201 @@ const chatController = {
     } catch (err) {
       console.error('[chat] paypalCapture error:', err.message);
       return res.status(500).json({ error: err.message });
+    }
+  },
+
+  /**
+   * POST /api/chat/stream
+   * Streaming variant of sendMessage using Server-Sent Events.
+   * Yields tokens as they arrive from OpenAI so the UI feels instant.
+   */
+  async streamMessage(req, res) {
+    // ── SSE headers ────────────────────────────────────────────────────────
+    res.setHeader('Content-Type',  'text/event-stream; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection',    'keep-alive');
+    res.setHeader('X-Accel-Buffering', 'no'); // disable nginx/proxy buffering
+    res.flushHeaders();
+
+    let aborted = false;
+    req.on('close', () => { aborted = true; });
+
+    const emit = (data) => {
+      if (!aborted) res.write(`data: ${JSON.stringify(data)}\n\n`);
+    };
+    const finish = (data) => {
+      emit({ type: 'done', ...data });
+      if (!aborted) { res.write('data: [DONE]\n\n'); res.end(); }
+    };
+
+    const startTime = Date.now();
+
+    try {
+      const { session_token, message, cart_context, user_context, user_token, client_history } = req.body || {};
+
+      if (!session_token || !message?.trim()) {
+        return finish({ error: 'session_token and message are required' });
+      }
+
+      const rateCheck = sessionMgr.checkRateLimit(session_token, RATE_LIMIT_PER_MIN);
+      if (!rateCheck.allowed) {
+        return finish({ error: 'Too many messages. Please wait a moment before sending another.' });
+      }
+
+      const session = await sessionMgr.getSession(session_token);
+      if (!session)           return finish({ error: 'Session not found. Please refresh to start a new chat.' });
+      if (session.ended_at)   return finish({ error: 'This session has ended. Please start a new chat.' });
+
+      const config = await loadChatConfig();
+      if (!config?.enabled)  return finish({ error: 'The AI chat assistant is currently unavailable.' });
+
+      const providerName = (config.provider || 'openai').toLowerCase();
+      if (providerName !== 'ollama' && !normalizeApiKeyForProvider(providerName, config.api_key)) {
+        return finish({ error: 'Chat temporarily unavailable due to configuration issue.' });
+      }
+
+      let userId = session.user_id || null;
+      if (user_token && !userId) {
+        try {
+          const jwt = require('jsonwebtoken');
+          const decoded = jwt.verify(user_token, process.env.JWT_SECRET);
+          userId = decoded.id || decoded.userId || null;
+        } catch (_) {}
+      }
+
+      await sessionMgr.touchSession(session.id);
+
+      const maxContext = config.max_context_messages || 20;
+      let history = await loadHistory(session.id, maxContext);
+      if (!history.length && Array.isArray(client_history) && client_history.length) {
+        history = client_history
+          .filter(m => m.role === 'user' || m.role === 'assistant')
+          .slice(-maxContext)
+          .map(m => ({ role: m.role, content: String(m.content || '') }));
+      }
+
+      const systemPrompt = buildSystemPrompt(config, cart_context, user_context);
+      const messages = [
+        { role: 'system', content: systemPrompt },
+        ...history,
+        { role: 'user', content: message.trim() }
+      ];
+
+      if (session.consent_given) {
+        await persistMessage(session.id, { role: 'user', content: message.trim() });
+      }
+
+      const provider = getLLMProvider(
+        providerName,
+        config.api_key || process.env.OPENAI_API_KEY,
+        { ollamaBaseUrl: config.ollama_base_url }
+      );
+
+      const llmConfig = {
+        model:       config.model       || 'gpt-4o-mini',
+        max_tokens:  config.max_tokens  || 1024,
+        temperature: config.temperature != null ? config.temperature : 0.7
+      };
+
+      const tools   = getEnabledTools(config);
+      const actions = [];
+      let   finalReply = '';
+      const hasStream  = typeof provider.chatStream === 'function';
+
+      // ── Agentic streaming loop ─────────────────────────────────────────
+      for (let iter = 0; iter < MAX_TOOL_ITERATIONS; iter++) {
+        if (aborted) break;
+
+        if (hasStream) {
+          // ── Streaming path ────────────────────────────────────────────
+          const gen = provider.chatStream(messages, tools, llmConfig);
+          let iterContent = '';
+          let iterToolCalls = null;
+
+          for await (const event of gen) {
+            if (aborted) break;
+
+            if (event.type === 'token') {
+              emit({ type: 'token', text: event.text });
+              iterContent += event.text;
+            } else if (event.type === 'response') {
+              iterContent    = event.content || iterContent;
+              iterToolCalls  = event.tool_calls;
+            }
+          }
+
+          if (!iterToolCalls || !iterToolCalls.length) {
+            // Final text answer
+            finalReply = iterContent;
+            if (session.consent_given) {
+              await persistMessage(session.id, {
+                role:       'assistant',
+                content:    finalReply,
+                model_used: llmConfig.model,
+                latency_ms: Date.now() - startTime
+              });
+            }
+            break;
+          }
+
+          // Tool iteration — tell the frontend we're thinking
+          emit({ type: 'thinking' });
+          messages.push({ role: 'assistant', content: iterContent || null, tool_calls: iterToolCalls });
+
+          for (const tc of iterToolCalls) {
+            if (aborted) break;
+            const toolResult = await dispatchTool(tc.name, tc.args || {}, { session, config, userId, guestEmail: null, actions });
+            messages.push({ role: 'tool', tool_call_id: tc.id, tool_name: tc.name, tool_result: toolResult });
+          }
+
+        } else {
+          // ── Non-streaming fallback (Anthropic, Gemini, etc.) ──────────
+          const response = await provider.chat(messages, tools, llmConfig);
+
+          if (!response.tool_calls?.length) {
+            finalReply = response.content || '';
+            // Send full text as a single token so the frontend renders it
+            if (finalReply) emit({ type: 'token', text: finalReply });
+            if (session.consent_given) {
+              await persistMessage(session.id, {
+                role: 'assistant', content: finalReply,
+                model_used: llmConfig.model, latency_ms: Date.now() - startTime
+              });
+            }
+            break;
+          }
+
+          emit({ type: 'thinking' });
+          messages.push({ role: 'assistant', content: response.content || null, tool_calls: response.tool_calls });
+
+          for (const tc of response.tool_calls) {
+            if (aborted) break;
+            const toolResult = await dispatchTool(tc.name, tc.args || {}, { session, config, userId, guestEmail: null, actions });
+            messages.push({ role: 'tool', tool_call_id: tc.id, tool_name: tc.name, tool_result: toolResult });
+          }
+
+          // Last iteration safety: get final response without tools
+          if (iter === MAX_TOOL_ITERATIONS - 1) {
+            const final = await provider.chat(messages, [], llmConfig);
+            finalReply = final.content || 'I\'ve completed the requested actions.';
+            if (finalReply) emit({ type: 'token', text: finalReply });
+          }
+        }
+      }
+
+      const quickReplies = buildQuickReplies(actions, finalReply);
+      finish({ reply: finalReply, actions, quick_replies: quickReplies, latency_ms: Date.now() - startTime });
+
+    } catch (err) {
+      console.error('[chat/stream] error:', err);
+      const msg    = String(err?.message || '');
+      const status = Number(err?.status || err?.statusCode || 0);
+      const isAuth = status === 401 || /unauthorized|invalid api key|authentication/i.test(msg);
+      const isRate = status === 429 || /rate limit|too many requests/i.test(msg);
+      const reply  = (isAuth || isRate)
+        ? 'Our assistant is temporarily unavailable. Please try again shortly, or click "Talk to a human".'
+        : 'I encountered a technical issue. Please try again, or click "Talk to a human" for immediate help.';
+      try { finish({ error: msg, reply }); } catch (_) {}
     }
   }
 };

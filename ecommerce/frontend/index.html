@@ -65,7 +65,51 @@ a { text-decoration: none; color: inherit; }
 img { max-width: 100%; display: block; }
 .container { width: min(var(--max), calc(100% - 128px)); margin: 0 auto; }
 
-/* Skip link */
+/* ── Preloader ── */
+#preloader {
+  position: fixed; inset: 0; z-index: 99999;
+  background: #fbf7f1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 18px;
+  transition: transform .9s cubic-bezier(.76,0,.24,1), opacity .5s ease;
+}
+#preloader.hide {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+#preloader-logo {
+  width: 240px; height: auto;
+  object-fit: contain;
+  opacity: 0; transform: scale(.92);
+  animation: preLogoIn .8s cubic-bezier(.22,.68,0,1.1) .2s forwards;
+}
+#preloader-wordmark {
+  display: none; /* logo image already contains the wordmark */
+}
+#preloader-sub {
+  display: none; /* logo image already contains the subtitle */
+}
+#preloader-line {
+  width: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  animation: preLineIn .8s ease .7s forwards;
+}
+@keyframes preLogoIn {
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes preWordIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes preLineIn {
+  to { width: 120px; }
+}
+/* While preloader is visible, keep page below invisible but layout intact */
+body.preloading { overflow: hidden; }
+body.preloading #scroll-progress { display: none; }
+
+/* ── Skip link */
 .skip-link {
   position: absolute; top: -100%; left: 1rem;
   background: var(--ink); color: #fff;
@@ -104,12 +148,11 @@ img { max-width: 100%; display: block; }
 }
 .brand { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
 .brand img {
-  height: 52px; border-radius: 10px;
-  background: #f8f2e8;
-  box-shadow: 0 6px 18px rgba(39,49,42,.1);
-  object-fit: cover;
+  height: 72px; width: auto;
+  object-fit: contain;
+  background: transparent;
 }
-.brand-text { display: flex; flex-direction: column; gap: 2px; }
+.brand-text { display: none; } /* logo image contains wordmark + subtitle */
 .brand-name {
   font-family: var(--serif); font-size: 1.5rem;
   font-weight: 400; letter-spacing: .05em; line-height: 1;
@@ -215,6 +258,19 @@ img { max-width: 100%; display: block; }
   content: ''; display: block; width: 22px; height: 1px;
   background: currentColor; opacity: .7;
 }
+
+/* ── Hero grain texture ── */
+.hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: .032;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: multiply;
+}
+.hero-grid { position: relative; z-index: 2; }
 
 /* ── Hero ── */
 .hero {
@@ -502,9 +558,16 @@ img { max-width: 100%; display: block; }
   transition: transform .3s var(--ease-out), box-shadow .3s ease;
   position: relative; overflow: hidden;
 }
+.flavour-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  border-radius: 22px 22px 0 0;
+  transition: opacity .3s;
+}
 .flavour-card::after {
   content: ''; position: absolute;
-  top: 0; left: 0; right: 0; height: 2px;
+  top: 0; left: 0; right: 0; height: 3px;
+  border-radius: 22px 22px 0 0;
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
   opacity: 0; transition: opacity .3s;
 }
@@ -515,6 +578,78 @@ img { max-width: 100%; display: block; }
   font-weight: 500; margin-bottom: .5rem;
 }
 .flavour-card p { color: var(--muted); font-size: .91rem; margin: 0; font-weight: 300; }
+.flavour-icon { font-size: 1.6rem; display: block; margin-bottom: 12px; line-height: 1; }
+
+.flavour-traditional { background: rgba(248,242,230,.9); border-color: rgba(184,151,90,.15); }
+.flavour-traditional::before { background: linear-gradient(90deg, #c8a96e, #b8975a); opacity: 1; }
+
+.flavour-lemon { background: rgba(255,252,230,.9); border-color: rgba(220,190,50,.15); }
+.flavour-lemon::before { background: linear-gradient(90deg, #e8d44d, #c9b820); opacity: 1; }
+
+.flavour-orange { background: rgba(255,245,230,.9); border-color: rgba(220,140,50,.15); }
+.flavour-orange::before { background: linear-gradient(90deg, #e8933a, #c97420); opacity: 1; }
+
+.flavour-pistachio { background: rgba(236,244,230,.9); border-color: rgba(120,160,90,.15); }
+.flavour-pistachio::before { background: linear-gradient(90deg, #7e9277, #5a7a52); opacity: 1; }
+
+.flavour-apricot { background: rgba(255,240,225,.9); border-color: rgba(210,130,80,.15); }
+.flavour-apricot::before { background: linear-gradient(90deg, #e8a060, #c97840); opacity: 1; }
+
+.flavour-cherry { background: rgba(255,232,235,.9); border-color: rgba(180,60,80,.15); }
+.flavour-cherry::before { background: linear-gradient(90deg, #c45c6a, #a03848); opacity: 1; }
+
+/* ── Flavour carousel (mobile) ── */
+@media (max-width: 720px) {
+  .flavours-carousel-wrap {
+    position: relative;
+    margin: 0 -24px; /* bleed to screen edge */
+    padding: 0 24px 24px;
+  }
+  .grid6.flavour-grid-carousel {
+    display: flex;
+    flex-direction: row;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 4px 4px 8px;
+    /* Peek right edge */
+    padding-right: 48px;
+  }
+  .grid6.flavour-grid-carousel::-webkit-scrollbar { display: none; }
+  .grid6.flavour-grid-carousel .flavour-card {
+    flex: 0 0 72vw;
+    max-width: 300px;
+    scroll-snap-align: start;
+    /* disable hover transform on touch */
+    transform: none !important;
+  }
+  /* Dot indicators */
+  .flavour-dots {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    margin-top: 16px;
+  }
+  .flavour-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--line);
+    transition: background .25s, width .25s;
+    cursor: pointer;
+    border: none; padding: 0;
+  }
+  .flavour-dot.active {
+    background: var(--gold);
+    width: 20px;
+    border-radius: 999px;
+  }
+}
+@media (min-width: 721px) {
+  .flavours-carousel-wrap { display: contents; }
+  .flavour-dots { display: none !important; }
+}
 
 /* ── Products grid ── */
 .products-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
@@ -585,6 +720,68 @@ img { max-width: 100%; display: block; }
 }
 .testimonial-name { font-weight: 500; font-size: .9rem; color: var(--ink); }
 .testimonial-role { font-size: .8rem; color: var(--muted); font-weight: 300; }
+
+/* ── Cinematic quote section ── */
+.quote-section {
+  background: var(--ink);
+  padding: 112px 0;
+  position: relative;
+  overflow: hidden;
+}
+.quote-section::before {
+  content: '\201C';
+  font-family: var(--serif);
+  font-size: clamp(18rem, 30vw, 28rem);
+  line-height: .75;
+  color: rgba(184,151,90,.06);
+  position: absolute;
+  top: -2rem; left: 4%;
+  pointer-events: none;
+  user-select: none;
+}
+.quote-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.quote-ornament {
+  display: flex; align-items: center; gap: 14px;
+  justify-content: center; margin-bottom: 44px;
+}
+.quote-ornament::before, .quote-ornament::after {
+  content: ''; flex: 0 0 48px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-light));
+}
+.quote-ornament::after {
+  background: linear-gradient(90deg, var(--gold-light), transparent);
+}
+.quote-ornament-diamond {
+  width: 6px; height: 6px;
+  background: var(--gold); transform: rotate(45deg); flex-shrink: 0;
+}
+.quote-text {
+  font-family: var(--serif);
+  font-size: clamp(1.65rem, 3.2vw, 2.8rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.45;
+  letter-spacing: .01em;
+  color: rgba(253,250,245,.9);
+  margin-bottom: 36px;
+}
+.quote-text em {
+  font-style: normal;
+  color: var(--gold-light);
+}
+.quote-attribution {
+  font-size: .72rem;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: rgba(253,250,245,.36);
+  font-weight: 400;
+}
 
 /* ── Newsletter ── */
 .newsletter-section { background: var(--ink); padding: 88px 0; }
@@ -669,6 +866,35 @@ img { max-width: 100%; display: block; }
 }
 .faq-item p { color: var(--muted); font-size: .92rem; margin: 0; font-weight: 300; line-height: 1.7; }
 
+/* ── FAQ — mobile show-more ── */
+.faq-more-btn {
+  display: none; /* hidden on desktop */
+}
+@media (max-width: 720px) {
+  .faq-item.faq-hidden { display: none; }
+  .faq-item.faq-hidden.faq-revealed { display: block; }
+  .faq-more-btn {
+    display: flex; align-items: center; gap: 8px;
+    margin: 20px auto 0;
+    background: transparent; border: 1px solid rgba(39,49,42,.18);
+    border-radius: 999px; padding: 11px 22px;
+    font-family: var(--sans); font-size: .8rem;
+    font-weight: 500; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--ink);
+    cursor: pointer; transition: all .22s ease;
+  }
+  .faq-more-btn:hover {
+    border-color: var(--gold); color: var(--gold);
+    background: rgba(184,151,90,.04);
+  }
+  .faq-more-btn svg {
+    transition: transform .3s ease;
+  }
+  .faq-more-btn.expanded svg {
+    transform: rotate(180deg);
+  }
+}
+
 /* ── FAQ accordion (mobile only) ── */
 .faq-item .faq-btn { display: none; }
 @media (max-width: 720px) {
@@ -721,10 +947,15 @@ img { max-width: 100%; display: block; }
   gap: 32px; padding-bottom: 52px;
   border-bottom: 1px solid rgba(255,255,255,.08);
 }
+.footer-logo {
+  width: 180px; height: auto;
+  object-fit: contain;
+  margin-bottom: 18px;
+  /* Dark footer: render logo as cream/white silhouette */
+  filter: brightness(0) invert(1) opacity(0.88);
+}
 .footer-brand .brand-name-footer {
-  font-family: var(--serif); font-size: 1.56rem;
-  font-weight: 400; color: #faf7f1;
-  letter-spacing: .06em; margin-bottom: 10px; display: block;
+  display: none; /* replaced by footer-logo image */
 }
 .footer-brand p {
   font-size: .88rem; line-height: 1.75;
@@ -755,6 +986,79 @@ img { max-width: 100%; display: block; }
 }
 .footer-bottom a { color: rgba(250,247,241,.32); }
 .footer-bottom a:hover { color: rgba(250,247,241,.68); }
+
+/* ── Scroll progress bar ── */
+#scroll-progress {
+  position: fixed; top: 0; left: 0; z-index: 200;
+  height: 2px; width: 0%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  transition: width .1s linear;
+  pointer-events: none;
+}
+
+/* ── Custom gold cursor (desktop only) ── */
+@media (hover: hover) and (pointer: fine) {
+  body { cursor: none; }
+  #custom-cursor {
+    position: fixed; z-index: 9999; pointer-events: none;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--gold);
+    transform: translate(-50%, -50%);
+    transition: transform .12s ease, width .2s ease, height .2s ease, background .2s ease, opacity .2s ease;
+    opacity: 0;
+    mix-blend-mode: multiply;
+  }
+  #custom-cursor.visible { opacity: .85; }
+  #custom-cursor.hovering {
+    width: 32px; height: 32px;
+    background: rgba(184,151,90,.22);
+    border: 1.5px solid var(--gold);
+  }
+  a, button, [role="button"], .social-link, .qty-btn { cursor: none; }
+}
+
+/* ── Hero entrance animations ── */
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroCardFloat {
+  from { opacity: 0; transform: translateY(40px) scale(.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Word-by-word headline reveal */
+.hero h1 .word-wrap {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: .06em; /* prevent descender clip */
+}
+.hero h1 .word {
+  display: inline-block;
+  transform: translateY(110%);
+  opacity: 0;
+  animation: wordReveal .72s cubic-bezier(.22,.68,0,1.08) both;
+}
+@keyframes wordReveal {
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.hero .eyebrow { animation: heroFadeUp .7s var(--ease-out) .1s both; }
+/* h1 words are animated individually via JS — no blanket animation */
+.hero > .container > .hero-grid > div > p { animation: heroFadeUp .8s var(--ease-out) both; }
+.hero .cta-row        { animation: heroFadeUp .8s var(--ease-out) both; }
+.hero-card            { animation: heroCardFloat .9s var(--ease-out) .35s both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero .eyebrow, .hero h1 .word,
+  .hero > .container > .hero-grid > div > p,
+  .hero .cta-row, .hero-card {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
 
 /* ── Scroll reveal ── */
 .reveal {
@@ -889,6 +1193,35 @@ img { max-width: 100%; display: block; }
 .wholesale-form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .full { grid-column: 1 / -1; }
 
+/* ── Skeleton loader ── */
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position:  600px 0; }
+}
+.skeleton-card {
+  background: rgba(255,255,255,.9);
+  border: 1px solid rgba(39,49,42,.06);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(39,49,42,.06);
+}
+.skeleton-img {
+  width: 100%; aspect-ratio: 4/3;
+  background: linear-gradient(90deg, #f0ebe2 25%, #e8e0d4 50%, #f0ebe2 75%);
+  background-size: 600px 100%;
+  animation: shimmer 1.4s infinite linear;
+}
+.skeleton-body { padding: 20px 22px 22px; }
+.skeleton-line {
+  height: 12px; border-radius: 999px; margin-bottom: 10px;
+  background: linear-gradient(90deg, #f0ebe2 25%, #e8e0d4 50%, #f0ebe2 75%);
+  background-size: 600px 100%;
+  animation: shimmer 1.4s infinite linear;
+}
+.skeleton-line.short { width: 55%; }
+.skeleton-line.medium { width: 75%; }
+.skeleton-line.tall { height: 18px; width: 40%; margin-top: 18px; }
+
 /* ── Form error / validation ── */
 .field-error {
   font-size: .82rem; color: #c0392b;
@@ -958,8 +1291,14 @@ img { max-width: 100%; display: block; }
   .newsletter-form { flex-direction: column; }
   .newsletter-form input,
   .newsletter-form button { width: 100%; min-height: 50px; }
-  .split .visual { display: none; }
-  .split { gap: 0; }
+  .split .visual {
+    min-height: 220px;
+    max-height: 260px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+  .split .visual img { border-radius: 20px; }
+  .split { gap: 24px; }
   .content-card { padding: 0; }
   .testimonials-grid { grid-template-columns: 1fr; }
   .small-btn { min-height: 44px; padding: 12px 18px; }
@@ -989,7 +1328,7 @@ img { max-width: 100%; display: block; }
   .footer-grid { grid-template-columns: 1fr; }
   .hero-card { padding: 18px; }
   .hero-card-grid { gap: 12px; }
-  .brand img { height: 42px; }
+  .brand img { height: 52px; }
   .brand-name { font-size: 1.25rem; }
   .cta-banner { padding: 28px 20px; border-radius: 24px; }
   .flavour-card, .faq-item { padding: 20px 16px; }
@@ -1012,6 +1351,16 @@ img { max-width: 100%; display: block; }
 </style>
 </head>
 <body>
+<!-- ── Preloader ── -->
+<div id="preloader" role="status" aria-label="Loading Siculera">
+  <img id="preloader-logo" src="assets/images/siculera-logo-transparent.webp" alt="" aria-hidden="true" width="240" height="160">
+  <div id="preloader-wordmark">Siculera</div>
+  <div id="preloader-line"></div>
+  <div id="preloader-sub">Pasticceria Siciliana</div>
+</div>
+
+<div id="scroll-progress" aria-hidden="true"></div>
+<div id="custom-cursor" aria-hidden="true"></div>
 <a class="skip-link" href="#main-content">Skip to main content</a>
 
 <div class="topbar" data-i18n="topbar">Carefully crafted in Sicily &nbsp;·&nbsp; <strong>Complimentary gift wrapping</strong> on all orders</div>
@@ -1019,7 +1368,7 @@ img { max-width: 100%; display: block; }
 <header class="site-header" id="siteHeader">
   <div class="container nav">
     <a class="brand" href="#top" aria-label="Siculera — return to top">
-      <img src="assets/images/siculera-logo.jpeg" alt="Siculera" width="52" height="52">
+      <img src="assets/images/siculera-logo-transparent.webp" alt="Siculera" width="108" height="72" fetchpriority="high">
       <div class="brand-text">
         <div class="brand-name">Siculera</div>
         <div class="brand-sub" data-i18n="brandSub">Pasticceria Siciliana</div>
@@ -1074,23 +1423,23 @@ img { max-width: 100%; display: block; }
       </div>
       <div class="hero-card">
         <div class="hero-image">
-          <img src="assets/images/Siculera Hero Image.png" alt="Siculera artisanal Sicilian pastries">
+          <img src="assets/images/hero.webp" alt="Siculera artisanal Sicilian pastries" fetchpriority="high" width="600" height="400">
         </div>
         <div class="hero-card-grid">
           <article class="product-tile">
-            <div class="product-photo"><img src="assets/images/Traditional Sicilian Almond.png" alt="Traditional Sicilian Almond"></div>
+            <div class="product-photo"><img src="assets/images/product-traditional.webp" alt="Traditional Sicilian Almond" loading="lazy" width="200" height="200"></div>
             <div class="tile-body"><div class="tile-title" data-i18n="tileTraditionalTitle">Traditional</div><div class="tile-note" data-i18n="tileTraditionalNote">Timeless, elegant, unmistakably Sicilian.</div></div>
           </article>
           <article class="product-tile">
-            <div class="product-photo citrus"><img src="assets/images/Orange Almond.png" alt="Orange Almond"></div>
+            <div class="product-photo citrus"><img src="assets/images/product-orange-almond.webp" alt="Orange Almond" loading="lazy" width="200" height="200"></div>
             <div class="tile-body"><div class="tile-title" data-i18n="tileLemonOrangeTitle">Lemon &amp; Orange</div><div class="tile-note" data-i18n="tileLemonOrangeNote">Bright citrus depth with Mediterranean warmth.</div></div>
           </article>
           <article class="product-tile">
-            <div class="product-photo green"><img src="assets/images/Pistachio Almond.png" alt="Pistachio Almond"></div>
+            <div class="product-photo green"><img src="assets/images/product-pistachio-almond.webp" alt="Pistachio Almond" loading="lazy" width="200" height="200"></div>
             <div class="tile-body"><div class="tile-title" data-i18n="tilePistachioTitle">Pistachio</div><div class="tile-note" data-i18n="tilePistachioNote">Richer, softer, more indulgent.</div></div>
           </article>
           <article class="product-tile">
-            <div class="product-photo rose"><img src="assets/images/Almond Paste with Apricot Jam.png" alt="Apricot Almond Paste"></div>
+            <div class="product-photo rose"><img src="assets/images/product-apricot-jam.webp" alt="Apricot Almond Paste" loading="lazy" width="200" height="200"></div>
             <div class="tile-body"><div class="tile-title" data-i18n="tileFruitFilledTitle">Fruit-Filled</div><div class="tile-note" data-i18n="tileFruitFilledNote">Apricot and cherry for memorable gifting.</div></div>
           </article>
         </div>
@@ -1133,7 +1482,7 @@ img { max-width: 100%; display: block; }
           <div class="cta-row"><a href="#collection" class="btn btn-primary" data-i18n="discoverSignatureCollection">Discover the Signature Collection</a></div>
         </div>
         <div class="visual reveal reveal-d2">
-          <img src="assets/images/Man Baking.png" alt="Man baking Siculera pastries">
+          <img src="assets/images/section-man-baking.webp" alt="Man baking Siculera pastries" loading="lazy" width="600" height="480">
         </div>
       </div>
     </div>
@@ -1151,13 +1500,23 @@ img { max-width: 100%; display: block; }
         <p>A collection shaped by contrast, balance, and the richness of Mediterranean flavour.</p>
       </div>
       <div class="ornament reveal"><div class="ornament-diamond"></div></div>
-      <div class="grid6">
-        <div class="flavour-card reveal"><h4>Traditional</h4><p>For those who love the classic Sicilian taste — deep, warm, and enduring.</p></div>
-        <div class="flavour-card reveal reveal-d1"><h4>Lemon</h4><p>Fresh, bright, and lightly vibrant with a clean Mediterranean lift.</p></div>
-        <div class="flavour-card reveal reveal-d2"><h4>Orange</h4><p>Citrus-forward and warmly Mediterranean, full of Sicilian sun.</p></div>
-        <div class="flavour-card reveal reveal-d3"><h4>Pistachio</h4><p>Richer, smoother, and more indulgent — a favourite for true connoisseurs.</p></div>
-        <div class="flavour-card reveal reveal-d4"><h4>Apricot Jam</h4><p>Soft, delicate, and gently fruity with a refined almond finish.</p></div>
-        <div class="flavour-card reveal reveal-d5"><h4>Caramelized Cherry</h4><p>Elegant, distinctive, and made for memorable gifting occasions.</p></div>
+      <div class="flavours-carousel-wrap">
+        <div class="grid6 flavour-grid-carousel" id="flavourCarousel">
+          <div class="flavour-card flavour-traditional reveal"><span class="flavour-icon" aria-hidden="true">🌾</span><h4>Traditional</h4><p>For those who love the classic Sicilian taste — deep, warm, and enduring.</p></div>
+          <div class="flavour-card flavour-lemon reveal reveal-d1"><span class="flavour-icon" aria-hidden="true">🍋</span><h4>Lemon</h4><p>Fresh, bright, and lightly vibrant with a clean Mediterranean lift.</p></div>
+          <div class="flavour-card flavour-orange reveal reveal-d2"><span class="flavour-icon" aria-hidden="true">🍊</span><h4>Orange</h4><p>Citrus-forward and warmly Mediterranean, full of Sicilian sun.</p></div>
+          <div class="flavour-card flavour-pistachio reveal reveal-d3"><span class="flavour-icon" aria-hidden="true">🌿</span><h4>Pistachio</h4><p>Richer, smoother, and more indulgent — a favourite for true connoisseurs.</p></div>
+          <div class="flavour-card flavour-apricot reveal reveal-d4"><span class="flavour-icon" aria-hidden="true">🍑</span><h4>Apricot Jam</h4><p>Soft, delicate, and gently fruity with a refined almond finish.</p></div>
+          <div class="flavour-card flavour-cherry reveal reveal-d5"><span class="flavour-icon" aria-hidden="true">🍒</span><h4>Caramelized Cherry</h4><p>Elegant, distinctive, and made for memorable gifting occasions.</p></div>
+        </div>
+        <div class="flavour-dots" id="flavourDots" aria-hidden="true">
+          <button class="flavour-dot active" data-idx="0"></button>
+          <button class="flavour-dot" data-idx="1"></button>
+          <button class="flavour-dot" data-idx="2"></button>
+          <button class="flavour-dot" data-idx="3"></button>
+          <button class="flavour-dot" data-idx="4"></button>
+          <button class="flavour-dot" data-idx="5"></button>
+        </div>
       </div>
       <div class="cta-row" style="justify-content:center;margin-top:32px">
         <a href="#collection" class="btn btn-primary">Find Your Flavour</a>
@@ -1177,7 +1536,34 @@ img { max-width: 100%; display: block; }
         <p>Six almond creations, composed with elegance and distinct character.</p>
       </div>
       <div class="ornament reveal"><div class="ornament-diamond"></div></div>
-      <div class="products-grid" id="productGrid"></div>
+      <div class="products-grid" id="productGrid">
+        <noscript>
+          <article class="collection-card">
+            <div class="product-photo"><img src="assets/images/product-traditional.webp" alt="Traditional Sicilian Almond Paste" loading="lazy" width="400" height="300"></div>
+            <div class="body"><span class="tag">Signature flavour</span><h3>Traditional Sicilian Almond Paste</h3><p>The timeless classic, simple and unmistakably Sicilian.</p><div class="tile-bottom"><div class="price">€18.00</div></div></div>
+          </article>
+          <article class="collection-card">
+            <div class="product-photo citrus"><img src="assets/images/product-lemon-almond-alt.webp" alt="Lemon Almond Paste" loading="lazy" width="400" height="300"></div>
+            <div class="body"><span class="tag">Signature flavour</span><h3>Lemon Almond Paste</h3><p>Fresh citrus brightness with a delicate almond base.</p><div class="tile-bottom"><div class="price">€19.00</div></div></div>
+          </article>
+          <article class="collection-card">
+            <div class="product-photo citrus"><img src="assets/images/product-orange-almond.webp" alt="Orange Almond Paste" loading="lazy" width="400" height="300"></div>
+            <div class="body"><span class="tag">Signature flavour</span><h3>Orange Almond Paste</h3><p>Warm, fragrant, and full of Mediterranean character.</p><div class="tile-bottom"><div class="price">€19.00</div></div></div>
+          </article>
+          <article class="collection-card">
+            <div class="product-photo green"><img src="assets/images/product-pistachio-almond.webp" alt="Pistachio Almond Paste" loading="lazy" width="400" height="300"></div>
+            <div class="body"><span class="tag">Signature flavour</span><h3>Pistachio Almond Paste</h3><p>Smooth, richer, and naturally more indulgent.</p><div class="tile-bottom"><div class="price">€22.00</div></div></div>
+          </article>
+          <article class="collection-card">
+            <div class="product-photo rose"><img src="assets/images/product-apricot-jam.webp" alt="Almond Paste with Apricot Jam" loading="lazy" width="400" height="300"></div>
+            <div class="body"><span class="tag">Signature flavour</span><h3>Almond Paste with Apricot Jam</h3><p>Soft fruit sweetness with a refined almond finish.</p><div class="tile-bottom"><div class="price">€21.00</div></div></div>
+          </article>
+          <article class="collection-card">
+            <div class="product-photo rose"><img src="assets/images/product-caramelized-cherry.webp" alt="Almond Paste with Caramelized Cherry" loading="lazy" width="400" height="300"></div>
+            <div class="body"><span class="tag">Signature flavour</span><h3>Almond Paste with Caramelized Cherry</h3><p>Elegant, distinctive, and made for memorable gifting.</p><div class="tile-bottom"><div class="price">€23.00</div></div></div>
+          </article>
+        </noscript>
+      </div>
     </div>
   </section>
 
@@ -1190,7 +1576,7 @@ img { max-width: 100%; display: block; }
       </div>
       <div class="split">
         <div class="visual reveal">
-          <img src="assets/images/Second Section.png" alt="Siculera artisan baking atmosphere">
+          <img src="assets/images/section-feature.webp" alt="Siculera artisan baking atmosphere" loading="lazy" width="600" height="480">
         </div>
         <div class="content-card reveal reveal-d2">
           <h2 data-i18n="featureTitle">Rooted in Sicily. Composed with <em>restraint.</em></h2>
@@ -1219,7 +1605,7 @@ img { max-width: 100%; display: block; }
           <div class="cta-row"><a href="#collection" class="btn btn-primary" data-i18n="giftingButton">Explore Giftable Selections</a></div>
         </div>
         <div class="visual reveal reveal-d2">
-          <img src="assets/images/Third Section.png" alt="Siculera gift presentation">
+          <img src="assets/images/section-gifting.webp" alt="Siculera gift presentation" loading="lazy" width="600" height="480">
         </div>
       </div>
     </div>
@@ -1238,7 +1624,7 @@ img { max-width: 100%; display: block; }
           <div class="stars">★★★★★</div>
           <p class="testimonial-text">"An extraordinary gift. The pistachio almond paste was unlike anything I had tried before — refined, elegant, and unmistakably Sicilian."</p>
           <div class="testimonial-author">
-            <div class="testimonial-avatar"><img src="assets/images/Prof image 1.png" alt="Isabella"></div>
+            <div class="testimonial-avatar"><img src="assets/images/profile-1.webp" alt="Isabella" loading="lazy" width="36" height="36"></div>
             <div><div class="testimonial-name">Isabella M.</div><div class="testimonial-role">Milan, Italy</div></div>
           </div>
         </div>
@@ -1246,7 +1632,7 @@ img { max-width: 100%; display: block; }
           <div class="stars">★★★★★</div>
           <p class="testimonial-text">"We serve Siculera at our boutique hotel and guests ask about it every season. The packaging alone conveys the quality inside."</p>
           <div class="testimonial-author">
-            <div class="testimonial-avatar"><img src="assets/images/Prof image 3.png" alt="Thomas"></div>
+            <div class="testimonial-avatar"><img src="assets/images/profile-3.webp" alt="Thomas" loading="lazy" width="36" height="36"></div>
             <div><div class="testimonial-name">Thomas R.</div><div class="testimonial-role">Head of Hospitality, Côte d'Azur</div></div>
           </div>
         </div>
@@ -1254,10 +1640,23 @@ img { max-width: 100%; display: block; }
           <div class="stars">★★★★★</div>
           <p class="testimonial-text">"I sent a box of the caramelized cherry to a client in London. The response was immediate — she asked where to order more. Impeccable."</p>
           <div class="testimonial-author">
-            <div class="testimonial-avatar"><img src="assets/images/Prof Image 4.png" alt="Camille"></div>
+            <div class="testimonial-avatar"><img src="assets/images/profile-4.webp" alt="Camille" loading="lazy" width="36" height="36"></div>
             <div><div class="testimonial-name">Camille D.</div><div class="testimonial-role">Corporate Gifting, Paris</div></div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Cinematic Quote ── -->
+  <section class="quote-section">
+    <div class="container">
+      <div class="quote-inner reveal">
+        <div class="quote-ornament"><div class="quote-ornament-diamond"></div></div>
+        <blockquote class="quote-text">
+          "The finest things are not made to impress — they are made to be <em>felt</em>, shared, and quietly remembered."
+        </blockquote>
+        <p class="quote-attribution">The Siculera Philosophy</p>
       </div>
     </div>
   </section>
@@ -1280,7 +1679,7 @@ img { max-width: 100%; display: block; }
           </div>
         </div>
         <div class="visual reveal reveal-d2">
-          <img src="assets/images/Pistachio Image.png" alt="Pistachio almond offering">
+          <img src="assets/images/section-pistachio.webp" alt="Pistachio almond offering" loading="lazy" width="600" height="480">
         </div>
       </div>
     </div>
@@ -1314,22 +1713,27 @@ img { max-width: 100%; display: block; }
           <button class="faq-btn" aria-expanded="false"><span data-i18n="faqQ3">Can businesses order for hotels, retail, or client gifting?</span><span class="faq-icon" aria-hidden="true">+</span></button>
           <div class="faq-body"><div class="faq-body-inner"><p data-i18n="faqA3">Yes. We welcome enquiries from boutique hotels, cafés, gourmet shops, and businesses looking for memorable gifting options.</p></div></div>
         </div>
-        <div class="faq-item reveal reveal-d3">
+        <div class="faq-item faq-hidden reveal reveal-d3">
           <h4 data-i18n="faqQ4">Do I need to know exactly what I want before contacting you?</h4>
           <button class="faq-btn" aria-expanded="false"><span data-i18n="faqQ4">Do I need to know exactly what I want before contacting you?</span><span class="faq-icon" aria-hidden="true">+</span></button>
           <div class="faq-body"><div class="faq-body-inner"><p data-i18n="faqA4">Not at all. Whether you already have something specific in mind or simply want guidance, we can help you find the right option.</p></div></div>
         </div>
-        <div class="faq-item reveal reveal-d4">
+        <div class="faq-item faq-hidden reveal reveal-d4">
           <h4 data-i18n="faqQ5">Can I choose flavours based on the occasion?</h4>
           <button class="faq-btn" aria-expanded="false"><span data-i18n="faqQ5">Can I choose flavours based on the occasion?</span><span class="faq-icon" aria-hidden="true">+</span></button>
           <div class="faq-body"><div class="faq-body-inner"><p data-i18n="faqA5">Yes. Some prefer a classic selection, while others choose citrus, pistachio, or fruit-filled varieties depending on the mood or season.</p></div></div>
         </div>
-        <div class="faq-item reveal reveal-d5">
+        <div class="faq-item faq-hidden reveal reveal-d5">
           <h4 data-i18n="faqQ6">Is there a wholesale or partnership option?</h4>
           <button class="faq-btn" aria-expanded="false"><span data-i18n="faqQ6">Is there a wholesale or partnership option?</span><span class="faq-icon" aria-hidden="true">+</span></button>
           <div class="faq-body"><div class="faq-body-inner"><p data-i18n="faqA6">Yes. If you are interested in retail, hospitality, or larger gifting orders, you can contact us through the business enquiry path.</p></div></div>
         </div>
       </div>
+      <!-- Mobile show-more toggle -->
+      <button class="faq-more-btn" id="faqMoreBtn" type="button" aria-expanded="false">
+        <span id="faqMoreLabel">Show 3 more questions</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
       <div class="cta-row" style="justify-content:center;margin-top:32px">
         <button class="btn btn-primary" id="openCartBtn2" type="button" data-i18n="orderOrEnquire">Order or Enquire</button>
       </div>
@@ -1376,12 +1780,18 @@ img { max-width: 100%; display: block; }
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <span class="brand-name-footer">Siculera</span>
+        <img class="footer-logo" src="assets/images/siculera-logo-transparent.webp" alt="Siculera" width="180" height="120">
         <p>Authentic Sicilian almond specialties made for gifting, sharing, and memorable moments of refined pleasure.</p>
         <div class="social-links" aria-label="Social media">
-          <a class="social-link" href="#" aria-label="Instagram">in</a>
-          <a class="social-link" href="#" aria-label="Facebook">f</a>
-          <a class="social-link" href="#" aria-label="Pinterest">p</a>
+          <a class="social-link" href="https://instagram.com/siculera" aria-label="Instagram" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a class="social-link" href="https://facebook.com/siculera" aria-label="Facebook" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a class="social-link" href="https://pinterest.com/siculera" aria-label="Pinterest" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.236 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.181-.78 1.172-4.97 1.172-4.97s-.299-.598-.299-1.482c0-1.388.806-2.428 1.808-2.428.852 0 1.265.64 1.265 1.408 0 .858-.546 2.14-.828 3.33-.236.995.499 1.806 1.476 1.806 1.771 0 3.135-1.867 3.135-4.56 0-2.385-1.714-4.052-4.163-4.052-2.836 0-4.5 2.127-4.5 4.326 0 .856.33 1.775.741 2.276a.3.3 0 0 1 .069.286c-.076.313-.244.995-.277 1.134-.044.183-.146.222-.337.134-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.967-.527-2.292-1.148l-.623 2.378c-.226.869-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+          </a>
         </div>
       </div>
       <div>
@@ -2008,12 +2418,12 @@ function flavourClass(flavour) {
 
 function localProductImage(slug) {
   const map = {
-    'traditional-almond-paste': 'assets/images/Traditional Sicilian Almond.png',
-    'lemon-almond-paste': 'assets/images/Lemon Almond.png',
-    'orange-almond-paste': 'assets/images/Orange Almond.png',
-    'pistachio-almond-paste': 'assets/images/Pistachio Almond.png',
-    'apricot-jam-almond-paste': 'assets/images/Almond Paste with Apricot Jam.png',
-    'caramelized-cherry-almond': 'assets/images/Almond Paste with Caramelized Cherry.png'
+    'traditional-almond-paste': 'assets/images/product-traditional.webp',
+    'lemon-almond-paste': 'assets/images/product-lemon-almond-alt.webp',
+    'orange-almond-paste': 'assets/images/product-orange-almond.webp',
+    'pistachio-almond-paste': 'assets/images/product-pistachio-almond.webp',
+    'apricot-jam-almond-paste': 'assets/images/product-apricot-jam.webp',
+    'caramelized-cherry-almond': 'assets/images/product-caramelized-cherry.webp'
   };
   return map[slug] || null;
 }
@@ -2407,19 +2817,255 @@ if (mobileCTABtn) {
   } catch(_) {}
 })();
 
+// ── Skeleton loader — inject before products arrive ──
+(function() {
+  const grid = document.getElementById('productGrid');
+  if (!grid) return;
+  const skeletonCard = () => `
+    <div class="skeleton-card" aria-hidden="true">
+      <div class="skeleton-img"></div>
+      <div class="skeleton-body">
+        <div class="skeleton-line short"></div>
+        <div class="skeleton-line medium"></div>
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line tall"></div>
+      </div>
+    </div>`;
+  // Show 3 skeletons (one row on desktop)
+  grid.innerHTML = skeletonCard() + skeletonCard() + skeletonCard();
+})();
+
 // ── Init ──
 attachLanguageListeners();
 setLanguage(getLanguage());
 loadProducts(); // async: fetches from API then calls renderProducts()
 updateCart();
+
+// ── Preloader ──
+(function() {
+  document.body.classList.add('preloading');
+  const preloader = document.getElementById('preloader');
+  if (!preloader) return;
+
+  function dismiss() {
+    preloader.classList.add('hide');
+    document.body.classList.remove('preloading');
+    // Remove from DOM after transition ends
+    preloader.addEventListener('transitionend', () => {
+      preloader.remove();
+    }, { once: true });
+  }
+
+  // Minimum display time 1.6s, then wait for window load — whichever is later
+  const minTime = new Promise(res => setTimeout(res, 1600));
+  const loaded  = new Promise(res => {
+    if (document.readyState === 'complete') res();
+    else window.addEventListener('load', res, { once: true });
+  });
+
+  Promise.all([minTime, loaded]).then(dismiss);
+})();
+
+// ── Word-by-word hero headline ──
+(function() {
+  const h1 = document.querySelector('.hero h1');
+  if (!h1) return;
+
+  // Delay words until after preloader dismisses (~1.7s) + small buffer
+  const BASE_DELAY = 1.82; // seconds
+
+  function wrapWords(node, counter) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const words = node.textContent.split(/(\s+)/);
+      const frag  = document.createDocumentFragment();
+      words.forEach(part => {
+        if (/^\s+$/.test(part)) {
+          frag.appendChild(document.createTextNode(part));
+        } else if (part.length) {
+          const wrap = document.createElement('span');
+          wrap.className = 'word-wrap';
+          const span = document.createElement('span');
+          span.className = 'word';
+          span.textContent = part;
+          const delay = BASE_DELAY + counter.val * 0.08;
+          span.style.animationDelay = delay + 's';
+          counter.val++;
+          wrap.appendChild(span);
+          frag.appendChild(wrap);
+        }
+      });
+      node.replaceWith(frag);
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      Array.from(node.childNodes).forEach(child => wrapWords(child, counter));
+    }
+  }
+
+  // Set paragraph and CTA delays to flow after last word
+  const wordCount = h1.textContent.trim().split(/\s+/).length;
+  const afterWords = BASE_DELAY + wordCount * 0.08 + 0.1;
+  const heroP = document.querySelector('.hero > .container > .hero-grid > div > p');
+  const heroCTA = document.querySelector('.hero .cta-row');
+  if (heroP)  heroP.style.animationDelay  = afterWords + 's';
+  if (heroCTA) heroCTA.style.animationDelay = (afterWords + 0.14) + 's';
+
+  wrapWords(h1, { val: 0 });
+})();
+
+// ── FAQ mobile show-more ──
+(function() {
+  const btn = document.getElementById('faqMoreBtn');
+  const label = document.getElementById('faqMoreLabel');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const hidden = document.querySelectorAll('.faq-item.faq-hidden');
+    const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+    hidden.forEach(item => {
+      item.classList.toggle('faq-revealed', !isExpanded);
+    });
+    btn.setAttribute('aria-expanded', String(!isExpanded));
+    btn.classList.toggle('expanded', !isExpanded);
+    label.textContent = isExpanded ? 'Show 3 more questions' : 'Show fewer questions';
+  });
+})();
+
+// ── Flavour carousel dots ──
+(function() {
+  const carousel = document.getElementById('flavourCarousel');
+  const dots     = document.querySelectorAll('#flavourDots .flavour-dot');
+  if (!carousel || !dots.length) return;
+
+  // Scroll to card when dot is clicked
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const idx   = parseInt(dot.dataset.idx, 10);
+      const cards = carousel.querySelectorAll('.flavour-card');
+      if (cards[idx]) {
+        cards[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+      }
+    });
+  });
+
+  // Sync active dot on scroll
+  let dotTick = false;
+  carousel.addEventListener('scroll', () => {
+    if (dotTick) return;
+    dotTick = true;
+    requestAnimationFrame(() => {
+      const cards    = carousel.querySelectorAll('.flavour-card');
+      const scrollLeft = carousel.scrollLeft;
+      let closest = 0, minDist = Infinity;
+      cards.forEach((card, i) => {
+        const dist = Math.abs(card.offsetLeft - scrollLeft);
+        if (dist < minDist) { minDist = dist; closest = i; }
+      });
+      dots.forEach((d, i) => d.classList.toggle('active', i === closest));
+      dotTick = false;
+    });
+  }, { passive: true });
+})();
+
+// ── Hero card parallax ──
+(function() {
+  const card = document.querySelector('.hero-card');
+  const hero = document.querySelector('.hero');
+  if (!card || !hero) return;
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const heroRect = hero.getBoundingClientRect();
+      const heroH    = hero.offsetHeight;
+      // progress: 0 = hero fully visible, 1 = hero scrolled past
+      const progress = Math.max(0, Math.min(1, -heroRect.top / heroH));
+      const translateY = progress * -42; // max 42px upward drift
+      card.style.transform = `translateY(${translateY}px)`;
+      ticking = false;
+    });
+  }, { passive: true });
+})();
+
+// ── Scroll progress bar ──
+(function() {
+  const bar = document.getElementById('scroll-progress');
+  if (!bar) return;
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (total > 0 ? (scrolled / total) * 100 : 0) + '%';
+  }, { passive: true });
+})();
+
+// ── Custom gold cursor ──
+(function() {
+  const cursor = document.getElementById('custom-cursor');
+  if (!cursor) return;
+  const isTouch = !window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (isTouch) return;
+
+  let mx = -100, my = -100;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top  = my + 'px';
+    cursor.classList.add('visible');
+  }, { passive: true });
+  document.addEventListener('mouseleave', () => cursor.classList.remove('visible'));
+
+  const hoverEls = 'a, button, [role="button"], .social-link, .collection-card, .flavour-card';
+  document.addEventListener('mouseover', e => {
+    if (e.target.closest(hoverEls)) cursor.classList.add('hovering');
+  });
+  document.addEventListener('mouseout', e => {
+    if (e.target.closest(hoverEls)) cursor.classList.remove('hovering');
+  });
+})();
+
+// ── Magnetic CTA buttons ──
+(function() {
+  const isTouch = !window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (isTouch) return;
+  document.querySelectorAll('.btn-primary, .btn-gold').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      const x = e.clientX - r.left - r.width  / 2;
+      const y = e.clientY - r.top  - r.height / 2;
+      btn.style.transform = `translate(${x * 0.22}px, ${y * 0.3}px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
+  });
+})();
+
+// ── 3D tilt on collection cards ──
+(function() {
+  const isTouch = !window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (isTouch) return;
+  document.addEventListener('mousemove', e => {
+    document.querySelectorAll('.collection-card').forEach(card => {
+      const r = card.getBoundingClientRect();
+      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) return;
+      const x = (e.clientX - r.left) / r.width  - 0.5;
+      const y = (e.clientY - r.top)  / r.height - 0.5;
+      card.style.transform = `perspective(600px) rotateY(${x * 7}deg) rotateX(${-y * 7}deg) translateY(-7px)`;
+    });
+  }, { passive: true });
+  document.addEventListener('mouseleave', () => {
+    document.querySelectorAll('.collection-card').forEach(c => c.style.transform = '');
+  });
+  document.querySelectorAll('.collection-card').forEach(card => {
+    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+  });
+})();
 </script>
 <!-- Siculera AI Chat Widget -->
 <script>
   (function() {
-    var devPorts = ['8080', '5500', '3000', '5173', '4173'];
-    var origin = devPorts.indexOf(window.location.port) !== -1 ? 'http://localhost:4000' : '';
     var s = document.createElement('script');
-    s.src = origin + '/assets/siculera-chat.js';
+    s.src = '/assets/siculera-chat.js';
     s.onerror = function() { console.warn('[Siculera] Chat widget failed to load from', s.src); };
     document.body.appendChild(s);
   })();

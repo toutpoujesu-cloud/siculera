@@ -17,6 +17,9 @@ router.post('/session', chatController.createSession);
 // POST /api/chat/message — send a message (main chat endpoint)
 router.post('/message', chatController.sendMessage);
 
+// POST /api/chat/stream — streaming variant (Server-Sent Events)
+router.post('/stream', chatController.streamMessage);
+
 // POST /api/chat/consent — update GDPR consent
 router.post('/consent', chatController.updateConsent);
 

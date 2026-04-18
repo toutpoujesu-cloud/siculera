@@ -28,12 +28,13 @@
     "openai": "^4.52.0",
     "pdf-parse": "^1.1.1",
     "pg": "^8.12.0",
+    "sharp": "^0.34.5",
     "stripe": "^16.0.0",
     "uuid": "^10.0.0"
   },
   "optionalDependencies": {
-    "embedded-postgres": "^18.3.0-beta.16",
-    "@embedded-postgres/windows-x64": "^18.3.0-beta.16"
+    "@embedded-postgres/windows-x64": "^18.3.0-beta.16",
+    "embedded-postgres": "^18.3.0-beta.16"
   },
   "devDependencies": {
     "nodemon": "^3.1.4"

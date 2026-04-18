@@ -1,6 +1,13 @@
 # Secrets and local credentials
 claude apikey/
 deepseek apikey/
+openai key/
+openaikey/
+new deepseek apikey/
+clouflare token/
+
+# Claude internal worktrees
+.claude/worktrees/
 
 # Local environment files
 **/.env
